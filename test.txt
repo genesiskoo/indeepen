@@ -1,5 +1,3 @@
 ﻿For Test.그럼 수정을 시작하지
 첫번째 수정
 
-test
-test2

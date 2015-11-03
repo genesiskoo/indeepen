@@ -1,0 +1,10 @@
+/images/profile //프로필 사진 저장
+/images/profile_thumbnail
+/images/bg //배경화면
+/images/bg_thumbnail
+
+/contents/images //post 이미지
+/contents/images_thumbnail
+
+/contents/songs // 음악
+/contents/movies // 동영상

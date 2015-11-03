@@ -1,5 +1,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+var autoIncrement = require('mongoose-auto-increment');
+autoIncrement.initialize(mongoose);
 
 var Blog = require('./Blogs.js');
 var Reply = require('./Replies.js');
@@ -21,7 +23,7 @@ var postSchema = new Schema({
 	likes : [{type : Number, ref : 'User'}],
 	work : {
 		type : {type : Number}, // 0(그림), 1(사진), 2(음악), 3(영상예술) 
-		emotion : Number,//0(감정없음), 1(기쁨), 2(사랑), 3(슬픔),4( 화남)	
+		emotion : Number //0(감정없음), 1(기쁨), 2(사랑), 3(슬픔),4( 화남)
 	},
 	show : {
 		type : {type : Number}, // 0(전시), 1(공연), 2(상영), 3(예술모임), 4(패스티벌) 
@@ -53,7 +55,7 @@ var postSchema = new Schema({
                 coordinates : [Number]
 			},
             address : {type : String, trim : true}
-		},
+		}
 	},
 	resources : [{
 		kind: Number,            //0(이미지), 1(동영상), 2(음원)
@@ -69,6 +71,11 @@ var postSchema = new Schema({
 		delete_date : Date
 	}
 }, {versionKey : false});
+
+postSchema.plugin(autoIncrement.plugin, {
+	model : 'Post',
+	startAt : 1
+});
 
 module.exports = mongoose.model('Post', postSchema);
 

@@ -1,5 +1,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+var autoIncrement = require('mongoose-auto-increment');
+autoIncrement.initialize(mongoose);
 
 var blogSchema = new Schema({
 	_id: Number,
@@ -57,5 +59,10 @@ var blogSchema = new Schema({
 		}
 	}
 }, { versionKey: false });
+
+userSchema.plugin(autoIncrement.plugin, {
+	model : 'User',
+	startAt : 1
+});
 
 module.exports = mongoose.model('Blog', blogSchema);

@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-
+var autoIncrement = require('mongoose-auto-increment');
+autoIncrement.initialize(mongoose);
 var Blog = require('./Blogs.js');
 
 var replySchema = new Schema({	
@@ -23,6 +24,8 @@ var replySchema = new Schema({
 		default : true
 	}
 }, {versionKey : false});
+
+replySchema.plugin(autoIncrement.plugin, {model:'Reply', startAt : 1});
 
 module.exports = mongoose.model('Reply', replySchema);
 

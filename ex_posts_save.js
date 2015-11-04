@@ -13,12 +13,12 @@ var workinfo = {
 		emotion : 3
 	},
 	resources : [{
-		kind : 0,
+		type : 0,
 		original_path : '/contents/images/1.png',
 		thumbnail_path : '/contents/images_thumbnail/1.png'
 	},
 	{
-		kind : 0,
+		type : 0,
 		original_path : '/contents/images/2.png',
 		thumbnail_path : '/contents/images_thumbnail/2.png'
 	}]

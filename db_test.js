@@ -6,12 +6,16 @@ var Reply = require('./models/Replies');
 
 var postId = 1;
 var replyInfo = {
-    _writer : 2,
-    content : '댓글을 답니다.'
+    _writer : 3,
+    content : '그럽니다.......'
 };
 
+//Reply.initReply(postId, function(err, doc){
+//    console.log(doc);
+//});
+
 Reply.saveReply(postId, replyInfo, function(err, doc){
-    console.log(doc);
+    console.log("?????",doc);
 });
 
 

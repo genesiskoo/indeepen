@@ -2,7 +2,9 @@
 var mongoose = require('./config/mongoose_conn.js');
 
 
-var Users = require('./controllers/Users.js')
+var Users = require('./models/Users.js');
+
+
 for(var i=1; i<11; i++) {
 	Users.saveUser({
 		email: 'moon'+i+'@naver.com',
@@ -20,3 +22,4 @@ for(var i=1; i<11; i++) {
 		console.log(' create' + doc);
 	});
 }
+

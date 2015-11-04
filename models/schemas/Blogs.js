@@ -60,8 +60,8 @@ var blogSchema = new Schema({
 	}
 }, { versionKey: false });
 
-userSchema.plugin(autoIncrement.plugin, {
-	model : 'User',
+blogSchema.plugin(autoIncrement.plugin, {
+	model : 'Blog',
 	startAt : 1
 });
 

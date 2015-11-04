@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fae20e81-4887-4d24-9dd7-a536ce0a01f8" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/models/Blogs.js" afterPath="$PROJECT_DIR$/models/Blogs.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/models/Fans.js" afterPath="$PROJECT_DIR$/models/Fans.js" />
     </list>
     <ignored path="indeepen_mongo_test.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -23,6 +27,16 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="Blogs.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/models/Blogs.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.10614525">
+              <caret line="5" column="10" selection-start-line="5" selection-start-column="10" selection-end-line="5" selection-end-column="10" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="Reply.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/controllers/Reply.js">
           <provider selected="true" editor-type-id="text-editor">
@@ -43,10 +57,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="app.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="app.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5094972">
+            <state vertical-scroll-proportion="0.0">
               <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
               <folding />
             </state>
@@ -57,7 +71,39 @@
         <entry file="file://$PROJECT_DIR$/ex_posts_show.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="0" column="33" selection-start-line="0" selection-start-column="33" selection-end-line="0" selection-end-column="33" />
+              <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Fans.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/models/Fans.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="6" column="9" selection-start-line="6" selection-start-column="9" selection-end-line="6" selection-end-column="9" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ex_counters_save.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ex_counters_save.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ex_posts_save.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ex_posts_save.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -107,6 +153,8 @@
         <option value="$PROJECT_DIR$/config/mongoose_conn.js" />
         <option value="$PROJECT_DIR$/app.js" />
         <option value="$PROJECT_DIR$/ex_posts_show.js" />
+        <option value="$PROJECT_DIR$/models/Fans.js" />
+        <option value="$PROJECT_DIR$/models/Blogs.js" />
       </list>
     </option>
   </component>
@@ -402,12 +450,24 @@
       <option name="project" value="LOCAL" />
       <updated>1446602568111</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Merge branch 'koo'&#10;&#10;# Conflicts:&#10;#&#9;ex_posts_show.js&#10;#&#9;models/Blogs.js&#10;#&#9;models/Fans.js&#10;">
+      <created>1446602746204</created>
+      <option name="number" value="00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1446602746204</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Merge branch 'koo'&#10;&#10;# Conflicts:&#10;#&#9;ex_posts_show.js&#10;#&#9;models/Blogs.js&#10;#&#9;models/Fans.js&#10;&#10;complete">
+      <created>1446609200989</created>
+      <option name="number" value="00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1446609200989</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17175975" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -467,7 +527,9 @@
     <MESSAGE value="Schemas update" />
     <MESSAGE value="Blog 수정&#10;Fans, Imisstyou Notis 스키마 생성" />
     <MESSAGE value="ex_posh_show.js 수정" />
-    <option name="LAST_COMMIT_MESSAGE" value="ex_posh_show.js 수정" />
+    <MESSAGE value="Merge branch 'koo'&#10;&#10;# Conflicts:&#10;#&#9;ex_posts_show.js&#10;#&#9;models/Blogs.js&#10;#&#9;models/Fans.js&#10;" />
+    <MESSAGE value="Merge branch 'koo'&#10;&#10;# Conflicts:&#10;#&#9;ex_posts_show.js&#10;#&#9;models/Blogs.js&#10;#&#9;models/Fans.js&#10;&#10;complete" />
+    <option name="LAST_COMMIT_MESSAGE" value="Merge branch 'koo'&#10;&#10;# Conflicts:&#10;#&#9;ex_posts_show.js&#10;#&#9;models/Blogs.js&#10;#&#9;models/Fans.js&#10;&#10;complete" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -516,18 +578,52 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ex_posts_show.js">
+    <entry file="file://$PROJECT_DIR$/app.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="33" selection-start-line="0" selection-start-column="33" selection-end-line="0" selection-end-column="33" />
+          <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app.js">
+    <entry file="file://$PROJECT_DIR$/ex_posts_save.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5094972">
-          <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ex_counters_save.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ex_posts_show.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/Fans.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="6" column="9" selection-start-line="6" selection-start-column="9" selection-end-line="6" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/Blogs.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.10614525">
+          <caret line="5" column="10" selection-start-line="5" selection-start-column="10" selection-end-line="5" selection-end-column="10" />
           <folding />
         </state>
       </provider>

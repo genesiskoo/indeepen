@@ -3,8 +3,7 @@ var Schema = mongoose.Schema;
 
 var blogSchema = new Schema({
 	_id: Number,
-	user_id: {type :Number, ref : 'User'},
-	user_id: Number,
+	_user : {type :Number, ref : 'User'},
 	email : String,
 	phone : String,
 	type : {                         /// 0(개인) 1(블로그)

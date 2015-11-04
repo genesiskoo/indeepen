@@ -1,25 +1,24 @@
 var express = require('express');
 var mongoose = require('mongoose');
 
-mongoose.connect('mongodb://54.199.219.43:3000/indeepenkoo');
+//mongoose.connect('mongodb://54.199.219.43:3000/indeepenkoo');
+mongoose.connect('mongodb://localhost:27017/indeepenkoo');
 
-var Post = require('./models/');
+var Post = require('./models/Posts');
 
-var showinfo = {
-    post_type : 1,
+var showInfo = {
+    post_type : 0,
     _writer : 1,
-    content : '이것은 예술공연 문화이다',
+    content : '내 작업물들이다',
     hash_tags : ['깃저주','gitdie'],
-    likes : [6,2,4],
+    likes : [
+        {_user: 1, flag : true},{_user :3, flag :true}
+    ],
     show : {
         type : 2, //공연
         tags : [{
-            _user: 11,
-            point : {31,21}
-        },{
-            _user: 12,
-            point : {10,21}
-        }]
+            _user: 11
+        }],
         start_date: '2015-11-04',
         end_date: '2015-11-07',
         start_time : '18:00',
@@ -43,7 +42,7 @@ var showinfo = {
     }]
 };
 
-Post.savePost(showinfo, function(err, doc){
+Post.savePost(showInfo, function(err, doc){
     if(err){
         console.error(err);
         return;

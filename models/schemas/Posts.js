@@ -37,6 +37,7 @@ var postSchema = new Schema({
         emotion : Number//0(감정없음), 1(기쁨), 2(사랑), 3(슬픔),4( 화남)
     },
     show : {
+        title : String,
         type : {type : Number}, // 0(전시), 1(공연), 2(상영), 3(예술모임), 4(패스티벌)
         tags : [{
             _user : {  // Blog에서 user_id, nick, profile_photo 가져옴

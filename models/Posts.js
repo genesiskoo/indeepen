@@ -16,7 +16,7 @@ module.exports.findPost = function(key, callback){
 	.exec(callback);
 }
 
-module.exports.findShowPosts = function(key, filter, callback){
+module.exports.findShowPosts = function(key, callback){
 	key.post_type = 1; // 문화 예술
 	Post.findOne(key)
 	.populate('_writer', 'user_id nick profile_photo')

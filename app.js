@@ -18,7 +18,7 @@ app.use(require('./routers/web_router.js'));
 //app.use(replyRouter);
 //app.use(postRouter);
 
-app.listen(3000, function(){
-    console.log('Server @ 3000');
+app.listen(3333, function(){
+    console.log('Server @ 3333');
 })
 

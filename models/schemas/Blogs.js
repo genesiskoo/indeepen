@@ -5,7 +5,7 @@ autoIncrement.initialize(mongoose);
 
 var blogSchema = new Schema({
 	_id: Number,
-	user_id: Number,
+	_user: { type : Number, ref :'User'},
 	type : {                         /// 0(개인) 1(블로그)
 		type : Number,
 		default : 0

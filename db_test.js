@@ -6,16 +6,30 @@ var Reply = require('./models/Replies');
 
 var postId = 1;
 var replyInfo = {
-    _writer : 3,
+    _writer : 2,
     content : '그럽니다.......'
 };
 
 //Reply.initReply(postId, function(err, doc){
 //    console.log(doc);
 //});
+//for(var i =1; i<11; i++){
+//    Reply.saveReply(postId,  {
+//        _writer : i,
+//        content : '아하......... '+i
+//    }, function(err, doc){
+//        console.log("?????",doc);
+//    });
+//}
 
-Reply.saveReply(postId, replyInfo, function(err, doc){
-    console.log("?????",doc);
-});
+//Reply.findReplies(postId, function(err, docs){
+//    console.log(docs);
+//    console.log('size', docs.replies.length);
+//})
 
+
+
+//Reply.deleteReply(2, 6, function(err, doc){
+//    console.log(doc);
+//})
 

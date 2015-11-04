@@ -22,10 +22,6 @@ var replySchema = new Schema({
         rg_date : {
             type : Date,
             default : Date.now
-        },
-        is_valid : {
-            type : Boolean,
-            default : true
         }
     }]
 }, {versionKey : false});

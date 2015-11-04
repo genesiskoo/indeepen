@@ -3,10 +3,9 @@ var mongoose = require('mongoose');
 var notiSchema = new mongoose.Schema({
 
 	_id : Number,
-	sender : {
-		user_id : Number,
-		nick : {type : String, trim : true},
-		profile_photo : String
+	_sender : {
+		type : Number,
+		ref : 'User'
 	},
 	date : {
 		type : Date,

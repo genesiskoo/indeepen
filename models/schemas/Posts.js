@@ -28,7 +28,7 @@ var postSchema = new Schema({
             _user : {type : Number, ref : 'User'},
             flag : {
                 type : Boolean,
-                default : false
+                default : true
             }
         }
     ],

@@ -5,13 +5,14 @@ autoIncrement.initialize(mongoose);
 var Blog = require('./Blogs.js');
 var Post = require('./Posts.js');
 
+
 var replySchema = new Schema({
     _id : Number,
     _post : {
         type : Number,
         ref : 'Post'
     },
-    replies : [{
+    replies :  [{
         _id : Number,
         _writer : {  // Blog에서 user_id, nick, profile_photo  가져옴
             type : Number,

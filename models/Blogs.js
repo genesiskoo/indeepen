@@ -3,7 +3,11 @@ var Schema = mongoose.Schema;
 
 var blogSchema = new Schema({
 	_id: Number,
+<<<<<<< HEAD
 	user_id: {type :Number, ref : 'User'},
+=======
+	user_id: Number,
+>>>>>>> koo
 	email : String,
 	phone : String,
 	type : {                         /// 0(개인) 1(블로그)
@@ -20,8 +24,11 @@ var blogSchema = new Schema({
 		default : '추후 결정'
 	},
 	intro : String,
+<<<<<<< HEAD
 	imissyou : [{ type: Schema.Types.ObjectId, ref: 'Imissyou' }],
 	fans : [{ type: Schema.Types.ObjectId, ref: 'Fans' }],
+=======
+>>>>>>> koo
 	location: {
 		point: {
 			type: {

@@ -3,8 +3,13 @@ var Schema = mongoose.Schema;
 
 var fanSchema = new Schema({
 	
+<<<<<<< HEAD
 	user_id : {type : Number, ref : 'User'},
 	blog_id : {type : Number, ref : 'Blog'},
+=======
+	user_id : Number,
+	blog_id : Number,
+>>>>>>> koo
 	profile_photo: String,
 	nick: String,
 	rg_date: {

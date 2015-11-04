@@ -1,5 +1,8 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+
+var User = require('./Users');
+
 var autoIncrement = require('mongoose-auto-increment');
 autoIncrement.initialize(mongoose);
 
@@ -12,12 +15,12 @@ var blogSchema = new Schema({
 	},
 	bg_photo: {
 		type : String,
-		default : '//////////////////// 추후 결정'
+		default : '/images/bg_thumbnail/default.png'
 	},
 	nick: String,
 	profile_photo: {
 		type : String,
-		default : '추후 결정'
+		default : '/images/profile_thumbnail/default.png'
 	},
 	intro : String,
 	i_miss_you: [{

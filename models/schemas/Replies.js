@@ -3,7 +3,7 @@ var Schema = mongoose.Schema;
 var autoIncrement = require('mongoose-auto-increment');
 autoIncrement.initialize(mongoose);
 var Blog = require('./Blogs.js');
-var Post = require('/Posts.js');
+var Post = require('./Posts.js');
 
 var replySchema = new Schema({
     _id : Number,

@@ -7,7 +7,7 @@ var workinfo = {
 	_writer : 1,
 	content : '아.. 왜 이리 고칠게 많냐... #슬픈날 이다...',
 	hash_tags : ['슬픈날'],
-	likes : [2,3,4],
+	likes : [{ _user : 2},{ _user : 3}, { _user : 4}],
 	work : {
 		type : 0,
 		emotion : 3

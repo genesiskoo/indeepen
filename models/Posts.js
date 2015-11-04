@@ -1,18 +1,9 @@
-var Counters = require('./Counters.js');
+
 
 var Post = require('./schemas/Posts.js');
-//var Reply = require('./Replies.js');
 
 module.exports.savePost = function(postInfo, callback){
-	Counters.getNextSeq('posts', function(err, seq){
-		if(err){
-			console.error('ERROR OF GETTING AUTO_INCREMENT : ', err);
-			return;
-		}
-		console.log('next sq : ', seq);
-		postInfo._id = seq.seq;
-		Post.create(postInfo, callback);
-	});
+    Post.create(postInfo, callback);
 }
 
 module.exports.findPost = function(key, callback){

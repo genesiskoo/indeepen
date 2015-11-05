@@ -1,6 +1,5 @@
 var express = require('express');
-//var postRouter = require('./routers/router_post.js');
-//var replyRouter = require('./routers/reply_router.js');
+
 var mongoose = require('./config/mongoose_conn.js');
 var fs = require('fs');
 var bodyParser = require('body-parser');
@@ -17,6 +16,15 @@ app.set('view engine', 'ejs');
 app.use(require('./routers/web_router.js'));
 //app.use(replyRouter);
 //app.use(postRouter);
+
+app.user(function(err, req, res, next){
+    //console.error(err.message);
+    var msg = {
+        code : err.code,
+        msg : err.message
+    }
+    res.status(err.code).json(msg);
+});
 
 app.listen(3333, function(){
     console.log('Server @ 3333');

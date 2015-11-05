@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var imissyouSchema = new Schema({
+var iMissYouSchema = new Schema({
 	_id : Number,
     _blog : {
         type : Number,
@@ -9,20 +9,20 @@ var imissyouSchema = new Schema({
     },
     year : Number,
     month : Number,
-    imissyous : [{
+    iMissYous : [{
         _user : {
             type : Number,
             ref : 'User'
         },
-        rg_date : {
+        addAt : {
             type: Date,
             default: Date.now
         }
     }],
-    is_valid :{
+    isValid :{
         type : Boolean,
         default : true
     }
 });
 
-module.exports = mongoose.model('imissyou', imissyouSchema);
+module.exports = mongoose.model('iMissYou', iMissYouSchema);

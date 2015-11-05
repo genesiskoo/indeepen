@@ -8,12 +8,12 @@ var User = require('./Users');
 
 var postSchema = new Schema({
     _id : Number,
-    post_type : Number, // 0(일반 - work), 1(문화예술 - show),
-    rg_date : {
+    postType : Number, // 0(일반 - work), 1(문화예술 - show),
+    createAt : {
         type : Date,
         default : Date.now
     },
-    upd_date : {
+    updateAt : {
         type : Date,
         default : Date.now
     },
@@ -22,7 +22,7 @@ var postSchema = new Schema({
         ref : 'Blog'
     },
     content : {type : String, trim : true},
-    hash_tags : [{type : String, trim : true}],
+    hashTags : [{type : String, trim : true}],
     likes : [
         {
             _user : {type : Number, ref : 'User'},
@@ -49,10 +49,10 @@ var postSchema = new Schema({
                 y : Number
             }
         }],
-        start_date : Date,
-        end_date : Date,
-        start_time : {type : String, trim : true},
-        end_time : {type : String, trim : true},
+        startDate : Date,
+        endDate : Date,
+        startTime : {type : String, trim : true},
+        endTime : {type : String, trim : true},
         fee : Number,
         location : {
             point : {
@@ -67,10 +67,10 @@ var postSchema = new Schema({
     },
     resources : [{
         type : {type : Number},            //0(이미지), 1(동영상), 2(음원)
-        original_path : String,      // 영상, 음원이 thumbnail 사용 안하면 여기다가 저장
-        thumbnail_path : String
+        originalPath : String,      // 영상, 음원이 thumbnail 사용 안하면 여기다가 저장
+        thumbnailPath : String
     }],
-    is_valid : {
+    isValid : {
         type : Boolean,
         default : true
     }

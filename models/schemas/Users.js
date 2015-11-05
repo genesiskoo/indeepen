@@ -10,25 +10,25 @@ var userSchema = new mongoose.Schema({
         type : String,
         trim : true
     },
-    profile_photo: {
+    profilePhoto: {
         type : String,
         default : '/photo/profile/default_profile.png'
     },
     intro: String,
     phone: String,
-    rg_date: {
+    createAt: {
         type: Date,
         default: Date.now
     },
-    upd_date : {
+    updateAt : {
         type : Date,
         default : Date.now
     },
-    is_public: {
+    isPublic: {
         type: Boolean,
         default: true
     },
-    is_valid: {
+    isValid: {
         type: Boolean,
         default: true
     }

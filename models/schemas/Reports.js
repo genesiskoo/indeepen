@@ -21,11 +21,11 @@ var reportSchema = new Schema({
             type : Number,
             ref : 'User'
         },
-        report_date : {
+        reportAt : {
             type : Date,
             default : Date.now
         },
-        handle_date : Date
+        handleAt : Date
     }]
 }, {versionKey : false});
 

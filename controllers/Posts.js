@@ -139,7 +139,7 @@ module.exports.addWorkPost = function(req, res, next){
 
                     }else{
                         console.log("postInfo", postInfo);
-                        // 파일 삭제해야함 
+                        // 파일 삭제해야함
                         Post.savePost(postInfo, function(err, doc){
                             if(err){
                                 console.error('Erro', err);

@@ -7,14 +7,15 @@ var router = express.Router();
 
 var Post = require('../controllers/Posts.js');
 
-router('/post/works')
-    .get(getWorkPosts);
+//router('/post/works')
+//    .get(getWorkPosts);
+//
+//router('/post/work')
+//    .post(addWorkPost);
 
-router('/post/work')
-    .post(addWorkPost);
+router.get('/post/work', Post.showAddWorkPostPage);
+router.post('/post/work', Post.addWorkPost);
 
-router.get('/posts/shows',Post.getShowPosts);
 
 module.exports = router;
 
-//test

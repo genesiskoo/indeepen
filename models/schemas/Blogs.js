@@ -13,26 +13,24 @@ var blogSchema = new Schema({
 		type : Number,
 		default : 0
 	},
-	bg_photo: {
+	bgPhoto: {
 		type : String,
 		default : '/images/bg_thumbnail/default.png'
 	},
 	nick: String,
-	profile_photo: {
+	profilePhoto: {
 		type : String,
 		default : '/images/profile_thumbnail/default.png'
 	},
 	intro : String,
-	i_miss_you: [{
-		user_id: Number,
-		profile_photo: String,
-		nick: String
+    // 보류....
+	iMissYou: [{
+		_user : {
+            type : Number,
+            ref : 'User'
+        }
 	}],
-	fans: [{
-		user_id: Number,
-		profile_photo: String,
-		nick: String
-	}],
+	fans: [{type : Number, ref : 'User'}],
 	location: {
 		point: {
 			type: {
@@ -43,24 +41,22 @@ var blogSchema = new Schema({
 		},
 		address: String
 	},
-	rg_date: {
+	createAt: {
 		type: Date,
 		default: Date.now
 	},
-	is_activated: {
+    updateAt : {
+        type : Date,
+        default : Data.now
+    },
+	isActivated: {
 		type: Boolean,
 		default: true
 	},
-	is_valid: {
-		is_valid: {
-			type: Boolean,
-			default: true
-		},
-		deleted_date: {
-			type: Date,
-			default: ''
-		}
-	}
+	isValid: {
+        type: Boolean,
+        default: true
+    }
 }, { versionKey: false });
 
 blogSchema.plugin(autoIncrement.plugin, {

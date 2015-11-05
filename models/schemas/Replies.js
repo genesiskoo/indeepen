@@ -18,7 +18,7 @@ var replySchema = new Schema({
         ref : 'Blog'
     },
     content : {type : String, trim : true},
-    rg_date : {
+    createAt : {
         type : Date,
         default : Date.now
     }

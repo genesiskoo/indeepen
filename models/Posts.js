@@ -1,5 +1,3 @@
-
-
 var Post = require('./schemas/Posts.js');
 
 module.exports.savePost = function(postInfo, callback){
@@ -7,8 +5,8 @@ module.exports.savePost = function(postInfo, callback){
 }
 
 module.exports.findPost = function(key, callback){
-	key['is_valid'] = {
-		is_valid : true
+	key['isValid'] = {
+		isValid : true
 	};
 	console.log('key, ', key);
 	Post.findOne(key)
@@ -17,14 +15,14 @@ module.exports.findPost = function(key, callback){
 }
 
 module.exports.findShowPosts = function(key, callback){
-	key.post_type = 1; // 문화 예술
-	Post.findOne(key)
-	.populate('_writer', 'user_id nick profile_photo')
+	key.postType = 1; // 문화 예술
+	Post.find(key)
+	.populate('_writer', 'userId nick profilePhoto')
 	.exec(callback); 
 }
 
 module.exports.findWorkPosts = function(key, filter, callback){
-	key.post_type = 0; // 일반 예술
+	key.postType = 0; // 일반 예술
 	Post.findOne(key)
 	.populate('_writer', 'user_id nick profile_photo')
 	.exec(callback);

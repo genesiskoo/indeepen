@@ -1,17 +1,22 @@
 /**
  * Created by heuneul on 2015-11-04.
  */
-
-var express= require('express');
+var express = require('express');
 var router = express.Router();
 
 var Post = require('../controllers/Posts.js');
 
-router('/post/works')
-    .get(getWorkPosts);
+//router('/post/works')
+//    .get(getWorkPosts);
+//
+//router('/post/work')
+//    .post(addWorkPost);
+//
+//router('/post/work/:post_id')
+//    .get(getWorkPostDetailInfo);
 
-router('/post/work')
-    .post(addWorkPost);
+//show 추가
 
-router('/post/work/:post_id')
-    .get(getWorkPostDetailInfo);
+router.get('/posts/shows',Post.getShowPosts);
+
+module.exports = router;

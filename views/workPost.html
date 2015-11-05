@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Work Post</title>
+</head>
+<body>
+<h3>Add WOrk Post</h3>
+<br><br>
+
+<form method="post" action="/post/work" enctype="multipart/form-data">
+    파일1<input type='file' name="file" multiple="multiple"><br>
+    파일2<input type='file' name="file"><br>
+    파일3<input type='file' name="file"><br>
+    <!--파일4<input type='file' name="file"><br>
+    파일5<input type='file' name="file"><br>-->
+    분류<input type="text" name="workType" value="2"><br>
+    감정<input type='text' name='emotion' value='1'><br>
+    블로그 id<input type="text" name='blogId' value='1'><br>
+    내용<input type="text" name="content" value='테스트 중 입니다....'><br>
+    <button type="submit">등록</button>
+</form>
+</body>
+</html>

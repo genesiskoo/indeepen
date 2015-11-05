@@ -13,11 +13,13 @@ app.use(bodyParser.urlencoded({extended : false}));
 app.set('views', './views');
 app.set('view engine', 'ejs');
 
+app.use(require('./routers/post_router.js'));
 app.use(require('./routers/web_router.js'));
 //app.use(replyRouter);
 //app.use(postRouter);
 
-app.user(function(err, req, res, next){
+
+app.use(function(err, req, res, next){
     //console.error(err.message);
     var msg = {
         code : err.code,

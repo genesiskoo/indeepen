@@ -110,19 +110,20 @@ module.exports.addWorkPost = function(req, res, next){
 
 
                 // aws의 upload에 생긴 파일 명시적으로 지워줘야 함
-                console.log('urls',urls);
-                console.log('workType', workType);
-                console.log('emotion', emotion);
-                console.log('blogId', blogId);
-                console.log('content', content);
-                // hash_tag 추출
 
+                // hash_tag 추출
+                var tmpStr = content.split('#');
+                var hashTag = [];
+                for(var i=1; i<tmpStr.length; i++){
+                    hashTag.push(tmpStr[i].split(' ')[0]);
+                }
+                console.log('hash tag', hashTag);
                 // db 저장
                 var postInfo = {
                     postType : 0,
                     _writer : blogId,
                     content : content,
-                    hash_tags : [],
+                    hashTags : hashTag,
                     likes : [],
                     work : {
                         type : workType,
@@ -132,17 +133,19 @@ module.exports.addWorkPost = function(req, res, next){
                 };
                 async.each(urls, function(url, callback){
                     console.log('url', url);
+                    // s3 경로 저장
                     postInfo.resources.push({type : url.contentType, originalPath : url.url});
                     callback();
                 }, function(err){
                     if(err){
-
+                        var error = new Error('file url 관리에서 실패.....');
+                        error.code = 400;
+                        return next(error);
                     }else{
                         console.log("postInfo", postInfo);
-                        // 파일 삭제해야함
                         Post.savePost(postInfo, function(err, doc){
                             if(err){
-                                console.error('Erro', err);
+                                console.error('Error', err);
                                 var error = new Error('포스팅 실패');
                                 error.code = 400;
                                 next(error);
@@ -153,8 +156,6 @@ module.exports.addWorkPost = function(req, res, next){
                         });
                     }
                 });
-
-
             }
         ],
         function (err) {
@@ -175,5 +176,3 @@ module.exports.addWorkPost = function(req, res, next){
 //
 //}
 
-
-// 이 코드는 몰라 

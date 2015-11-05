@@ -27,7 +27,8 @@ module.exports.findWorkPosts = function(key, filter, callback){
 	key.post_type = 0; // 일반 예술
 	Post.findOne(key)
 	.populate('_writer', 'user_id nick profile_photo')
-	.exec(callback); 
+	.exec(callback);
+
 }
 
 module.exports.findPosts = function(key, filter, callback){

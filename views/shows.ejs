@@ -1,0 +1,30 @@
+<html>
+<head>
+    <title>Show list</title>
+</head>
+<body>
+    <ol>
+        <%shows.forEach(function(show){ %>
+        <div><li>
+            <h2><a href="">제목 : <%=show.show.title%></a></h2>
+            postType : <%=show.postType%>
+            createAt : <%=show.createAt%>
+            _writer : <%=show._writer%>
+            content : <%=show.content%>
+            hashTags : <%=show.hashTags%>
+            likes : <%=show.likes%>
+                <% show.resources.forEach(function(resource){%>
+                    resources : <%=resource%>
+                <%})%>
+            show.type : <%=show.show.type%>
+            show.point : <%=show.show.point%>
+            show.startDate : <%=show.show.startDate%>
+            show.endDate : <%=show.show.endDate%>
+            show.startTime : <%=show.show.startTime%>
+            show.endTime : <%=show.show.endTime%>
+            show.fee : <%=show.show.fee%>
+        </li></div>
+        <% });  %>
+    </ol>
+</body>
+</html>

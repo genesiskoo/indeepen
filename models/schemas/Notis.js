@@ -17,7 +17,7 @@ var notiSchema = new mongoose.Schema({
 		post_id : Number,
 		content : String // 알림 대표 사진
 	},
-	is_checked : {
+	isChecked : {
 		type : Boolean,
 		default : fasle
 	},

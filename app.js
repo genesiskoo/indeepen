@@ -17,7 +17,7 @@ app.use(require('./routers/web_router.js'));
 //app.use(replyRouter);
 //app.use(postRouter);
 
-app.user(function(err, req, res, next){
+app.use(function(err, req, res, next){
     //console.error(err.message);
     var msg = {
         code : err.code,

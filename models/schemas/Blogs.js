@@ -47,7 +47,7 @@ var blogSchema = new Schema({
 	},
     updateAt : {
         type : Date,
-        default : Data.now
+        default : Date.now
     },
 	isActivated: {
 		type: Boolean,

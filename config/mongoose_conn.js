@@ -3,4 +3,4 @@ var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost:27017/indeepen');
 module.exports = mongoose;
 //var db = mongoose.connect('mongodb://localhost:27017/indeepen');
-//module.exports = db;
+//module.exports = db;d

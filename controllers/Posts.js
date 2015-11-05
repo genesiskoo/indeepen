@@ -90,10 +90,20 @@ module.exports.addWorkPost = function(req, res, next){
                             console.error('S3 PubObject Error', err);
                             callback(err);
                         } else {
-                            var imageUrl = s3.endpoint.href + bucketName + '/' + itemKey
+                            var imageUrl = s3.endpoint.href + bucketName + '/' + itemKey;
                             console.log('imageUrl ', imageUrl);
-                            imageUrls.push({contentType : contentType, url :imageUrl});
-                            callback();
+                            // aws의 upload에 생긴 파일 명시적으로 지워줘야 함
+                            console.log('filePath',file.path);
+                            fs.unlink(file.path, function(err){
+                               if(err){
+                                   var error = new Error('파일 삭제를 실패했습니다.');
+                                   error.code = 400;
+                                   return next(error);
+                               }else{
+                                   imageUrls.push({contentType : contentType, url :imageUrl});
+                                   callback();
+                               }
+                            });
                         }
                     });
 
@@ -109,15 +119,17 @@ module.exports.addWorkPost = function(req, res, next){
             function (workType, emotion, blogId, content, urls, callback) {
 
 
-                // aws의 upload에 생긴 파일 명시적으로 지워줘야 함
+
 
                 // hash_tag 추출
                 var tmpStr = content.split('#');
                 var hashTag = [];
                 for(var i=1; i<tmpStr.length; i++){
-                    hashTag.push(tmpStr[i].split(' ')[0]);
+                    var tmp = tmpStr[i].split(' ')[0];
+                    if(tmp != '')
+                        hashTag.push(tmp);
                 }
-                console.log('hash tag', hashTag);
+
                 // db 저장
                 var postInfo = {
                     postType : 0,

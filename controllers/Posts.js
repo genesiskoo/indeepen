@@ -177,3 +177,14 @@ module.exports.addWorkPost = function(req, res, next){
 //}
 
 
+module.exports.getShowPosts = function(req,res,next){
+    Post.findShowPosts(key,function(err,docs){
+        if(err){
+            res.sendStatus(400);
+        }
+        res.render('shows',{ shows : docs });
+    });
+
+};
+
+

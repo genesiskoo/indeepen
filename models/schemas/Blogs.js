@@ -23,13 +23,6 @@ var blogSchema = new Schema({
 		default : '/images/profile_thumbnail/default.png'
 	},
 	intro : String,
-    // 보류....
-	iMissYou: [{
-		_user : {
-            type : Number,
-            ref : 'User'
-        }
-	}],
 	fans: [{type : Number, ref : 'User'}],
 	location: {
 		point: {

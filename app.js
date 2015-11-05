@@ -13,6 +13,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.set('views', './views');
 app.set('view engine', 'ejs');
 
+app.use(require('./routers/post_router.js'));
 app.use(require('./routers/web_router.js'));
 app.use(require('./routers/post_router.js'));
 //app.use(replyRouter);

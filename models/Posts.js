@@ -5,12 +5,9 @@ module.exports.savePost = function(postInfo, callback){
 }
 
 module.exports.findPost = function(key, callback){
-	key['isValid'] = {
-		isValid : true
-	};
 	console.log('key, ', key);
 	Post.findOne(key)
-	.populate('_writer', 'user_id nick profile_photo')
+	.populate('_writer', '_user nick profile_photo')
 	.exec(callback);
 }
 

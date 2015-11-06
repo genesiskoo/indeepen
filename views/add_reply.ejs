@@ -4,13 +4,18 @@
     </head>
     <body>
         <ul>
+            <% users.forEach(function(user){ %>
+                <li><%= user._id%></li>
+            <% })%>
+        </ul>
+        <ul>
         <% replies.forEach(function(reply) { %>
-            <li><%= reply._writer.nick %> <%= reply._writer.profile_photo %>
-            <%= reply.content %> <%= reply.rg_date %> </li>
+            <li><%= reply._writer.nick %> <%= reply._writer.profilePhoto %>
+            <%= reply.content %> <%= reply.createAt %> </li>
         <% })%>
-            <form method="POST" action="/reply/<%= postId %>">
-                <input type="text" name="writer"><br>
-                <input type="text" name="content"><br>
+            <form method="POST" action="/posts/<%= postId %>/comments">
+                writer : <input type="text" name="writer"><br>
+                content : <input type="text" name="content"><br>
                 <button type="submit">댓글 달기</button>
             </form>
         </ul>

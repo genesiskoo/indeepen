@@ -1,9 +1,12 @@
+/**
+ * Created by Moon Jung Hyun on 2015-11-06.
+ */
+
 var mongoose = require('mongoose');
-var autoIncrement = require('mongoose-auto-increment');
-autoIncrement.initialize(mongoose);
+var Blog = require('./Blogs');
+
 var userSchema = new mongoose.Schema({
-    _id: Number,
-    email: String,
+    email: {type : String, unique : true},
     password : String,
     name: String,
     nick: {
@@ -14,8 +17,8 @@ var userSchema = new mongoose.Schema({
         type : String,
         default : '/photo/profile/default_profile.png'
     },
-    intro: String,
-    phone: String,
+    intro: {type : String, trim : true},
+    phone: {type : String, trim : true},
     createAt: {
         type: Date,
         default: Date.now
@@ -27,17 +30,22 @@ var userSchema = new mongoose.Schema({
     isPublic: {
         type: Boolean,
         default: true
-    },
-    isValid: {
-        type: Boolean,
-        default: true
     }
 }, { versionKey: false });
 
-userSchema.plugin(autoIncrement.plugin, {
-	model : 'User',
-	startAt : 1
+userSchema.post('save', function(doc){
+    console.log('Save User _id', doc._id);
+    var blogInfo = {
+        _user : doc._id,
+        nick : doc.nick
+    };
+    Blog.saveBlog(blogInfo, function(err, doc){
+        if(err){
+            console.error('Save Blog Error in User post event ', err);
+            return;
+        }
+        console.log(doc);
+    });
 });
-
 
 module.exports = mongoose.model('User', userSchema);

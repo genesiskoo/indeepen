@@ -1,5 +1,5 @@
 /**
- * Created by heuneul on 2015-11-04.
+ * Created by Moon Jung Hyun on 2015-11-06.
  */
 var formidable = require('formidable'),
     pathUtil = require('path');
@@ -18,11 +18,7 @@ AWS.config.secretAccessKey = awsS3.secretAccessKey;
 
 // Listup All Files
 var s3 = new AWS.S3();
-
 var bucketName = awsS3.bucketName;
-
-var Post = require('../models/Posts');
-var Reply = require('../models/Replies');
 
 var userKey = 1; // session에 있을 정보
 var blogKey = 1; // session에 있을 정보
@@ -30,8 +26,13 @@ var uploadUrl = __dirname + './../upload';
 //////////////////////// web 용
 module.exports.showAddWorkPostPage = function(req, res){
     fs.createReadStream(__dirname + './../views/workPost.html').pipe(res);
-}
+};
+var Post = require('../models/Posts');
+var Reply = require('../models/Replies');
+var Blog = require('./../models/schemas/Blogs');
 
+var Comment = require('./../models/schemas/Comments');
+var PostSchema = require('./../models/schemas/Posts');
 /*
     예술 콘텐츠 저장
  */
@@ -153,7 +154,7 @@ module.exports.addWorkPost = function(req, res, next){
                         return next(error);
                     }else{
                         console.log("postInfo", postInfo);
-                        Post.savePost(postInfo, function(err, doc){
+                        PostSchema.savePost(postInfo, function(err, doc){
                             if(err){
                                 console.error('Error', err);
                                 var error = new Error('포스팅 실패');
@@ -162,17 +163,17 @@ module.exports.addWorkPost = function(req, res, next){
                             }else{
                                 console.log('Done');
                                 // replies 초기화....
-                                Reply.initReply(doc._id, function(err, doc){
-                                    if(err){
-                                        console.error('INIT REPLIES COLLECTION ERROR ', err);
-                                        var error = new Error('댓글 초기화를 실패했습니다.');
-                                        error.code = 500;
-                                        return next(error);
-                                    }else{
-                                        callback();
-                                    }
-                                });
-                                //callback();
+                                //Reply.initReply(doc._id, function(err, doc){
+                                //    if(err){
+                                //        console.error('INIT REPLIES COLLECTION ERROR ', err);
+                                //        var error = new Error('댓글 초기화를 실패했습니다.');
+                                //        error.code = 500;
+                                //        return next(error);
+                                //    }else{
+                                //        callback();
+                                //    }
+                                //});
+                                callback();
                             }
                         });
                     }
@@ -184,7 +185,7 @@ module.exports.addWorkPost = function(req, res, next){
                 res.sendStatus(500);
             }
             else {
-                res.redirect('/post/work');
+                res.redirect('/posts/work');
             }
         });
 };
@@ -192,7 +193,7 @@ module.exports.addWorkPost = function(req, res, next){
 /*
     예술 콘텐츠 리스트 가져오기
  */
-var PostSchema = require('./../models/schemas/Posts');
+
 module.exports.getWorkPosts = function(req, res, next){
     var workPost = new PostSchema({postType : 0});
     workPost.findByPostType(function(err, workPosts){
@@ -202,10 +203,42 @@ module.exports.getWorkPosts = function(req, res, next){
             error.code = 400;
             return next(error);
         }
-       console.log(workPosts);
-        res.render('post', {works : workPosts});
+        console.log(workPosts);
+        async.each(workPosts, function(workPost, callback){
+            Comment.countCommentsOfPost(workPost._id, function(err, count){
+                if(err){
+                    console.error('ERROR COUNT COMMENTS ', err);
+                    var error = new Error('댓글 개수를 셀 수 없습니다.');
+                    error.code = 400;
+                    return next(error);
+                }
+                console.log('count ', count);
+                workPost['commentCnt'] = count;
+                Comment.findLast2Comments(workPost._id, function(err, docs){
+                    if(err){
+                        console.error('ERROR FIND LAST 2 COMMENTS ', err);
+                        var error = new Error('최신 댓글 2개를 가져오는데 실패했습니다.');
+                        error.code = 400;
+                        return next(error);
+                    }
+                    console.log('comment docs ', docs);
+                    workPost['comments'] = docs.reverse(); // 댓글 순서 때문에 reverse...
+                    console.log('final workPost ', workPost);
+                    callback();
+                });
+            });
+        }, function(err){
+            if(err){
+                console.error('ERROR AFTER async each ', err);
+                var error = new error('댓글 정보를 가져오는데 실패했습니다.');
+                error.code = 400;
+                return next(error);
+            }
+            res.render('post', {works : workPosts});
+        });
+
     });
-}
+};
 
 //module.exports.getWorkPostDetailInfo = function(req, res, next){
 //
@@ -384,16 +417,10 @@ module.exports.addShowPost = function(req, res, next){
 /*
  댓글 저장하기
  */
-module.exports.addReply = function(req, res, next){
-    var replyInfo = {
-        _writer : blogKey,
-        content : req.body.content
-    };
-    Reply.saveReply(req.params.postId, {
-        _post : id,
-        _writer : writer,
-        content : content
-    }, function(err, doc){
+module.exports.addComment = function(req, res, next){
+    console.log('addComment');
+    var postId = req.params.postId;
+    Comment.saveComment(postId, req.body.writer, req.body.content, function(err, doc){
         if(err){
             console.error('ERROR AT ADD REPLY - ', err);
             var error = new Error('댓글을 입력할 수 없습니다.');
@@ -401,27 +428,47 @@ module.exports.addReply = function(req, res, next){
             return next(error);
         }
         // web....
-        //res.redirect('/reply/'+id);
+        res.redirect('/posts/'+postId+'/comments');
 
         // app ...
+        /*
         var msg = {
             code : 200,
             msg : '댓글을 작성했습니다.'
         };
         res.status(msg.code).json(msg);
+        */
     });
 };
 /*
  댓글 리스트 가져오기
  */
-module.exports.getReplies = function(req, res, next){
+module.exports.getComments = function(req, res, next){
     var id = req.params.postId;
-    Reply.findReplies(id, function(err, docs){
+    Comment.findCommentsOfPost(id, function(err, docs){
         if(err){
             var error = new Error('댓글을 불러올 수 없습니다.');
             error.code = 400;
             return next(error);
         }
-        res.render('add_reply', {postId : id, replies : docs});
+        console.log('replies docs ', docs);
+
+        // web에서 입력할때 글쓴이를 편하게 하기 위해....;;;
+        Blog.findBlogs(function(err, blogs){
+            res.render('add_reply', {postId : id, replies : docs, users : blogs});
+        });
+
+        // app...
+/*
+        var msg = {
+            code : 200,
+            msg : '댓글을 가져왔습니다.',
+            result : {
+                // pagination....
+                comments : docs.reverse()
+            }
+        };
+        res.status(msg.code).json(msg);
+*/
     });
 };

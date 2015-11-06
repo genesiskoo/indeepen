@@ -4,19 +4,25 @@
     <style>
         .container{
             width : 70%;
-            margin : 10px 0px;
+            margin : 0px 10px;
             background-color : #9932CC;
             color : white;
+            padding : 5px;
         }
         img{
-            width : 200px;
+            height : 220px;
+        }
+        .goRe{
+            float : right;
+            font-size:1.3em;
+            color : #FDF5E6;
         }
     </style>
 </head>
 <body>
     <% works.forEach(function(work){ %>
         <div class="container">
-            <a href="/posts/<%= work._id %>/replies">댓글 작성하기... </a><br><br>
+            <a href="/posts/<%= work._id %>/comments" class="goRe">댓글 작성하기... </a><br><br>
             _id : <%= work._id %><br>
             postType : <%= work.postType %><br>
             createAt : <%= work.createAt %><br>
@@ -25,13 +31,20 @@
             writer의 nick : <%= work._writer.nick%><br>
             writer의 profile : <%=work._writer.profilePhoto%><br>
             content : <%= work.content %><br>
+            댓글 수 : <%= work.commentCnt%><br>
+            comments : <%= work.comments %><br>
             likes : <%= work.likes %><br>
             workType : <%= work.work.type %><br>
             emotion : <%= work.work.emotion %><br>
             resources : <br>
             <% work.resources.forEach(function(re){ %>
-            type : <%= re.type %><br>
+            <%if(re.type == 'image/jpeg'){ %>
                 <img src=" <%= re.originalPath %>"/>
+            <% }else{ %>
+                <audio src=" <%= re.originalPath %>" controls>
+
+                </audio>
+            <%}%>
             <% }) %>
         </div>
     <% })%>

@@ -21,6 +21,7 @@ app.use(require('./routers/web_router.js'));
 
 app.use(function (err, req, res, next) {
     //console.error(err.message);
+    console.log(req.method);
     console.log(req.url);
     var msg = {
         code: err.code,

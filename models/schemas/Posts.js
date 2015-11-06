@@ -1,13 +1,15 @@
+/**
+ * Created by Moon Jung Hyun on 2015-11-06.
+ */
+
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var autoIncrement = require('mongoose-auto-increment');
-autoIncrement.initialize(mongoose);
+var ObjectId = mongoose.Types.ObjectId;
 
 var Blog = require('./Blogs');
-var User = require('./Users');
+var Comment = require('./Comments');
 
 var postSchema = new Schema({
-    _id : Number,
     postType : Number, // 0(일반 - work), 1(문화예술 - show),
     createAt : {
         type : Date,
@@ -18,30 +20,23 @@ var postSchema = new Schema({
         default : Date.now
     },
     _writer : {   // Blog에서 user_id, nick, profile_photo  가져옴
-        type : Number,
+        type : Schema.Types.ObjectId,
         ref : 'Blog'
     },
     content : {type : String, trim : true},
     hashTags : [{type : String, trim : true}],
-    likes : [{type : Number, ref : 'Blog'}
-        //{
-        //    _user : {type : Number, ref : 'User'},
-        //    flag : {
-        //        type : Boolean,
-        //        default : true
-        //    }
-        //}
-    ],
+    likes : [{type : Schema.Types.ObjectId, ref : 'Blog'}],
+    //comments : [{type : Schema.Types.ObjectId, ref : 'Comment'}],
     work : {
         type : {type : Number}, // 0(그림), 1(사진), 2(음악), 3(영상예술)
         emotion : Number//0(감정없음), 1(기쁨), 2(사랑), 3(슬픔),4( 화남)
     },
     show : {
-        title : String,
+        title : {type : String, trim : true},
         type : {type : Number}, // 0(전시), 1(공연), 2(상영), 3(예술모임), 4(패스티벌)
         tags : [{
             _user : {  // Blog에서 user_id, nick, profile_photo 가져옴
-                type : Number,
+                type : Schema.Types.ObjectId,
                 ref : 'Blog'
             },
             point : {
@@ -70,25 +65,87 @@ var postSchema = new Schema({
         type : {type : String},            //0(이미지), 1(동영상), 2(음원)
         originalPath : String,      // 영상, 음원이 thumbnail 사용 안하면 여기다가 저장
         thumbnailPath : String
-    }],
-    isValid : {
-        type : Boolean,
-        default : true
-    }
+    }]
 }, {versionKey : false});
 
-postSchema.methods.findByPostType =function(callback){
-    return this.model('Post').find({postType : this.postType, isValid : true}).
-        sort({createAt : -1}).
-        populate({path : '_writer', select : '_id _user nick profilePhoto'}).
-        populate({path : 'likes', select : '_id _user nick profilePhoto'}).
-        exec(callback);
+/*
+    method
+ */
+postSchema.methods = {
+    /**
+     * 해당 postType의 post만 가져오기
+     * @param callback
+     * @returns {Promise}
+     */
+    findByPostType : function(options, callback){
+        if(!options) options = {};
+        return this.model('Post').find(options).
+            where('postType').
+            equals(this.postType).
+            sort({createAt : -1}).
+            populate({path : '_writer', select : '-type -bgPhoto -intro -fans -location -createAt -updateAt -isActivated'}).
+            populate({path : 'likes', select : '_id _user nick profilePhoto'}).
+            exec(callback);
+    }
 };
 
-postSchema.plugin(autoIncrement.plugin, {
-	model : 'Post',
-	startAt : 1
-});
+/*
+    Statics
+ */
+postSchema.statics = {
+    /**
+     * 특정 post의 상세정보 가져오기 - pagination 추가
+     * @param postId
+     * @param callback
+     * @returns {Promise}
+     */
+    findPost : function(postId, callback){
+        return this.findOne({_id : new ObjectId(postId)}).
+            select('postType createAt _writer content likes comments work show resource').
+            populate('_writer', '_id _user nick profilePhoto').
+            populate('comments', '_writer.nick content').
+            populate('show.tags._user', '_id _user nick profilePhoto').
+            sort({createAt : -1}).
+            exec(callback);
+
+    },
+    /**
+     * 모든 type의 post들 가져오기
+     * @param options filtering 조건들
+     * @param callback
+     * @returns {Promise}
+     */
+    findPosts : function(options, callback){
+        if(!options) options = {};
+
+        return this.find(options).
+            select('postType createAt _writer content likes comments work show resource').
+            populate('_writer', '_id _user nick profilePhoto').
+            populate('comments', '_writer.nick content').
+            populate('show.tags._user', '_id _user nick profilePhoto').
+            sort({createAt : -1}).
+            exec(callback);
+    },
+    /**
+     * Post정보 저장하기
+     * @param postInfo
+     * @param callback
+     * @returns {postInfo}
+     */
+    savePost : function(postInfo, callback){
+        return this.create(postInfo, callback);
+    }
+};
+
+
+//postSchema.methods.findByPostType =function(callback){
+//    return this.model('Post').find({postType : this.postType}).
+//        sort({createAt : -1}).
+//        populate({path : '_writer', select : '_id _user nick profilePhoto'}).
+//        populate({path : 'likes', select : '_id _user nick profilePhoto'}).
+//        exec(callback);
+//};
+
 
 module.exports = mongoose.model('Post', postSchema);
 

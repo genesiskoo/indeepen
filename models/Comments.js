@@ -1,35 +1,31 @@
+/**
+ * Created by heuneul on 2015-11-06.
+ */
+
 var ObjectId = require('mongoose').Types.ObjectId;
 
-var Reply = require('./schemas/Replies.js');
-var Blog = require('./schemas/Blogs');
-
-/*
- 포스트를 저장하면 댓글 초기화 해야 함
- */
-module.exports.initReply = function(postId, callback){
-    Reply.create({_post : postId}, callback);
-};
+var Comment = require('./schemas/Comments');
+//var Blog = require('./schemas/Blogs');
 
 /*
  댓글 저장.
  */
-module.exports.saveReply = function(postId, replyInfo, callback){
-    console.log("saveReply");
-    Reply.findOneAndUpdate({_post : postId}, {$push : {replies : replyInfo}}, callback);
+module.exports.saveComment = function(commentInfo, callback){
+    Comment.create(commentInfo, callback);
 };
 
 /*
-    댓글 count
+ 댓글 count
  */
-module.exports.countReplies = function(postId, callback){
-    Reply.findOne({_post : postId}, function(err, doc){
-        var cnt = doc.replies.length;
-        console.log('cnt', cnt);
-        callback(err, cnt);
-    });
-};
+//module.exports.countReplies = function(postId, callback){
+//    Reply.findOne({_post : postId}, function(err, doc){
+//        var cnt = doc.replies.length;
+//        console.log('cnt', cnt);
+//        callback(err, cnt);
+//    });
+//};
 /*
-    댓글 최신 2개만 가져오기
+ 댓글 최신 2개만 가져오기
  */
 module.exports.findLast2Replies = function(postId, callback){
     Reply.aggregate([{
@@ -48,10 +44,10 @@ module.exports.findLast2Replies = function(postId, callback){
 };
 
 /*
-    20개씩 끊어서....
-    paginationInfo = {
-        total : 10,
-        nowPage : 0,
+ 20개씩 끊어서....
+ paginationInfo = {
+ total : 10,
+ nowPage : 0,
  */
 module.exports.findReplies = function(postId, callback) {
     var unit = 20;

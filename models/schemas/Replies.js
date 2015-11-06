@@ -13,14 +13,20 @@ var replySchema = new Schema({
         type : Number,
         ref : 'Post'
     },
-    _writer : {  // Blog에서 _user, nick, profile_photo  가져옴
-        type : Number,
-        ref : 'Blog'
-    },
-    content : {type : String, trim : true},
-    createAt : {
-        type : Date,
-        default : Date.now
+    replies : [{
+        _writer : {  // Blog에서 _user, nick, profile_photo  가져옴
+            type : Number,
+            ref : 'Blog'
+        },
+        content : {type : String, trim : true},
+        addAt : {
+            type : Date,
+            default : Date.now
+        }
+    }],
+    isValid : {
+        type : Boolean,
+        default : true
     }
 }, {versionKey : false});
 

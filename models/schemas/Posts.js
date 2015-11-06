@@ -66,6 +66,7 @@ var postSchema = new Schema({
         }
     },
     resources : [{
+        _id : false,
         type : {type : String},            //0(이미지), 1(동영상), 2(음원)
         originalPath : String,      // 영상, 음원이 thumbnail 사용 안하면 여기다가 저장
         thumbnailPath : String

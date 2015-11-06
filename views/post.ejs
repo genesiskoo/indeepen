@@ -9,7 +9,7 @@
             color : white;
         }
         img{
-            width : 50%;
+            width : 200px;
         }
     </style>
 </head>
@@ -29,11 +29,9 @@
             emotion : <%= work.work.emotion %><br>
             resources : <br>
             <% work.resources.forEach(function(re){ %>
-                type : <%= re.type %><br>
-                url : <%= re.originalPath %><br>
-                <hr>
+            type : <%= re.type %><br>
+                <img src=" <%= re.originalPath %>"/>
             <% }) %>
-
         </div>
     <% })%>
 

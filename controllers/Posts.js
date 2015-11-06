@@ -22,6 +22,7 @@ var s3 = new AWS.S3();
 var bucketName = awsS3.bucketName;
 
 var Post = require('../models/Posts');
+var Reply = require('../models/Replies');
 
 var userKey = 1; // session에 있을 정보
 var blogKey = 1; // session에 있을 정보
@@ -159,7 +160,18 @@ module.exports.addWorkPost = function(req, res, next){
                                 next(error);
                             }else{
                                 console.log('Done');
-                                callback();
+                                // replies 초기화....
+                                Reply.initReply(doc._id, function(err, doc){
+                                    if(err){
+                                        console.erro('INIT REPLIES COLLECTION ERROR ', err);
+                                        var error = new Error('댓글 초기화를 실패했습니다.');
+                                        error.code = 500;
+                                        return next(error);
+                                    }else{
+                                        callback();
+                                    }
+                                });
+                                //callback();
                             }
                         });
                     }
@@ -183,6 +195,12 @@ var PostSchema = require('./../models/schemas/Posts');
 module.exports.getWorkPosts = function(req, res, next){
     var workPost = new PostSchema({postType : 0});
     workPost.findByPostType(function(err, workPosts){
+        if(err) {
+            console.error(err);
+            var error = new Error('Work Post를 가져올 수 없습니다.');
+            error.code = 400;
+            return next(error);
+        }
        console.log(workPosts);
         res.render('post', {works : workPosts});
     });

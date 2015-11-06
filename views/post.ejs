@@ -5,13 +5,16 @@
         .container{
             width : 50%;
             margin-top : 10px;
+            background-color : #5890ad;
         }
     </style>
 </head>
 <body>
+    <% works.forEach(function(work){ %>
+        <div class="container">
+            <%= work %>
+        </div>
+    <% })%>
 
-    <div class="container">
-
-    </div>
 </body>
 </html>

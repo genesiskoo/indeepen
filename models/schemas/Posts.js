@@ -76,6 +76,10 @@ var postSchema = new Schema({
     }
 }, {versionKey : false});
 
+postSchema.methods.findByPostType =function(callback){
+    return this.model('Post').find({postType : this.postType}, callback);
+}
+
 postSchema.plugin(autoIncrement.plugin, {
 	model : 'Post',
 	startAt : 1

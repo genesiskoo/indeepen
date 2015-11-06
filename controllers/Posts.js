@@ -117,10 +117,6 @@ module.exports.addWorkPost = function(req, res, next){
 
             },
             function (workType, emotion, blogId, content, urls, callback) {
-
-
-
-
                 // hash_tag 추출
                 var tmpStr = content.split('#');
                 var hashTag = [];
@@ -179,11 +175,14 @@ module.exports.addWorkPost = function(req, res, next){
             }
         });
 };
-//
-//module.exports.getWorkPosts = function(req, res, next){
-//
-//}
-//
+
+/*
+    예술 콘텐츠 가져오기
+ */
+module.exports.getWorkPosts = function(req, res, next){
+
+}
+
 //module.exports.getWorkPostDetailInfo = function(req, res, next){
 //
 //}

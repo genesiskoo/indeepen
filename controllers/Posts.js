@@ -249,13 +249,11 @@ module.exports.getShowAddForm = function(req,res,next){
 }
 
 module.exports.getShowPosts = function(req,res,next){
-    Post.findShowPosts(function(err,docs){
-        if(err){
-            res.sendStatus(400);
-        }
-        res.render('shows',{ shows : docs });
+    var showPost = new PostSchema({postType : 1});
+    showPost.findByPostType(function(err, showPosts){
+        console.log(showPosts);
+        res.render('shows', {shows : showPosts});
     });
-
 };
 
 //문화컨텐츠 추가 POST
@@ -337,12 +335,14 @@ module.exports.addShowPost = function(req, res, next){
                     if(err){
                         callback(err);
                     }else{
-                        callback(null,uploadInfo.title, uploadInfo.showType, uploadInfo.startDate, uploadInfo.endDate, uploadInfo.startTime, uploadInfo.endTime, uploadInfo.fee, uploadInfo.blogId, uploadInfo.content, imageUrls);
+                        callback(null,uploadInfo.showType, uploadInfo.title, uploadInfo.startDate, uploadInfo.endDate,
+                            uploadInfo.startTime, uploadInfo.endTime, uploadInfo.fee, uploadInfo.blogId,
+                            uploadInfo.content, uploadInfo.address, imageUrls);
                     }
                 });
 
             },
-            function (showType, title, startDate, endDate, startTime,endTime,fee,  blogId, content, urls, callback) {
+            function (showType, title, startDate, endDate, startTime,endTime,fee, blogId, content, address, urls, callback) {
 
 
 
@@ -371,7 +371,12 @@ module.exports.addShowPost = function(req, res, next){
                         endDate : endDate,
                         startTime : startTime,
                         endTime : endTime,
-                        fee : fee
+                        fee : fee,
+                        location : {
+                            point : {
+                            },
+                            address : address
+                        }//loc
                     },
                     resources : []
                 };
@@ -383,6 +388,7 @@ module.exports.addShowPost = function(req, res, next){
                 }, function(err){
                     if(err){
                         var error = new Error('file url 관리에서 실패.....');
+                        console.error(err);
                         error.code = 400;
                         return next(error);
                     }else{

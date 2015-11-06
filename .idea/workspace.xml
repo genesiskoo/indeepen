@@ -1,420 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="fae20e81-4887-4d24-9dd7-a536ce0a01f8" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/randomstring/examples/.empty" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/.jshintrc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/.npmignore" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/formidable/.npmignore" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/path/.npmignore" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/randomstring/.npmignore" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/util/.npmignore" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/xml2js/.npmignore" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/xmlbuilder/.npmignore" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/formidable/.travis.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/kerberos/.travis.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/randomstring/.travis.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/util/.travis.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/xml2js/.travis.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/util/.zuul.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/xml2js/83.coffee" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/sax/AUTHORS" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/dist/BUNDLE_LICENSE.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/async/CHANGELOG.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/randomstring/CHANGELOG.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/CONTRIBUTING.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/kerberos/HISTORY.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/sax/LICENSE-W3C.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/LICENSE.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/async/LICENSE" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/formidable/LICENSE" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/inherits/LICENSE" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/kerberos/LICENSE" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/path/LICENSE" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/process/LICENSE" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/randomstring/LICENSE" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/sax/LICENSE" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/util/LICENSE" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/xml2js/LICENSE" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/NOTICE.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/async/README.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/README.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/inherits/README.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/kerberos/README.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/path/README.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/process/README.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/randomstring/README.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/sax/README.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/util/README.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/xml2js/README.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/xmlbuilder/README.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/formidable/Readme.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/UPGRADING.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/xmlbuilder/lib/XMLBuilder.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/xmlbuilder/lib/XMLFragment.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/lib/model/api.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/lib/api_loader.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/apigateway-2015-07-09.min.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/apigateway-2015-07-09.paginators.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/lib/services/apigateway.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/async/dist/async.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/async/lib/async.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/async/dist/async.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/sax/test/attribute-name.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/autoscaling-2011-01-01.min.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/autoscaling-2011-01-01.paginators.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/dist/aws-sdk.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/dist/aws-sdk.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/lib/aws.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/kerberos/lib/base64.c" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/kerberos/lib/win32/base64.c" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/kerberos/lib/base64.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/kerberos/lib/win32/base64.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/sax/examples/big-not-pretty.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/kerberos/binding.gyp" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/bower.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/dist-tools/browser-builder.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/lib/browser.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/process/browser.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/lib/xml/browser_parser.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/sax/test/buffer-overrun.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/lib/json/builder.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/lib/xml/builder.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/xml2js/canon.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/sax/test/case.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/sax/test/cdata-chunked.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/sax/test/cdata-end-split.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/sax/test/cdata-fake-end.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/sax/test/cdata-multiple.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/sax/test/cdata.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/randomstring/lib/charset.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/cloudformation-2010-05-15.min.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/cloudformation-2010-05-15.paginators.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/cloudfront-2015-07-27.min.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/cloudfront-2015-07-27.paginators.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/cloudfront-2015-07-27.waiters.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/lib/services/cloudfront.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/cloudhsm-2014-05-30.min.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/cloudsearch-2011-02-01.min.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/cloudsearch-2011-02-01.paginators.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/cloudsearch-2013-01-01.min.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/cloudsearch-2013-01-01.paginators.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/cloudsearchdomain-2013-01-01.min.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/lib/services/cloudsearchdomain.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/cloudtrail-2013-11-01.min.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/cloudtrail-2013-11-01.paginators.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/codecommit-2015-04-13.min.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/codecommit-2015-04-13.paginators.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/codedeploy-2014-10-06.min.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/codepipeline-2015-07-09.min.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/cognito-identity-2014-06-30.min.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/cognito-sync-2014-06-30.min.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/lib/credentials/cognito_identity_credentials.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/lib/services/cognitoidentity.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/lib/model/collection.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/sax/component.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/config-2014-11-12.min.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/config-2014-11-12.paginators.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/lib/config.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/scripts/console" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/lib/dynamodb/converter.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/lib/core.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/lib/credentials/credential_provider_chain.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/lib/credentials.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/sax/test/cyrillic.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/datapipeline-2012-10-29.min.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/datapipeline-2012-10-29.paginators.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/util/test/node/debug.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/devicefarm-2015-06-23.min.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/devicefarm-2015-06-23.paginators.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/directconnect-2012-10-25.min.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/directconnect-2012-10-25.paginators.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/lib/dynamodb/document_client.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/ds-2015-04-16.min.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/sax/test/duplicate-attribute.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/dynamodb-2011-12-05.min.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/dynamodb-2011-12-05.paginators.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/dynamodb-2011-12-05.waiters.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/dynamodb-2012-08-10.min.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/dynamodb-2012-08-10.paginators.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/dynamodb-2012-08-10.waiters.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/lib/services/dynamodb.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/ec2-2015-10-01.min.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/ec2-2015-10-01.paginators.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/ec2-2015-10-01.waiters.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/lib/services/ec2.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/lib/credentials/ec2_metadata_credentials.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/ecs-2014-11-13.min.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/ecs-2014-11-13.paginators.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/elasticache-2015-02-02.min.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/elasticache-2015-02-02.paginators.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/elasticbeanstalk-2010-12-01.min.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/elasticbeanstalk-2010-12-01.paginators.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/elasticfilesystem-2015-02-01.min.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/elasticloadbalancing-2012-06-01.min.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/elasticloadbalancing-2012-06-01.paginators.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/elasticmapreduce-2009-03-31.min.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/elasticmapreduce-2009-03-31.paginators.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/elastictranscoder-2012-09-25.min.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/elastictranscoder-2012-09-25.paginators.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/elastictranscoder-2012-09-25.waiters.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/email-2010-12-01.min.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/email-2010-12-01.paginators.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/email-2010-12-01.waiters.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/sax/test/entities.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/sax/test/entity-mega.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/lib/credentials/environment_credentials.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/es-2015-01-01.min.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/lib/event_listeners.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/sax/examples/example.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/formidable/lib/file.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/lib/credentials/file_system_credentials.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/firehose-2015-08-04.min.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/util/test/node/format.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/sax/examples/get-products.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/glacier-2012-06-01.min.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/glacier-2012-06-01.paginators.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/glacier-2012-06-01.waiters.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/lib/services/glacier.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/sax/examples/hello-world.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/lib/http.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/iam-2010-05-08.min.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/iam-2010-05-08.paginators.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/importexport-2010-06-01.min.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/importexport-2010-06-01.paginators.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/formidable/lib/incoming_form.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/index.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/formidable/index.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/formidable/lib/index.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/kerberos/index.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/process/index.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/randomstring/index.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/randomstring/test/index.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/sax/test/index.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/xmlbuilder/lib/index.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/inherits/inherits.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/inherits/inherits_browser.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/util/test/browser/inspect.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/util/test/node/inspect.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/inspector-2015-08-18.min.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/iot-2015-05-28.min.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/iot-data-2015-05-28.min.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/lib/services/iotdata.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/util/test/browser/is.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/util/support/isBuffer.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/util/support/isBufferBrowser.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/sax/test/issue-23.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/sax/test/issue-30.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/sax/test/issue-35.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/sax/test/issue-47.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/sax/test/issue-49.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/sax/test/issue-84.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/lib/protocol/json.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/formidable/lib/json_parser.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/kerberos/lib/kerberos.cc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/kerberos/lib/win32/kerberos.cc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/kerberos/lib/kerberos.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/kerberos/lib/win32/kerberos.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/kerberos/lib/kerberos.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/kerberos/lib/kerberos_context.cc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/kerberos/lib/kerberos_context.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/kerberos/lib/win32/kerberos_sspi.c" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/kerberos/lib/win32/kerberos_sspi.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/kerberos/test/kerberos_tests.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/kerberos/test/kerberos_win32_test.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/kerberos/lib/kerberosgss.c" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/kerberos/lib/kerberosgss.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/kinesis-2013-12-02.min.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/kinesis-2013-12-02.paginators.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/kms-2014-11-01.min.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/kms-2014-11-01.paginators.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/lambda-2014-11-11.min.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/lambda-2014-11-11.paginators.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/lambda-2015-03-31.min.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/lambda-2015-03-31.paginators.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/util/test/node/log.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/logs-2014-03-28.min.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/logs-2014-03-28.paginators.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/machinelearning-2014-12-12.min.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/machinelearning-2014-12-12.paginators.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/lib/services/machinelearning.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/lib/s3/managed_upload.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/marketplacecommerceanalytics-2015-07-01.min.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/metadata.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/lib/metadata_service.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/mobileanalytics-2014-06-05.min.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/randomstring/test/mocha.opts" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/kerberos/lib/auth_processes/mongodb.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/monitoring-2010-08-01.min.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/monitoring-2010-08-01.paginators.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/formidable/lib/multipart_parser.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/lib/http/node.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/lib/xml/node_parser.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/sax/examples/not-pretty.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/formidable/lib/octet_parser.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/lib/model/operation.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/opsworks-2013-02-18.min.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/opsworks-2013-02-18.paginators.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/async/package.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/package.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/formidable/package.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/inherits/package.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/kerberos/package.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/path/package.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/process/package.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/randomstring/package.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/sax/package.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/util/package.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/xml2js/package.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/xmlbuilder/package.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/lib/model/paginator.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/lib/param_validator.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/sax/test/parser-position.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/lib/json/parser.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/path/path.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/lib/signers/presign.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/sax/examples/pretty-print.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/lib/protocol/query.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/lib/query/query_param_serializer.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/formidable/lib/querystring_parser.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/.bin/randomstring.cmd" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/randomstring/lib/randomstring.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/.bin/randomstring" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/randomstring/bin/randomstring" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/rds-2013-01-10.min.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/rds-2013-01-10.paginators.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/rds-2013-02-12.min.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/rds-2013-02-12.paginators.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/rds-2013-09-09.min.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/rds-2013-09-09.paginators.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/rds-2013-09-09.waiters.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/rds-2014-10-31.min.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/rds-2014-10-31.paginators.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/rds-2014-10-31.waiters.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/redshift-2012-12-01.min.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/redshift-2012-12-01.paginators.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/redshift-2012-12-01.waiters.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/lib/region_config.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/lib/region_config.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/lib/request.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/lib/signers/request_signer.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/lib/resource_waiter.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/lib/model/resource_waiter.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/lib/response.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/lib/protocol/rest.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/lib/protocol/rest_json.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/lib/protocol/rest_xml.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/route53-2013-04-01.min.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/route53-2013-04-01.paginators.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/lib/services/route53.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/route53domains-2014-05-15.min.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/route53domains-2014-05-15.paginators.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/s3-2006-03-01.min.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/s3-2006-03-01.paginators.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/s3-2006-03-01.waiters.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/lib/services/s3.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/lib/signers/s3.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/lib/credentials/saml_credentials.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/sax/lib/sax.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/sax/test/script-close-better.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/sax/test/script.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/sdb-2009-04-15.min.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/sdb-2009-04-15.paginators.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/kerberos/lib/win32/wrappers/security_buffer.cc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/kerberos/lib/win32/wrappers/security_buffer.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/kerberos/lib/win32/wrappers/security_buffer.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/kerberos/lib/win32/wrappers/security_buffer_descriptor.cc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/kerberos/lib/win32/wrappers/security_buffer_descriptor.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/kerberos/lib/win32/wrappers/security_buffer_descriptor.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/kerberos/test/win32/security_buffer_descriptor_tests.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/kerberos/test/win32/security_buffer_tests.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/kerberos/lib/win32/wrappers/security_context.cc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/kerberos/lib/win32/wrappers/security_context.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/kerberos/lib/win32/wrappers/security_context.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/kerberos/lib/win32/wrappers/security_credentials.cc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/kerberos/lib/win32/wrappers/security_credentials.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/kerberos/lib/win32/wrappers/security_credentials.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/kerberos/test/win32/security_credentials_tests.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/sax/test/self-closing-child-strict.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/sax/test/self-closing-child.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/sax/test/self-closing-tag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/lib/sequential_executor.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/dist-tools/service-collector.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/lib/service.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/lib/services.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/lib/dynamodb/set.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/lib/model/shape.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/lib/credentials/shared_ini_file_credentials.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/sax/examples/shopping.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/views/showAddForm.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/sns-2010-03-31.min.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/sns-2010-03-31.paginators.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/sqs-2012-11-05.min.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/sqs-2012-11-05.paginators.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/lib/services/sqs.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/ssm-2014-11-06.min.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/kerberos/lib/sspi.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/lib/state_machine.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/storagegateway-2013-06-30.min.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/storagegateway-2013-06-30.paginators.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/sax/test/stray-ending.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/streams.dynamodb-2012-08-10.min.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/sax/examples/strict.dtd" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/sts-2011-06-15.min.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/lib/services/sts.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/support-2013-04-15.min.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/support-2013-04-15.paginators.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/swf-2012-01-25.min.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/swf-2012-01-25.paginators.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/lib/services/swf.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/lib/credentials/temporary_credentials.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/sax/examples/test.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/inherits/test.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/process/test.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/sax/examples/test.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/testem.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/xml2js/text.coffee" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/xml2js/text.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/sax/test/trailing-attribute-no-value.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/sax/test/trailing-non-whitespace.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/dist-tools/transform.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/scripts/translate-api" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/lib/dynamodb/translator.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/scripts/lib/translator.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/lib/dynamodb/types.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/sax/test/unclosed-root.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/sax/test/unquoted.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/lib/util.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/util/util.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/util/test/node/util.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/lib/signers/v2.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/lib/signers/v3.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/lib/signers/v3https.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/lib/signers/v4.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/waf-2015-08-24.min.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/lib/credentials/web_identity_credentials.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/kerberos/lib/worker.cc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/kerberos/lib/win32/worker.cc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/kerberos/lib/worker.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/kerberos/lib/win32/worker.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/workspaces-2015-04-08.min.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/apis/workspaces-2015-04-08.paginators.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/aws-sdk/lib/http/xhr.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/xml2js/lib/xml2js.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/sax/test/xmlns-issue-41.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/sax/test/xmlns-rebinding.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/sax/test/xmlns-strict.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/sax/test/xmlns-unbound.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/sax/test/xmlns-xml-default-ns.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/sax/test/xmlns-xml-default-prefix-attribute.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/sax/test/xmlns-xml-default-prefix.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/sax/test/xmlns-xml-default-redefine.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/controllers/Posts.js" afterPath="$PROJECT_DIR$/controllers/Posts.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ex_show_save.js" afterPath="$PROJECT_DIR$/ex_show_save.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/menu.html" afterPath="$PROJECT_DIR$/views/menu.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routers/post_router.js" afterPath="$PROJECT_DIR$/routers/post_router.js" />
+    <list default="true" id="fae20e81-4887-4d24-9dd7-a536ce0a01f8" name="Default" comment="show 수정중 img까지">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/controllers/Posts.js" afterPath="$PROJECT_DIR$/controllers/Posts.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/models/Replies.js" afterPath="$PROJECT_DIR$/models/Replies.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/models/schemas/Posts.js" afterPath="$PROJECT_DIR$/models/schemas/Posts.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/models/schemas/Replies.js" afterPath="$PROJECT_DIR$/models/schemas/Replies.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routers/post_router.js" afterPath="$PROJECT_DIR$/routers/post_router.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/post.ejs" afterPath="$PROJECT_DIR$/views/post.ejs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/showAddForm.html" afterPath="$PROJECT_DIR$/views/showAddForm.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/shows.ejs" afterPath="$PROJECT_DIR$/views/shows.ejs" />
     </list>
     <ignored path="indeepen_mongo_test.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -434,24 +30,62 @@
     <favorites_list name="indeepen_mongo_test" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="Posts.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/controllers/Posts.js">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="shows.ejs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/views/shows.ejs">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="208" column="6" selection-start-line="208" selection-start-column="6" selection-end-line="208" selection-end-column="6" />
-              <folding>
-                <element signature="e#906#6510#0" expanded="false" />
-              </folding>
+            <state vertical-scroll-proportion="-15.607142">
+              <caret line="23" column="26" selection-start-line="23" selection-start-column="26" selection-end-line="23" selection-end-column="26" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="workPost.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/views/workPost.html">
+      <file leaf-file-name="Replies.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/models/Replies.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-7.464286">
-              <caret line="11" column="35" selection-start-line="11" selection-start-column="35" selection-end-line="11" selection-end-column="35" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="9" column="1" selection-start-line="9" selection-start-column="1" selection-end-line="9" selection-end-column="1" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Posts.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/controllers/Posts.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="317" column="48" selection-start-line="317" selection-start-column="48" selection-end-line="317" selection-end-column="48" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="showAddForm.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/views/showAddForm.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.7222222">
+              <caret line="40" column="0" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Replies.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/models/schemas/Replies.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="28" column="22" selection-start-line="28" selection-start-column="22" selection-end-line="28" selection-end-column="22" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="app.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -461,40 +95,37 @@
         <entry file="file://$PROJECT_DIR$/models/schemas/Posts.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-              <folding>
-                <element signature="e#250#2144#0" expanded="false" />
-                <element signature="e#2558#2591#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="showAddForm.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/views/showAddForm.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-21.714285">
-              <caret line="32" column="0" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
+              <caret line="40" column="37" selection-start-line="40" selection-start-column="37" selection-end-line="40" selection-end-column="37" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="post_router.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="post_router.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/routers/post_router.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5611814">
-              <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Posts.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/models/Posts.js">
+      <file leaf-file-name="post.ejs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/views/post.ejs">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="18" column="18" selection-start-line="18" selection-start-column="18" selection-end-line="18" selection-end-column="18" />
+            <state vertical-scroll-proportion="-19.0">
+              <caret line="28" column="28" selection-start-line="28" selection-start-column="28" selection-end-line="28" selection-end-column="28" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="workPost.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/views/workPost.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-6.785714">
+              <caret line="10" column="70" selection-start-line="10" selection-start-column="70" selection-end-line="10" selection-end-column="70" />
               <folding />
             </state>
           </provider>
@@ -534,7 +165,6 @@
         <option value="$PROJECT_DIR$/models/schemas/Users.js" />
         <option value="$PROJECT_DIR$/ex_posts_save.js" />
         <option value="$PROJECT_DIR$/models/schemas/Reports.js" />
-        <option value="$PROJECT_DIR$/models/schemas/Posts.js" />
         <option value="$PROJECT_DIR$/ex_users_save.js" />
         <option value="$PROJECT_DIR$/models/Blogs.js" />
         <option value="$PROJECT_DIR$/models/Users.js" />
@@ -550,11 +180,12 @@
         <option value="$PROJECT_DIR$/models/Posts.js" />
         <option value="$PROJECT_DIR$/models/schemas/Blogs.js" />
         <option value="$PROJECT_DIR$/views/menu.html" />
-        <option value="$PROJECT_DIR$/views/shows.ejs" />
         <option value="$PROJECT_DIR$/ex_show_save.js" />
-        <option value="$PROJECT_DIR$/views/showAddForm.html" />
-        <option value="$PROJECT_DIR$/controllers/Posts.js" />
         <option value="$PROJECT_DIR$/routers/post_router.js" />
+        <option value="$PROJECT_DIR$/controllers/Posts.js" />
+        <option value="$PROJECT_DIR$/views/shows.ejs" />
+        <option value="$PROJECT_DIR$/models/schemas/Posts.js" />
+        <option value="$PROJECT_DIR$/views/showAddForm.html" />
       </list>
     </option>
   </component>
@@ -565,14 +196,11 @@
   <component name="JsGulpfileManager">
     <detection-done>true</detection-done>
   </component>
-  <component name="NamedScopeManager">
-    <order />
-  </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
-    <option name="width" value="1382" />
-    <option name="height" value="784" />
+    <option name="width" value="1936" />
+    <option name="height" value="1056" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -690,10 +318,11 @@
       <autoscrollToSource />
       <autoscrollFromSource />
       <sortByType />
+      <manualOrder />
+      <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
       <pane id="Scope" />
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -708,7 +337,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="indeepen" />
+              <option name="myItemId" value="navergit" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -718,7 +347,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="indeepen" />
+              <option name="myItemId" value="navergit" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -732,7 +361,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="indeepen" />
+              <option name="myItemId" value="navergit" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -746,7 +375,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="indeepen" />
+              <option name="myItemId" value="navergit" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -760,7 +389,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="indeepen" />
+              <option name="myItemId" value="navergit" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -772,12 +401,41 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="indeepen_mongo_test" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="navergit" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="controllers" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="indeepen_mongo_test" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="navergit" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="config" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="D:/workplace/ex" />
+    <property name="last_opened_file_path" value="D:/workplace/sinrim10ex" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="HbShouldOpenHtmlAsHb" value="" />
     <property name="settings.editor.selected.configurable" value="preferences.sourceCode" />
@@ -823,13 +481,6 @@
     <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
       <method />
     </configuration>
-    <configuration default="true" type="JsTestDriver-test-runner" factoryName="JsTestDriver">
-      <setting name="configLocationType" value="CONFIG_FILE" />
-      <setting name="settingsFile" value="" />
-      <setting name="serverType" value="INTERNAL" />
-      <setting name="preferredDebugBrowser" value="Chrome" />
-      <method />
-    </configuration>
     <configuration default="true" type="NodeJSConfigurationType" factoryName="Node.js" working-dir="">
       <method />
     </configuration>
@@ -848,6 +499,12 @@
       <envs />
       <method />
     </configuration>
+    <configuration default="true" type="js.build_tools.npm" factoryName="npm">
+      <command value="run-script" />
+      <scripts />
+      <envs />
+      <method />
+    </configuration>
     <configuration default="true" type="mocha-javascript-test-runner" factoryName="Mocha">
       <node-options />
       <working-directory>$PROJECT_DIR$</working-directory>
@@ -855,6 +512,7 @@
       <envs />
       <ui>bdd</ui>
       <extra-mocha-options />
+      <test-kind>DIRECTORY</test-kind>
       <test-directory />
       <recursive>false</recursive>
       <method />
@@ -959,52 +617,70 @@
       <option name="project" value="LOCAL" />
       <updated>1446783702863</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="post show 수정중">
+      <created>1446783724475</created>
+      <option name="number" value="00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1446783724475</updated>
+    </task>
+    <task id="LOCAL-00014" summary="show 수정중 img까지">
+      <created>1446789542911</created>
+      <option name="number" value="00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1446789542911</updated>
+    </task>
+    <task id="LOCAL-00015" summary="풀땡끼기전 심호흡">
+      <created>1446790536366</created>
+      <option name="number" value="00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1446790536366</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="784" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="false" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.15373352" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32359308" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2548148" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32683983" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32683983" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32876712" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15437302" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32683983" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32359308" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32575756" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19805194" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32876712" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.0" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
-      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32972974" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2283105" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17210683" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.0" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32972974" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2283105" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17210683" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout-to-restore>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -1031,7 +707,10 @@
     <MESSAGE value="Merge branch 'master' of https://dev.naver.com/git/indeepen&#10;&#10;# Conflicts:&#10;#&#9;controllers/Posts.js&#10;#&#9;routers/post_router.js&#10;" />
     <MESSAGE value="node_modules 추가" />
     <MESSAGE value="menu 수정&#10;post_router, Post" />
-    <option name="LAST_COMMIT_MESSAGE" value="menu 수정&#10;post_router, Post" />
+    <MESSAGE value="post show 수정중" />
+    <MESSAGE value="show 수정중 img까지" />
+    <MESSAGE value="풀땡끼기전 심호흡" />
+    <option name="LAST_COMMIT_MESSAGE" value="풀땡끼기전 심호흡" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1040,14 +719,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/models/Posts.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="40" column="2" selection-start-line="40" selection-start-column="2" selection-end-line="40" selection-end-column="2" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/config/mongoose_conn.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1074,6 +745,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.20588236">
           <caret line="7" column="10" selection-start-line="7" selection-start-column="10" selection-end-line="7" selection-end-column="10" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1095,13 +767,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/models/schemas/Reports.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="26" column="10" selection-start-line="26" selection-start-column="10" selection-end-line="26" selection-end-column="10" />
         </state>
       </provider>
     </entry>
@@ -1133,20 +798,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/models/Replies.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="9" column="1" selection-start-line="9" selection-start-column="1" selection-end-line="9" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/views/post.ejs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.071429">
-          <caret line="6" column="30" selection-start-line="6" selection-start-column="30" selection-end-line="6" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ex_posts_save.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1172,7 +823,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="9" column="6" selection-start-line="9" selection-start-column="6" selection-end-line="9" selection-end-column="6" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1180,7 +830,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1192,25 +841,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/models/schemas/Replies.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="22" column="26" selection-start-line="22" selection-start-column="26" selection-end-line="22" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/views/menu.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-12.0">
           <caret line="18" column="33" selection-start-line="18" selection-start-column="33" selection-end-line="18" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/views/shows.ejs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-12.892858">
-          <caret line="19" column="45" selection-start-line="19" selection-start-column="45" selection-end-line="19" selection-end-column="45" />
           <folding />
         </state>
       </provider>
@@ -1219,20 +853,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="28" column="38" selection-start-line="28" selection-start-column="38" selection-end-line="28" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/models/Counters.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="28" column="3" selection-start-line="28" selection-start-column="3" selection-end-line="28" selection-end-column="3" />
           <folding />
         </state>
       </provider>
@@ -1241,6 +861,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="2" column="55" selection-start-line="2" selection-start-column="55" selection-end-line="2" selection-end-column="55" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1248,6 +869,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="136" column="16" selection-start-line="136" selection-start-column="16" selection-end-line="136" selection-end-column="16" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1304,6 +926,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1339,6 +962,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1353,6 +977,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1360,6 +985,15 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="1.9028832">
           <caret line="66" column="28" selection-start-line="66" selection-start-column="28" selection-end-line="66" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/Counters.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1371,10 +1005,74 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/views/showAddForm.html">
+    <entry file="file://$PROJECT_DIR$/config/s3.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-21.714285">
-          <caret line="32" column="0" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/schemas/Reports.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="26" column="10" selection-start-line="26" selection-start-column="10" selection-end-line="26" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/schemas/Replies.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="28" column="22" selection-start-line="28" selection-start-column="22" selection-end-line="28" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/workPost.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-6.785714">
+          <caret line="10" column="70" selection-start-line="10" selection-start-column="70" selection-end-line="10" selection-end-column="70" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/post.ejs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-19.0">
+          <caret line="28" column="28" selection-start-line="28" selection-start-column="28" selection-end-line="28" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/Replies.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="9" column="1" selection-start-line="9" selection-start-column="1" selection-end-line="9" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routers/post_router.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/shows.ejs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-15.607142">
+          <caret line="23" column="26" selection-start-line="23" selection-start-column="26" selection-end-line="23" selection-end-column="26" />
           <folding />
         </state>
       </provider>
@@ -1382,17 +1080,7 @@
     <entry file="file://$PROJECT_DIR$/controllers/Posts.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="208" column="6" selection-start-line="208" selection-start-column="6" selection-end-line="208" selection-end-column="6" />
-          <folding>
-            <element signature="e#906#6510#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/views/workPost.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.464286">
-          <caret line="11" column="35" selection-start-line="11" selection-start-column="35" selection-end-line="11" selection-end-column="35" />
+          <caret line="317" column="48" selection-start-line="317" selection-start-column="48" selection-end-line="317" selection-end-column="48" />
           <folding />
         </state>
       </provider>
@@ -1400,18 +1088,15 @@
     <entry file="file://$PROJECT_DIR$/models/schemas/Posts.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-          <folding>
-            <element signature="e#250#2144#0" expanded="false" />
-            <element signature="e#2558#2591#0" expanded="false" />
-          </folding>
+          <caret line="40" column="37" selection-start-line="40" selection-start-column="37" selection-end-line="40" selection-end-column="37" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routers/post_router.js">
+    <entry file="file://$PROJECT_DIR$/views/showAddForm.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5611814">
-          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.7222222">
+          <caret line="40" column="0" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
           <folding />
         </state>
       </provider>

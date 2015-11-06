@@ -7,6 +7,7 @@
 <body>
 <h3>Add Show Form</h3>
     <form method="post" action="/posts/show" enctype="multipart/form-data">
+        작성자No<input type="text" name ="blogId" value="1"/><br>
         파일1<input type='file' name="file" multiple="multiple"><br>
         파일2<input type='file' name="file"><br>
         파일3<input type='file' name="file"><br>
@@ -32,7 +33,9 @@
         <p>입장료 :<input type ="text" name='fee' placeholder="입장료"></p>
 
         <p>제목 :<input type ="text" name='title' placeholder="제목"></p>
-        소개 :<textarea row ='4' cols ='30' name='content'></textarea>
+        소개 :<textarea row ='4' cols ='30' name='content'></textarea><br><br>
+        위치 : <br>
+        latitude :<input type='text' name ='lat'> longitude : <input type="text" name ='long'>
         <p><button>입력</button></p>
     </form>
 

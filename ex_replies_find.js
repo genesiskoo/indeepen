@@ -4,7 +4,7 @@
 
 var mongoose = require('./config/mongoose_conn.js');
 
-var Reply = require('./controllers/Replies.js');
+var Reply = require('./models/Replies.js');
 
 Reply.findReplies(3, function(err, docs){
     if(err){

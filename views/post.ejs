@@ -16,6 +16,7 @@
 <body>
     <% works.forEach(function(work){ %>
         <div class="container">
+            <a href="/posts/<%= work._id %>/replies">댓글 작성하기... </a><br><br>
             _id : <%= work._id %><br>
             postType : <%= work.postType %><br>
             createAt : <%= work.createAt %><br>

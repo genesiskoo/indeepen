@@ -13,7 +13,7 @@ module.exports.initReply = function(postId, callback){
 /*
  댓글 저장.
  */
-module.exports.saveReply = function(replyInfo, callback){
+module.exports.saveReply = function(postId, replyInfo, callback){
     Reply.findOneAndUpdate({_post : postId}, {$push : {replies : replyInfo}}, callback);
 };
 
@@ -63,8 +63,8 @@ module.exports.findReplies = function(postId, callback) {
             'replies.rg_date' : -1
         }
     }])
-        .skip(0)
-        .limit(20)
+        //.skip(0) 지금은 페이징 안함요......
+        //.limit(20)
         .exec(function(err, docs){
             Blog.populate(docs, {path : "replies._writer", select : '_id _user nick profilePhoto'}, callback);
         });

@@ -3,7 +3,7 @@ var Schema = mongoose.Schema;
 var autoIncrement = require('mongoose-auto-increment');
 autoIncrement.initialize(mongoose);
 
-var Blog = require('./Blogs.js');
+var Blog = require('./Blogs');
 var User = require('./Users');
 
 var postSchema = new Schema({
@@ -23,14 +23,14 @@ var postSchema = new Schema({
     },
     content : {type : String, trim : true},
     hashTags : [{type : String, trim : true}],
-    likes : [
-        {
-            _user : {type : Number, ref : 'User'},
-            flag : {
-                type : Boolean,
-                default : true
-            }
-        }
+    likes : [{type : Number, ref : 'Blog'}
+        //{
+        //    _user : {type : Number, ref : 'User'},
+        //    flag : {
+        //        type : Boolean,
+        //        default : true
+        //    }
+        //}
     ],
     work : {
         type : {type : Number}, // 0(그림), 1(사진), 2(음악), 3(영상예술)
@@ -77,8 +77,12 @@ var postSchema = new Schema({
 }, {versionKey : false});
 
 postSchema.methods.findByPostType =function(callback){
-    return this.model('Post').find({postType : this.postType}, callback);
-}
+    return this.model('Post').find({postType : this.postType, isValid : true}).
+        sort({createAt : -1}).
+        populate({path : '_writer', select : '_id _user nick profilePhoto'}).
+        populate({path : 'likes', select : '_id _user nick profilePhoto'}).
+        exec(callback);
+};
 
 postSchema.plugin(autoIncrement.plugin, {
 	model : 'Post',

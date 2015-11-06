@@ -15,12 +15,13 @@ app.set('view engine', 'ejs');
 
 app.use(require('./routers/post_router.js'));
 app.use(require('./routers/web_router.js'));
-app.use(require('./routers/post_router.js'));
+//app.use(require('./routers/post_router.js'));
 //app.use(replyRouter);
 //app.use(postRouter);
 
 app.use(function (err, req, res, next) {
     //console.error(err.message);
+    console.log(req.url);
     var msg = {
         code: err.code,
         msg: err.message

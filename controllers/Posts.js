@@ -179,8 +179,13 @@ module.exports.addWorkPost = function(req, res, next){
 /*
     예술 콘텐츠 가져오기
  */
+var PostSchema = require('./../models/schemas/Posts');
 module.exports.getWorkPosts = function(req, res, next){
-
+    var workPost = new PostSchema({postType : 0});
+    workPost.findByPostType(function(err, workPosts){
+       console.log(workPosts);
+        res.render('post', {works : workPosts});
+    });
 }
 
 //module.exports.getWorkPostDetailInfo = function(req, res, next){

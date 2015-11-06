@@ -16,7 +16,9 @@ var Post = require('../controllers/Posts.js');
 router.get('/post/work', Post.showAddWorkPostPage);
 router.post('/post/work', Post.addWorkPost);
 
-router.get('/posts/shows', Post.getShowPosts),
+router.get('/posts/shows', Post.getShowPosts);
+router.get('/posts/show', Post.getShowAddForm);
+router.post('/posts/show', Post.addShowPost);
 
 module.exports = router;
 

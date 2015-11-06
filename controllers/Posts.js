@@ -31,6 +31,7 @@ var uploadUrl = __dirname + './../upload';
 module.exports.showAddWorkPostPage = function(req, res){
     fs.createReadStream(__dirname + './../views/workPost.html').pipe(res);
 }
+
 /*
     예술 콘텐츠 저장
  */
@@ -163,7 +164,7 @@ module.exports.addWorkPost = function(req, res, next){
                                 // replies 초기화....
                                 Reply.initReply(doc._id, function(err, doc){
                                     if(err){
-                                        console.erro('INIT REPLIES COLLECTION ERROR ', err);
+                                        console.error('INIT REPLIES COLLECTION ERROR ', err);
                                         var error = new Error('댓글 초기화를 실패했습니다.');
                                         error.code = 500;
                                         return next(error);
@@ -189,7 +190,7 @@ module.exports.addWorkPost = function(req, res, next){
 };
 
 /*
-    예술 콘텐츠 가져오기
+    예술 콘텐츠 리스트 가져오기
  */
 var PostSchema = require('./../models/schemas/Posts');
 module.exports.getWorkPosts = function(req, res, next){
@@ -384,4 +385,49 @@ module.exports.addShowPost = function(req, res, next){
         });
 };
 
+////////////////////////////////////////////////////////////////////////////////
+// 댓글 관련.....
+/*
+ 댓글 저장하기
+ */
+module.exports.addReply = function(req, res, next){
+    var replyInfo = {
+        _writer : blogKey,
+        content : req.body.content
+    };
+    Reply.saveReply(req.params.postId, {
+        _post : id,
+        _writer : writer,
+        content : content
+    }, function(err, doc){
+        if(err){
+            console.error('ERROR AT ADD REPLY - ', err);
+            var error = new Error('댓글을 입력할 수 없습니다.');
+            error.code = 400;
+            return next(error);
+        }
+        // web....
+        //res.redirect('/reply/'+id);
 
+        // app ...
+        var msg = {
+            code : 200,
+            msg : '댓글을 작성했습니다.'
+        };
+        res.status(msg.code).json(msg);
+    });
+};
+/*
+ 댓글 리스트 가져오기
+ */
+module.exports.getReplies = function(req, res, next){
+    var id = req.params.postId;
+    Reply.findReplies(id, function(err, docs){
+        if(err){
+            var error = new Error('댓글을 불러올 수 없습니다.');
+            error.code = 400;
+            return next(error);
+        }
+        res.render('add_reply', {postId : id, replies : docs});
+    });
+};

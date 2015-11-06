@@ -3,15 +3,39 @@
     <title>Posts</title>
     <style>
         .container{
+            width : 70%;
+            margin : 10px 0px;
+            background-color : #9932CC;
+            color : white;
+        }
+        img{
             width : 50%;
-            margin-top : 10px;
         }
     </style>
 </head>
 <body>
+    <% works.forEach(function(work){ %>
+        <div class="container">
+            _id : <%= work._id %><br>
+            postType : <%= work.postType %><br>
+            createAt : <%= work.createAt %><br>
+            writer의 블로그 id  : <%= work._writer._id %><br>
+            writer의 회원 id : <%= work._writer._user%><br>
+            writer의 nick : <%= work._writer.nick%><br>
+            writer의 profile : <%=work._writer.profilePhoto%><br>
+            content : <%= work.content %><br>
+            likes : <%= work.likes %><br>
+            workType : <%= work.work.type %><br>
+            emotion : <%= work.work.emotion %><br>
+            resources : <br>
+            <% work.resources.forEach(function(re){ %>
+                type : <%= re.type %><br>
+                url : <%= re.originalPath %><br>
+                <hr>
+            <% }) %>
 
-    <div class="container">
+        </div>
+    <% })%>
 
-    </div>
 </body>
 </html>

@@ -1,28 +1,34 @@
 <html>
 <head>
     <title>Show list</title>
+    <style>
+        #contents{
+            background-color:lavender;
+        }
+    </style>
 </head>
 <body>
     <ol>
         <%shows.forEach(function(show){ %>
-        <div><li>
+        <div id="contents"><li>
             <h2><a href="">제목 : <%=show.show.title%></a></h2>
-            postType : <%=show.postType%>
-            createAt : <%=show.createAt%>
-            _writer : <%=show._writer%>
-            content : <%=show.content%>
-            hashTags : <%=show.hashTags%>
-            likes : <%=show.likes%>
+            postType : <%=show.postType%><br>
+            createAt : <%=show.createAt%><br>
+            _writer : <%=show._writer%><br>
+            content : <%=show.content%><br>
+            hashTags : <%=show.hashTags%><br>
+            likes : <%=show.likes%><br>
                 <% show.resources.forEach(function(resource){%>
-                    resources : <%=resource%>
-                <%})%>
-            show.type : <%=show.show.type%>
-            show.point : <%=show.show.point%>
-            show.startDate : <%=show.show.startDate%>
-            show.endDate : <%=show.show.endDate%>
-            show.startTime : <%=show.show.startTime%>
-            show.endTime : <%=show.show.endTime%>
-            show.fee : <%=show.show.fee%>
+                    resources : <%=resource%><br>
+                    pic : <img src="<%=resource.originalPath%>" width="200" height="200"/><br>
+                <%})%><br>
+            show.type : <%=show.show.type%><br>
+            show.point : <%=show.show.point%><br>
+            show.startDate : <%=show.show.startDate%><br>
+            show.endDate : <%=show.show.endDate%><br>
+            show.startTime : <%=show.show.startTime%><br>
+            show.endTime : <%=show.show.endTime%><br>
+            show.fee : <%=show.show.fee%><br>
         </li></div>
         <% });  %>
     </ol>

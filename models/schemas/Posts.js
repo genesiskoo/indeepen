@@ -84,6 +84,7 @@ postSchema.methods.findByPostType =function(callback){
         exec(callback);
 };
 
+
 postSchema.plugin(autoIncrement.plugin, {
 	model : 'Post',
 	startAt : 1

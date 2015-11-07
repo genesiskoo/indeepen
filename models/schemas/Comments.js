@@ -83,7 +83,7 @@ commentSchema.statics = {
      * @param callback
      */
     findCommentsOfPost : function(postId, callback){
-        this.find({_post : new ObjectId(postId)}).
+        this.find({_post : new ObjectId(postId)}, {_id : 1, _writer : 1, content : 1, createAt : 1}).
             sort({createAt : -1}).
             populate('_writer', '-type -bgPhoto -intro -fans -location -createAt -updateAt -isActivated').
             exec(callback);

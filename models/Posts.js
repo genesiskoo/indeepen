@@ -4,9 +4,9 @@ module.exports.savePost = function(postInfo, callback){
     Post.create(postInfo, callback);
 }
 
-module.exports.findPost = function(key, callback){
-	console.log('key, ', key);
-	Post.findOne(key)
+module.exports.findPost = function(postId, callback){
+	console.log('key, ', postId);
+	Post.findOne(postId)
 	.populate('_writer', '_user nick profile_photo')
 	.exec(callback);
 }

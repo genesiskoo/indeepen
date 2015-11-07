@@ -1,6 +1,7 @@
 /**
- * Created by Moon Jung Hyun on 2015-11-06.
+ * Created by Moon Jung Hyun on 2015-11-07.
  */
+
 var formidable = require('formidable'),
     pathUtil = require('path');
 var fs = require('fs');
@@ -18,47 +19,24 @@ var s3 = new AWS.S3();
 var bucketName = awsS3.bucketName;
 var uploadUrl = __dirname + './../upload';
 
-var userKey = '563cc592e1bdc2c8177dd104'; // session에 있을 정보
-var blogKey = '563cc593e1bdc2c8177dd10c'; // session에 있을 정보
+var userKey = 1; // session에 있을 정보
+var blogKey = 1; // session에 있을 정보
 
-
-
-var Post = require('../models/Posts');
-var Reply = require('../models/Replies');
-var Blog = require('./../models/schemas/Blogs');  // web 에서 정보 입력시 편하게 하게 하려고 추가 나중에 지움요.
+//////////////////////// web 용
+module.exports.showAddWorkPostPage = function(req, res){
+    fs.createReadStream(__dirname + './../views/workPost.html').pipe(res);
+};
 
 var Comment = require('./../models/schemas/Comments');
-var PostSchema = require('./../models/schemas/Posts');
-var Report = require('./../models/schemas/Reports');
+var Post = require('./../models/schemas/Posts');
 
 /**
- * 모든 type의 Post 가져오기
+ * 예술 Post 저장하기
  * @param req
  * @param res
  * @param next
  */
-module.exports.getPosts = function(req, res, next){
-   // PostSchema.findPosts();
-};
-
-
-
-
-
-module.exports.getShowAddForm = function(req,res,next){
-    fs.createReadStream(__dirname + './../views/showAddForm.html').pipe(res);
-}
-
-module.exports.getShowPosts = function(req,res,next){
-    var showPost = new PostSchema({postType : 1});
-    showPost.findByPostType(function(err, showPosts){
-        console.log(showPosts);
-        res.render('shows', {shows : showPosts});
-    });
-};
-
-//문화컨텐츠 추가 POST
-module.exports.addShowPost = function(req, res, next){
+module.exports.addWorkPost = function(req, res, next){
     async.waterfall(
         [
             function (callback) {
@@ -136,18 +114,12 @@ module.exports.addShowPost = function(req, res, next){
                     if(err){
                         callback(err);
                     }else{
-                        callback(null,uploadInfo.showType, uploadInfo.title, uploadInfo.startDate, uploadInfo.endDate,
-                            uploadInfo.startTime, uploadInfo.endTime, uploadInfo.fee, uploadInfo.blogId,
-                            uploadInfo.content, uploadInfo.address, imageUrls);
+                        callback(null, uploadInfo.workType, uploadInfo.emotion, uploadInfo.blogId, uploadInfo.content, imageUrls);
                     }
                 });
 
             },
-            function (showType, title, startDate, endDate, startTime,endTime,fee, blogId, content, address, urls, callback) {
-
-
-
-
+            function (workType, emotion, blogId, content, urls, callback) {
                 // hash_tag 추출
                 var tmpStr = content.split('#');
                 var hashTag = [];
@@ -159,25 +131,14 @@ module.exports.addShowPost = function(req, res, next){
 
                 // db 저장
                 var postInfo = {
-                    postType : 1,
+                    postType : 0,
                     _writer : blogId,
                     content : content,
                     hashTags : hashTag,
                     likes : [],
-                    show : {
-                        title : title,
-                        type : showType,
-                        tags : [],
-                        startDate : startDate,
-                        endDate : endDate,
-                        startTime : startTime,
-                        endTime : endTime,
-                        fee : fee,
-                        location : {
-                            point : {
-                            },
-                            address : address
-                        }//loc
+                    work : {
+                        type : workType,
+                        emotion : emotion
                     },
                     resources : []
                 };
@@ -188,8 +149,8 @@ module.exports.addShowPost = function(req, res, next){
                     callback();
                 }, function(err){
                     if(err){
+                        console.error('save workPosts async error ', err);
                         var error = new Error('file url 관리에서 실패.....');
-                        console.error(err);
                         error.code = 400;
                         return next(error);
                     }else{
@@ -214,150 +175,109 @@ module.exports.addShowPost = function(req, res, next){
                 res.sendStatus(500);
             }
             else {
-                res.redirect('/posts/shows');
-            }
-        });
-};
-
-
-
-module.exports.changeLike = function(req, res, next){
-    var id = req.params.postId;
-    var status = req.params.likeStatus;
-    console.log('postId', id);
-    console.log('likeStatus', status);
-    if(status == 'like'){ // 좋아요
-        PostSchema.pushLike(id, blogKey, function(err, doc){
-            if(err){
-                console.error('ERROR PUSH LIKE', err);
-                var error = new Error('좋아요에 실패했습니다.');
-                error.code = 400;
-                return next(error);
-            }
-            console.log('push like ', doc);
-            var msg = {
-                code : 200,
-                msg : 'Success'
-            };
-            res.status(msg.code).json(msg);
-        });
-    }else if(status == 'unlike'){ // 좋아요 취소
-        PostSchema.pullLike(id, blogKey, function(err, doc){
-            if(err){
-                console.error('ERROR PULL LIKE ', err);
-                var error = new Error('좋아요를 취소할 수가 없습니다.');
-                error.code = 400;
-                return next(error);
-            }
-            console.log('pull like ', doc);
-            var msg = {
-                code : 200,
-                msg : 'Success',
-            };
-            res.status(msg.code).json(msg);
-        });
-    }else{
-        var error = new Error('Only like Or unlike');
-        error.code = 400;
-        return next(error);
-    }
-
-};
-
-module.exports.reportPost = function(req, res, next){
-    var postId = req.params.postId;
-    if(!postId){
-        var error = new Error('URL 확인 부탁해요.');
-        error.code = 400;
-        return next(error);
-    }
-    Report.isReported(postId, blogKey, function(err, isReported){
-        if(err){
-            console.error('ERROR CHECK REPORTER ', err);
-            var error = new Error('신고 여부를 확인할 수 없습니다.');
-            error.code =400;
-            return next(error);
-        }
-        if(!isReported){
-            Report.saveReport(postId, blogKey, function(err, doc){
-                if(err){
-                    console.error('ERROR SAVE REPORT ', err);
-                    var error = new Error('신고 실패했습니다.');
-                    error.code = 400;
-                    return next(error);
-                }
-                console.log('RESULT SAVE REPORT ', doc);
+                // app..
+                /*
                 var msg = {
                     code : 200,
                     msg : 'Success'
                 };
                 res.status(msg.code).json(msg);
+                */
+                res.redirect('/workPosts/page');
+            }
+        });
+};
+
+
+/**
+ * 예술 Post List 가져오기
+ * @param req
+ * @param res
+ * @param next
+ */
+module.exports.getWorkPosts = function(req, res, next){
+    var works = [];
+    var workPost = new Post({postType : 0});
+    workPost.findByPostType(function(err, workPosts){
+        if(err) {
+            console.error('ERROR GETTING WORK POSTS', err);
+            var error = new Error('Work Post를 가져올 수 없습니다.');
+            error.code = 400;
+            return next(error);
+        }
+        async.each(workPosts, function(workPost, callback){
+            var tmp = {
+                postInfo : workPost
+            };
+
+            Comment.countCommentsOfPost(workPost._id, function(err, count){
+                if(err){
+                    console.error('ERROR COUNT COMMENTS ', err);
+                    var error = new Error('댓글 개수를 셀 수 없습니다.');
+                    error.code = 400;
+                    return next(error);
+                }
+                tmp['commentCnt'] = count;
+                Comment.findLast2Comments(workPost._id, function(err, docs){
+                    if(err){
+                        console.error('ERROR FIND LAST 2 COMMENTS ', err);
+                        var error = new Error('최신 댓글 2개를 가져오는데 실패했습니다.');
+                        error.code = 400;
+                        return next(error);
+                    }
+                    tmp['comments'] = docs.reverse();
+                    console.log('final workPost ', tmp);
+                    works.push(tmp);
+                    callback();
+                });
             });
-        }else{
-            console.log('이미 신고함...');
-            var error = new Error('이미 신고한 Post입니다.');
-            error.code = 400;
-            return next(error);
-        }
-    });
-};
+        }, function(err){
+            if(err){
+                console.error('ERROR AFTER async each ', err);
+                var error = new error('댓글 정보를 가져오는데 실패했습니다.');
+                error.code = 400;
+                return next(error);
+            }
 
+           var msg = {
+                code : 200,
+                msg : 'Success',
+                result : {
+                    // pagination 추가
+                    works : works
+                }
+            };
+            res.status(msg.code).json(msg);
 
-////////////////////////////////////////////////////////////////////////////////
-// 댓글 관련.....
-/*
- 댓글 저장하기
- */
-module.exports.addComment = function(req, res, next){
-    console.log('addComment');
-    var postId = req.params.postId;
-    Comment.saveComment(postId, req.body.writer, req.body.content, function(err, doc){
-        if(err){
-            console.error('ERROR AT ADD REPLY - ', err);
-            var error = new Error('댓글을 입력할 수 없습니다.');
-            error.code = 400;
-            return next(error);
-        }
-        // web....
-        res.redirect('/posts/'+postId+'/comments');
-
-        // app ...
-        /*
-        var msg = {
-            code : 200,
-            msg : 'Success'
-        };
-        res.status(msg.code).json(msg);
-        */
-    });
-};
-/*
- 댓글 리스트 가져오기
- */
-module.exports.getComments = function(req, res, next){
-    var id = req.params.postId;
-    Comment.findCommentsOfPost(id, function(err, docs){
-        if(err){
-            var error = new Error('댓글을 불러올 수 없습니다.');
-            error.code = 400;
-            return next(error);
-        }
-        // web에서 입력할때 글쓴이를 편하게 하기 위해....;;;
-        Blog.findBlogs(function(err, blogs){
-            res.render('add_reply', {postId : id, replies : docs, users : blogs});
+            //res.render('workPost', {works : works});
         });
 
-        // app...
-/*
-        var msg = {
-            code : 200,
-            msg : 'Success',
-            result : {
-                // pagination....
-                comments : docs.reverse()
-            }
-        };
-        res.status(msg.code).json(msg);
-*/
     });
 };
+
+module.exports.getWorkPost = function(req, res, next){
+    var id = req.params.postId;
+    var workPost = {};
+    Post.findPost(id, 0, function(err, doc){
+        if(err){
+            console.error('ERROR GETTING POST ', err);
+            var error = new Error('해당 post를 찾을 수 없습니다.');
+            error.code = 404;
+            return next(error);
+        }
+        console.log('doc ', doc);
+        workPost['postInfo'] = doc;
+        Comment.countCommentsOfPost(id, function(err, count){
+            console.log('count ', count);
+            workPost['commentCnt'] = count;
+            console.log('workPost ', workPost);
+            var msg = {
+                code : 200,
+                msg : 'Success',
+                result : workPost
+            };
+            res.status(msg.code).json(msg);
+        });
+    });
+};
+

@@ -73,18 +73,24 @@ var postSchema = new Schema({
  */
 postSchema.methods = {
     /**
-     * 해당 postType의 post만 가져오기
+     * 해당 postType의 Post만 가져오기
      * @param callback
      * @returns {Promise}
      */
     findByPostType : function(options, callback){
         if(!options) options = {};
+        var select = '';
+        if(this.postType == 0)
+            select = 'createAt _writer content likes work resources';
+        else
+            select = 'createAt _writer content likes show resources';
         return this.model('Post').find(options).
             where('postType').
             equals(this.postType).
+            select(select).
             sort({createAt : -1}).
             populate({path : '_writer', select : '-type -bgPhoto -intro -fans -location -createAt -updateAt -isActivated'}).
-            populate({path : 'likes', select : '_id _user nick profilePhoto'}).
+           // populate({path : 'likes', select : '_id _user nick profilePhoto'}).
             exec(callback);
     }
 };
@@ -99,11 +105,16 @@ postSchema.statics = {
      * @param callback
      * @returns {Promise}
      */
-    findPost : function(postId, callback){
+    findPost : function(postId, postType, callback){
+        var select = '';
+        if(postType == 0){
+            select ='createAt _writer content likes work resources';
+        }else{
+            select = 'createAt _writer content likes show resources';
+        }
         return this.findOne({_id : new ObjectId(postId)}).
-            select('postType createAt _writer content likes comments work show resource').
+            select(select).
             populate('_writer', '_id _user nick profilePhoto').
-            populate('comments', '_writer.nick content').
             populate('show.tags._user', '_id _user nick profilePhoto').
             sort({createAt : -1}).
             exec(callback);
@@ -119,9 +130,8 @@ postSchema.statics = {
         if(!options) options = {};
 
         return this.find(options).
-            select('postType createAt _writer content likes comments work show resource').
+            select('postType createAt _writer content likes work show resources').
             populate('_writer', '_id _user nick profilePhoto').
-            populate('comments', '_writer.nick content').
             populate('show.tags._user', '_id _user nick profilePhoto').
             sort({createAt : -1}).
             exec(callback);
@@ -134,18 +144,28 @@ postSchema.statics = {
      */
     savePost : function(postInfo, callback){
         return this.create(postInfo, callback);
+    },
+    /**
+     * 해당 Post 의 좋아요에 회원 blogId 추가하기
+     * @param postId
+     * @param blogId
+     * @param callback
+     * @returns {Query|*}
+     */
+    pushLike : function(postId, blogId, callback){
+        return this.findOneAndUpdate({_id : new ObjectId(postId)}, {$push : {likes : new ObjectId(blogId)}}, callback);
+    },
+    /**
+     * 해당 Post 의 좋아요에 회원 blogId 제거하기
+     * @param postId
+     * @param blogId
+     * @param callback
+     * @returns {Query|*}
+     */
+    pullLike : function(postId, blogId, callback){
+        return this.findOneAndUpdate({_id : new ObjectId(postId)}, {$pull : {likes : new ObjectId(blogId)}}, callback);
     }
 };
-
-
-//postSchema.methods.findByPostType =function(callback){
-//    return this.model('Post').find({postType : this.postType}).
-//        sort({createAt : -1}).
-//        populate({path : '_writer', select : '_id _user nick profilePhoto'}).
-//        populate({path : 'likes', select : '_id _user nick profilePhoto'}).
-//        exec(callback);
-//};
-
 
 module.exports = mongoose.model('Post', postSchema);
 

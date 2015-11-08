@@ -1,7 +1,6 @@
 /**
- * Created by Moon Jung Hyun on 2015-11-07.
+ * Created by heuneul on 2015-11-07.
  */
-
 var express = require('express');
 var router = express.Router();
 
@@ -14,4 +13,3 @@ router.get('/', WorkPost.getWorkPosts);
 
 router.get('/:postId', WorkPost.getWorkPost);
 module.exports = router;
-

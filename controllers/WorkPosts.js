@@ -205,7 +205,7 @@ module.exports.getWorkPosts = function(req, res, next){
             error.code = 400;
             return next(error);
         }
-        async.each(workPosts, function(workPost, callback){
+        async.eachSeries(workPosts, function(workPost, callback){
             var tmp = {
                 postInfo : workPost
             };
@@ -226,35 +226,36 @@ module.exports.getWorkPosts = function(req, res, next){
                         return next(error);
                     }
                     tmp['comments'] = docs.reverse();
-                    console.log('final workPost ', tmp);
+                    //console.log('final workPost ', tmp);
                     works.push(tmp);
                     callback();
                 });
             });
-        }, function(err){
-            if(err){
-                console.error('ERROR AFTER async each ', err);
-                var error = new error('댓글 정보를 가져오는데 실패했습니다.');
-                error.code = 400;
-                return next(error);
-            }
+        }, function done(){
 
-           var msg = {
-                code : 200,
-                msg : 'Success',
-                result : {
-                    // pagination 추가
-                    works : works
-                }
-            };
-            res.status(msg.code).json(msg);
+            /*
+             var msg = {
+             code : 200,
+             msg : 'Success',
+             result : {
+             // pagination 추가
+             works : works
+             }
+             };
+             res.status(msg.code).json(msg);
+             */
 
-            //res.render('workPost', {works : works});
+            res.render('post', {works : works});
         });
-
     });
 };
 
+/**
+ * 해당 예술 Post의 상세정보 가져오기
+ * @param req
+ * @param res
+ * @param next
+ */
 module.exports.getWorkPost = function(req, res, next){
     var id = req.params.postId;
     var workPost = {};

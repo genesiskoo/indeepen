@@ -15,7 +15,7 @@ var userSchema = new mongoose.Schema({
     },
     profilePhoto: {
         type : String,
-        default : '/photo/profile/default_profile.png'
+        default : 'https://s3-ap-northeast-1.amazonaws.com/in-deepen/images/profile/icon-person.png'
     },
     intro: {type : String, trim : true},
     phone: {type : String, trim : true},
@@ -37,7 +37,8 @@ userSchema.post('save', function(doc){
     console.log('Save User _id', doc._id);
     var blogInfo = {
         _user : doc._id,
-        nick : doc.nick
+        nick : doc.nick,
+        profilePhoto : doc.profilePhoto
     };
     Blog.saveBlog(blogInfo, function(err, doc){
         if(err){

@@ -15,6 +15,8 @@ router.get('/shows', Post.getShowPosts);
 router.get('/show', Post.getShowAddForm);
 router.post('/show', Post.addShowPost);
 
+router.delete('/:postId', Post.deletePost);
+
 router.post('/:postId/reports', Post.reportPost);
 
 router.get('/:postId/comments', Post.getComments);

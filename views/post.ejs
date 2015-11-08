@@ -4,7 +4,7 @@
     <style>
         .container{
             width : 70%;
-            margin : 0px 10px;
+            margin : 10px auto;
             background-color : #9932CC;
             color : white;
             padding : 5px;
@@ -20,11 +20,11 @@
     </style>
 </head>
 <body>
+    <h3><a href="/">Go To Menu......</a></h3>
     <% works.forEach(function(work){ %>
         <div class="container">
-            <a href="/posts/<%= work._id %>/comments" class="goRe">댓글 작성하기... </a><br><br>
+            <a href="/posts/<%= work.postInfo._id %>/comments" class="goRe">댓글 작성하기... </a><br><br>
             _id : <%= work.postInfo._id %><br>
-            postType : <%= work.postInfo.postType %><br>
             createAt : <%= work.postInfo.createAt %><br>
             writer의 블로그 id  : <%= work.postInfo._writer._id %><br>
             writer의 회원 id : <%= work.postInfo._writer._user%><br>

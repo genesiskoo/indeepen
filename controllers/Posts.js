@@ -41,10 +41,6 @@ module.exports.getPosts = function(req, res, next){
    // PostSchema.findPosts();
 };
 
-
-
-
-
 /**
  * Post 삭제하기
  * @param req

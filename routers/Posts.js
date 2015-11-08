@@ -11,9 +11,7 @@ router.get('/', Post.getPosts);
 
 
 
-router.get('/shows', Post.getShowPosts);
-router.get('/show', Post.getShowAddForm);
-router.post('/show', Post.addShowPost);
+
 
 router.delete('/:postId', Post.deletePost);
 

@@ -16,19 +16,23 @@
             createAt : <%=show.createAt%><br>
             _writer : <%=show._writer%><br>
             content : <%=show.content%><br>
-            hashTags : <%=show.hashTags%><br>
+                <%if(show.resources.length){hi}%>
+
             likes : <%=show.likes%><br>
                 <% show.resources.forEach(function(resource){%>
                     resources : <%=resource%><br>
                     pic : <img src="<%=resource.originalPath%>" width="200" height="200"/><br>
                 <%})%><br>
             show.type : <%=show.show.type%><br>
-            show.point : <%=show.show.point%><br>
             show.startDate : <%=show.show.startDate%><br>
             show.endDate : <%=show.show.endDate%><br>
             show.startTime : <%=show.show.startTime%><br>
             show.endTime : <%=show.show.endTime%><br>
             show.fee : <%=show.show.fee%><br>
+            show.address : <%=show.show.location.address%><br>
+            show.latitude : <%=show.show.location.point.coordinates[0]%><br>
+            show.longitude : <%=show.show.location.point.coordinates[1]%><br>
+
         </li></div>
         <% });  %>
     </ol>

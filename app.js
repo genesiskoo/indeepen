@@ -14,7 +14,8 @@ app.set('views', './views');
 app.set('view engine', 'ejs');
 
 app.use('/posts', require('./routers/Posts.js'));
-app.use('/workPosts', require('./routers/WorkPost'));
+app.use('/workPosts', require('./routers/WorkPosts'));
+app.use('/showPosts', require('./routers/ShowPosts'));
 app.use('/postComments', require('./routers/PostComments'));
 
 

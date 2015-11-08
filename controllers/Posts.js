@@ -42,6 +42,54 @@ module.exports.getPosts = function(req, res, next){
 };
 
 
+
+
+
+/**
+ * Post 삭제하기
+ * @param req
+ * @param res
+ * @param next
+ */
+module.exports.deletePost = function(req, res, next){
+    var postId = req.params.postId;
+    if(!postId){
+        var error = new Error('URL 확인 부탁해요.');
+        error.code = 400;
+        return next(error);
+    }
+    PostSchema.removePost(postId, function(err, doc){
+        if(err){
+            console.error('ERROR REMOVE POST ', err);
+            var error = new Error('Post를 삭제할 수 없습니다.');
+            error.code = 400;
+            return next(error);
+        }
+        //console.log(doc);
+        Comment.removeComments(doc._id, function(err, docs){
+            if(err){
+                console.error('ERROR REMOVE COMMENTS ', err);
+                var error = new Error('Comments를 삭제할 수 없습니다. ');
+                error.code = 400;
+                return next(error);
+            }
+            //console.log(docs);
+            var msg = {
+                code : 200,
+                msg : 'Success'
+            };
+            res.status(msg.code).json(msg);
+        });
+    });
+};
+
+/**
+ * 해당 Post에 대한 User(Blog)의 좋아요 추가/취소하기
+ * @param req
+ * @param res
+ * @param next
+ * @returns {*}
+ */
 module.exports.changeLike = function(req, res, next){
     var id = req.params.postId;
     var status = req.params.likeStatus;
@@ -85,6 +133,13 @@ module.exports.changeLike = function(req, res, next){
 
 };
 
+/**
+ * 해당 Post에 대해 한 User(Blog)가 신고하기
+ * @param req
+ * @param res
+ * @param next
+ * @returns {*}
+ */
 module.exports.reportPost = function(req, res, next){
     var postId = req.params.postId;
     if(!postId){
@@ -126,8 +181,11 @@ module.exports.reportPost = function(req, res, next){
 
 ////////////////////////////////////////////////////////////////////////////////
 // 댓글 관련.....
-/*
- 댓글 저장하기
+/**
+ * 댓글 저장하기
+ * @param req
+ * @param res
+ * @param next
  */
 module.exports.addComment = function(req, res, next){
     console.log('addComment');
@@ -152,8 +210,11 @@ module.exports.addComment = function(req, res, next){
         */
     });
 };
-/*
- 댓글 리스트 가져오기
+/**
+ * 댓글 리스트 가져오기
+ * @param req
+ * @param res
+ * @param next
  */
 module.exports.getComments = function(req, res, next){
     var id = req.params.postId;

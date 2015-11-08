@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+var ObjectId = mongoose.ObjectId;
 
 var User = require('./Users');
 
@@ -11,14 +12,15 @@ var blogSchema = new Schema({
 	},
 	bgPhoto: {
 		type : String,
-		default : '/images/bg_thumbnail/default.png'
+		default : 'https://s3-ap-northeast-1.amazonaws.com/in-deepen/images/bg/default_bg.png'
 	},
 	nick: String,
 	profilePhoto: {
 		type : String,
-		default : '/images/profile_thumbnail/default.png'
+		default : 'https://s3-ap-northeast-1.amazonaws.com/in-deepen/images/profile/icon-cafe.png'
 	},
 	intro : String,
+    iMissYous : [{type : Schema.Types.ObjectId, ref : 'Blog'}],
 	fans: [{type : Schema.Types.ObjectId, ref : 'Blog'}],
 	location: {
 		point: {
@@ -45,13 +47,34 @@ var blogSchema = new Schema({
 }, { versionKey: false });
 
 blogSchema.statics = {
-    saveBlog : function(blogInfo, callback){
+    // 댓글 달때 사용자 id 편하게 하기 위해 한 것. 나중에 지워....
+    findBlogs: function (callback) {
+        return this.find().exec(callback);
+    },
+    saveBlog: function (blogInfo, callback) {
         return this.create(blogInfo, callback);
     },
-    findBlogs : function(callback){
-        return this.find().exec(callback);
+    findBlogsOfUser : function(userId, callback){
+        this.find({_user : new ObjectId(userId)}).
+            select('-intro -iMissYous -fans -location -createAt - updateAt').
+            exec(callback);
+    },
+    findOneBlog : function(blogId, callback){
+        this.findOne({_id : new ObjectId(blogId)}).
+            select('-intro -location -createAt - updateAt - isActivated').
+            exec(callback);
+    },
+    findFansOfBlog : function(blogId, callback){ // pagination 추가
+        this.findOne({_id : new ObjectId(blogId)}).
+            select('-_user -type -bgPhoto -nick -profilePhoto -intro -iMissYous -location -createAt - updateAt -isActivated').
+            exec(callback);
+    },
+    findIMissYousOfBlog : function(blogId, callback){  //pagination 추가
+        this.findOne({_id : new ObjectId(blogId)}).
+            select('-_user -type -bgPhoto -nick -profilePhoto -intro -fans -location -createAt - updateAt -isActivated').
+            exec(callback);
     }
-}
+};
 
 
 module.exports = mongoose.model('Blog', blogSchema);

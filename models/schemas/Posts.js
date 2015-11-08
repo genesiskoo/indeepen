@@ -68,6 +68,8 @@ var postSchema = new Schema({
     }]
 }, {versionKey : false});
 
+
+
 /*
     method
  */
@@ -81,15 +83,15 @@ postSchema.methods = {
         if(!options) options = {};
         var select = '';
         if(this.postType == 0)
-            select = 'createAt _writer content likes work resources';
+            select = '_id createAt _writer content likes work resources';
         else
-            select = 'createAt _writer content likes show resources';
+            select = '_id createAt _writer content likes show resources';
         return this.model('Post').find(options).
             where('postType').
             equals(this.postType).
             select(select).
             sort({createAt : -1}).
-            populate({path : '_writer', select : '-type -bgPhoto -intro -fans -location -createAt -updateAt -isActivated'}).
+            populate({path : '_writer', select : '-type -bgPhoto -intro -iMissYou -fans -location -createAt -updateAt -isActivated'}).
            // populate({path : 'likes', select : '_id _user nick profilePhoto'}).
             exec(callback);
     }
@@ -164,6 +166,9 @@ postSchema.statics = {
      */
     pullLike : function(postId, blogId, callback){
         return this.findOneAndUpdate({_id : new ObjectId(postId)}, {$pull : {likes : new ObjectId(blogId)}}, callback);
+    },
+    removePost : function(postId, callback){
+        this.findOneAndRemove({_id : new ObjectId(postId)}, callback);
     }
 };
 

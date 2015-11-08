@@ -13,6 +13,8 @@ router.get('/', Post.getPosts);
 
 
 
+router.delete('/:postId', Post.deletePost);
+
 router.post('/:postId/reports', Post.reportPost);
 
 router.get('/:postId/comments', Post.getComments);

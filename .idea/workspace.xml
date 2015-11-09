@@ -2,32 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fae20e81-4887-4d24-9dd7-a536ce0a01f8" name="Default" comment="show 수정중 img까지">
-      <change type="DELETED" beforePath="C:\Users\heuneul\Desktop\git_indeepen\indeepen\db_test.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\heuneul\Desktop\git_indeepen\indeepen\ex_posts_save.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\heuneul\Desktop\git_indeepen\indeepen\ex_replies_find.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\heuneul\Desktop\git_indeepen\indeepen\ex_replies_save.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\heuneul\Desktop\git_indeepen\indeepen\ex_show_find.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\heuneul\Desktop\git_indeepen\indeepen\ex_show_save.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\heuneul\Desktop\git_indeepen\indeepen\ex_users_find.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\heuneul\Desktop\git_indeepen\indeepen\models\schemas\Counters.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\heuneul\Desktop\git_indeepen\indeepen\post.js" afterPath="" />
-      <change type="MOVED" beforePath="C:\Users\heuneul\Desktop\git_indeepen\indeepen\models\schemas\Blogs.js" afterPath="$PROJECT_DIR$/models/Blogs.js" />
-      <change type="MOVED" beforePath="C:\Users\heuneul\Desktop\git_indeepen\indeepen\models\schemas\Comments.js" afterPath="$PROJECT_DIR$/models/Comments.js" />
-      <change type="MOVED" beforePath="C:\Users\heuneul\Desktop\git_indeepen\indeepen\models\schemas\Imissyou.js" afterPath="$PROJECT_DIR$/models/Imissyou.js" />
-      <change type="MOVED" beforePath="C:\Users\heuneul\Desktop\git_indeepen\indeepen\models\schemas\Notis.js" afterPath="$PROJECT_DIR$/models/Notis.js" />
-      <change type="MOVED" beforePath="C:\Users\heuneul\Desktop\git_indeepen\indeepen\models\schemas\Posts.js" afterPath="$PROJECT_DIR$/models/Posts.js" />
-      <change type="MOVED" beforePath="C:\Users\heuneul\Desktop\git_indeepen\indeepen\models\schemas\Replies.js" afterPath="$PROJECT_DIR$/models/Replies.js" />
-      <change type="MOVED" beforePath="C:\Users\heuneul\Desktop\git_indeepen\indeepen\models\schemas\Reports.js" afterPath="$PROJECT_DIR$/models/Reports.js" />
-      <change type="MOVED" beforePath="C:\Users\heuneul\Desktop\git_indeepen\indeepen\models\schemas\Users.js" afterPath="$PROJECT_DIR$/models/Users.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/controllers/ArtistBlogs.js" afterPath="$PROJECT_DIR$/controllers/ArtistBlogs.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/controllers/Blogs.js" afterPath="$PROJECT_DIR$/controllers/Blogs.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/models/Counters.js" afterPath="$PROJECT_DIR$/models/Counters.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/controllers/PostComments.js" afterPath="$PROJECT_DIR$/controllers/PostComments.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/controllers/Posts.js" afterPath="$PROJECT_DIR$/controllers/Posts.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/controllers/ShowPosts.js" afterPath="$PROJECT_DIR$/controllers/ShowPosts.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/controllers/WorkPosts.js" afterPath="$PROJECT_DIR$/controllers/WorkPosts.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routers/ShowPosts.js" afterPath="$PROJECT_DIR$/routers/ShowPosts.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/showAddForm.html" afterPath="$PROJECT_DIR$/views/showAddForm.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/shows.ejs" afterPath="$PROJECT_DIR$/views/shows.ejs" />
     </list>
     <ignored path="indeepen_mongo_test.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -60,10 +38,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ArtistBlogs.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ArtistBlogs.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/controllers/ArtistBlogs.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="1.2222222">
+            <state vertical-scroll-proportion="0.0">
               <caret line="75" column="0" selection-start-line="75" selection-start-column="0" selection-end-line="75" selection-end-column="0" />
               <folding>
                 <element signature="e#359#928#0" expanded="false" />
@@ -74,11 +52,23 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Blogs.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/controllers/Blogs.js">
+      <file leaf-file-name="ShowPosts.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/controllers/ShowPosts.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="120" column="0" selection-start-line="120" selection-start-column="0" selection-end-line="120" selection-end-column="0" />
+              <caret line="58" column="2" selection-start-line="58" selection-start-column="2" selection-end-line="58" selection-end-column="2" />
+              <folding>
+                <element signature="e#1672#8299#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Blogs.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/controllers/Blogs.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.25925925">
+              <caret line="35" column="39" selection-start-line="35" selection-start-column="39" selection-end-line="35" selection-end-column="39" />
               <folding>
                 <element signature="e#215#305#0" expanded="false" />
                 <element signature="e#984#1076#0" expanded="false" />
@@ -121,16 +111,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="206" column="17" selection-start-line="206" selection-start-column="17" selection-end-line="206" selection-end-column="17" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="app.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -359,7 +339,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -378,8 +357,23 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="indeepen_mongo_test" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="indeepen" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="controllers" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
       <pane id="Scope" />
     </panes>
   </component>
@@ -592,25 +586,25 @@
     <frame x="-8" y="-8" width="1382" height="784" extended-state="6" />
     <editor active="false" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.15373352" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.15300146" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32740742" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32359308" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32575756" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19703704" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32683983" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32575756" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32740742" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -669,6 +663,82 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/controllers/Blogs.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="120" column="0" selection-start-line="120" selection-start-column="0" selection-end-line="120" selection-end-column="0" />
+          <folding>
+            <element signature="e#215#305#0" expanded="false" />
+            <element signature="e#984#1076#0" expanded="false" />
+            <element signature="e#1135#1746#0" expanded="false" />
+            <element signature="e#1749#1838#0" expanded="false" />
+            <element signature="e#1896#3212#0" expanded="false" />
+            <element signature="e#3215#3320#0" expanded="false" />
+            <element signature="e#3375#3942#0" expanded="false" />
+            <element signature="e#3945#4040#0" expanded="false" />
+            <element signature="e#4094#5270#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ex_users_save.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="4" column="30" selection-start-line="4" selection-start-column="30" selection-end-line="4" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/Users.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="55" column="2" selection-start-line="55" selection-start-column="2" selection-end-line="55" selection-end-column="2" />
+          <folding>
+            <element signature="e#0#51#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controllers/Posts.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="206" column="17" selection-start-line="206" selection-start-column="17" selection-end-line="206" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/Posts.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="40" column="14" selection-start-line="40" selection-start-column="14" selection-end-line="40" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/post.ejs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="28" column="28" selection-start-line="28" selection-start-column="28" selection-end-line="28" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/workPost.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="10" column="70" selection-start-line="10" selection-start-column="70" selection-end-line="10" selection-end-column="70" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -794,7 +864,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.6082474">
           <caret line="40" column="0" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -831,7 +900,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.1641286">
           <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -873,16 +941,6 @@
             <element signature="e#1043#7057#0" expanded="false" />
             <element signature="e#7187#8978#0" expanded="false" />
             <element signature="e#9110#9879#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/controllers/ShowPosts.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6393443">
-          <caret line="22" column="59" selection-start-line="22" selection-start-column="59" selection-end-line="22" selection-end-column="59" />
-          <folding>
-            <element signature="e#1193#7820#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -954,25 +1012,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.0">
           <caret line="23" column="26" selection-start-line="23" selection-start-column="26" selection-end-line="23" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/controllers/Blogs.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="120" column="0" selection-start-line="120" selection-start-column="0" selection-end-line="120" selection-end-column="0" />
-          <folding>
-            <element signature="e#215#305#0" expanded="false" />
-            <element signature="e#984#1076#0" expanded="false" />
-            <element signature="e#1135#1746#0" expanded="false" />
-            <element signature="e#1749#1838#0" expanded="false" />
-            <element signature="e#1896#3212#0" expanded="false" />
-            <element signature="e#3215#3320#0" expanded="false" />
-            <element signature="e#3375#3942#0" expanded="false" />
-            <element signature="e#3945#4040#0" expanded="false" />
-            <element signature="e#4094#5270#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1006,12 +1045,40 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/controllers/ArtistBlogs.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.2222222">
+        <state vertical-scroll-proportion="0.0">
           <caret line="75" column="0" selection-start-line="75" selection-start-column="0" selection-end-line="75" selection-end-column="0" />
           <folding>
             <element signature="e#359#928#0" expanded="false" />
             <element signature="e#1087#1614#0" expanded="false" />
             <element signature="e#1767#2140#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controllers/ShowPosts.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="58" column="2" selection-start-line="58" selection-start-column="2" selection-end-line="58" selection-end-column="2" />
+          <folding>
+            <element signature="e#1672#8299#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controllers/Blogs.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.25925925">
+          <caret line="35" column="39" selection-start-line="35" selection-start-column="39" selection-end-line="35" selection-end-column="39" />
+          <folding>
+            <element signature="e#215#305#0" expanded="false" />
+            <element signature="e#984#1076#0" expanded="false" />
+            <element signature="e#1135#1746#0" expanded="false" />
+            <element signature="e#1749#1838#0" expanded="false" />
+            <element signature="e#1896#3212#0" expanded="false" />
+            <element signature="e#3215#3320#0" expanded="false" />
+            <element signature="e#3375#3942#0" expanded="false" />
+            <element signature="e#3945#4040#0" expanded="false" />
+            <element signature="e#4094#5270#0" expanded="false" />
           </folding>
         </state>
       </provider>

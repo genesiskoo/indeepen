@@ -47,7 +47,7 @@ commentSchema.statics = {
      * @param callback
      */
     removeComments : function(postId, callback){
-        console.log('remve Comments statics method');
+        console.log('remove Comments statics method');
         this.remove({_post : new ObjectId(postId)}, callback);
     },
     /**
@@ -75,7 +75,7 @@ commentSchema.statics = {
         this.find({_post : new ObjectId(postId)}, {_writer : 1, content : 1}).
             sort({createAt : -1}).
             limit(2).
-            populate('_writer', '-_id -_user -type -bgPhoto -intro -profilePhoto -iMissYou -fans -location -createAt -updateAt -isActivated').
+            populate('_writer', '-_id -_user -type -bgPhoto -intro -profilePhoto -iMissYous -fans -location -createAt -updateAt -isActivated').
             exec(callback);
     },
     /**
@@ -86,7 +86,7 @@ commentSchema.statics = {
     findCommentsOfPost : function(postId, callback){
         this.find({_post : new ObjectId(postId)}, {_id : 1, _writer : 1, content : 1, createAt : 1}).
             sort({createAt : -1}).
-            populate('_writer', '-type -bgPhoto -intro -iMissYou -fans -location -createAt -updateAt -isActivated').
+            populate('_writer', '-type -bgPhoto -intro -iMissYous -fans -location -createAt -updateAt -isActivated').
             exec(callback);
     }
 };

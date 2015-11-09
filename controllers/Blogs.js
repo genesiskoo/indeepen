@@ -31,7 +31,7 @@ module.exports.getFansOfBlog = function(req, res, next){
         var msg = {
             code : 200,
             msg : 'Success',
-            result : doc
+            result : doc.fans
         };
         res.status(msg.code).json(msg);
     });
@@ -58,6 +58,7 @@ module.exports.getArtistsOfBlog = function(req, res, next){
             return next(error);
         }
         console.log('my artist', docs);
+        console.log('cnt ', docs.length);
         var msg = {
             code : 200,
             msg : 'Success',
@@ -90,10 +91,9 @@ module.exports.changeFanOfBlog = function(req, res, next){
                error.code = 400;
                return next(error);
            }
-            console.log('doc', doc);
             var msg = {
                 code : 200,
-                msg : 'Fan Success'
+                msg : 'Success'
             };
             res.status(msg.code).json(msg);
         });
@@ -105,10 +105,9 @@ module.exports.changeFanOfBlog = function(req, res, next){
                 error.code = 400;
                 return next(error);
             }
-            console.log('doc ', doc);
             var msg = {
                 code : 200,
-                msg : 'Unfan Success'
+                msg : 'Success'
             };
             res.status(msg.code).json(msg);
         });
@@ -119,3 +118,71 @@ module.exports.changeFanOfBlog = function(req, res, next){
     }
 };
 
+
+module.exports.getiMissYous = function(req, res, next){
+    var blogId = req.params.blogId;
+    if(!blogId){
+        var error = new Error('URL 확인 부탁해요.');
+        error.code = 400;
+        return next(error);
+    }
+    Blog.findIMissYousOfBlog(blogId, function(err, doc){
+        if(err){
+           var error = new Error('iMissYous를 가져올 수 없습니다.');
+           error.code = 400;
+           return next(error);
+        }
+        console.log('doc ', doc);
+        var msg = {
+            code : 200,
+            msg : 'Success',
+            result : doc.iMissYous
+        }
+        res.status(msg.code).json(msg);
+    });
+};
+
+/**
+ * 공간/개인 블로그 i miss you 저장하기
+ * @param req
+ * @param res
+ * @param next
+ * @returns {*}
+ */
+module.exports.addiMissYou = function(req, res, next){
+    var blogId = req.params.blogId;
+    if(!blogId){
+        var error = new Error('URL 확인 부탁해요.');
+        error.code = 400;
+        return next(error);
+    }
+    Blog.isIMissYoued(blogId, blogKey, function(err, doc){
+        if(err){
+            console.error('ERROR CHECH IS IMISSYOU ', err);
+            var error = new Error('iMissYou check 중 오류...');
+            error.code = 400;
+            return next(error);
+        }
+        console.log('doc ', doc);
+        if(doc){
+            var error = new Error('이미 iMissYou를 했습니다.');
+            error.code = 400;
+            return next(error);
+        }else{
+            Blog.pushIMissYouToBlog(blogId, blogKey, function(err, doc){
+                if(err){
+                    console.error('ERROR PUSHING IMISSYOUS ', err);
+                    var error = new Error('iMissYou를 할 수 없습니다.');
+                    error.code = 400;
+                    return next(error);
+                }
+                console.log(doc);
+                var msg = {
+                    code : 200,
+                    msg : 'Success'
+                };
+                res.status(msg.code).json(msg);
+            });
+        }
+    });
+};

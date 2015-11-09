@@ -66,12 +66,18 @@ blogSchema.statics = {
     },
     findFansOfBlog : function(blogId, callback){ // pagination 추가
         this.findOne({_id : new ObjectId(blogId)}).
-            select('-_user -type -bgPhoto -nick -profilePhoto -intro -iMissYous -location -createAt -updateAt -isActivated').
+            select('-_id -_user -type -bgPhoto -nick -profilePhoto -intro -iMissYous -location -createAt -updateAt -isActivated').
+            populate('fans', '-type -bgPhoto -intro -iMissYou -fans -location -createAt -updateAt -isActivated').
+            exec(callback);
+    },
+    findArtistsOfUser : function(blogId, callback){
+        this.find({fans : new ObjectId(blogId)}).
+            select('-type -bgPhoto -intro -iMissYous -location -createAt -updateAt -isActivated').
             exec(callback);
     },
     findIMissYousOfBlog : function(blogId, callback){  //pagination 추가
         this.findOne({_id : new ObjectId(blogId)}).
-            select('-_user -type -bgPhoto -nick -profilePhoto -intro -fans -location -createAt -updateAt -isActivated').
+            select('-_id -_user -type -bgPhoto -nick -profilePhoto -intro -fans -location -createAt -updateAt -isActivated').
             exec(callback);
     },
     findProfilePhotoOfBlog : function(blogId, callback){
@@ -83,6 +89,21 @@ blogSchema.statics = {
         this.findOne({_id : new ObjectId(blogId)}).
             select('-_id -_user -type -nick -profilePhoto -intro -fans -iMissYous -location -createAt -updateAt -isActivated').
             exec(callback);
+    },
+    pushFanToBlog : function(blogId, userBlogId, callback){
+        return this.findOneAndUpdate({_id : new ObjectId(blogId)}, {$push : {fans : new ObjectId(userBlogId)}}, callback);
+    },
+    pullFanFromBlog : function(blogId, userBlogId, callback){
+        return this.findOneAndUpdate({_id : new ObjectId(blogId)}, {$pull : {fans : new ObjectId(userBlogId)}}, callback);
+    },
+    pushIMissYouToBlog : function(blogId, userBlogId, callback){
+        return this.findOneAndUpdate({_id : new ObjectId(blogId)}, {$push : {iMissYous : new ObjectId(userBlogId)}}, callback);
+    },
+    pullIMissYouFromBlog : function(blogId, userBlogId, callback){
+        return this.findOneAndUpdate({_id : new ObjectId(blogId)}, {$pull : {iMissYous : new ObjectId(userBlogId)}}, callback);
+    },
+    removeBlog : function(blogId, callback){
+        return this.findOneAndRemove({_id : new ObjectId(blogId)}, callback);
     }
 
 };

@@ -3,8 +3,8 @@
  */
 var Blog = require('./../models/schemas/Blogs');
 
-var userKey = '563cc592e1bdc2c8177dd104'; // session에 있을 정보
-var blogKey = '563cc593e1bdc2c8177dd10c'; // session에 있을 정보
+var userKey = '563ef1ca401ae00c19a15829'; // session에 있을 정보
+var blogKey = '563ef1ca401ae00c19a15832'; // session에 있을 정보
 
 /**
  * 개인 Blog 기본 정보 가져오기

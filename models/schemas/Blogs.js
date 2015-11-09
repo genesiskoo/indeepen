@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var ObjectId = mongoose.ObjectId;
+var ObjectId = mongoose.Types.ObjectId;
 
 var User = require('./Users');
 
@@ -56,24 +56,35 @@ blogSchema.statics = {
     },
     findBlogsOfUser : function(userId, callback){
         this.find({_user : new ObjectId(userId)}).
-            select('-intro -iMissYous -fans -location -createAt - updateAt').
+            select('-intro -iMissYous -fans -location -createAt -updateAt').
             exec(callback);
     },
     findOneBlog : function(blogId, callback){
         this.findOne({_id : new ObjectId(blogId)}).
-            select('-intro -location -createAt - updateAt - isActivated').
+            select('-intro -location -createAt -updateAt -isActivated').
             exec(callback);
     },
     findFansOfBlog : function(blogId, callback){ // pagination 추가
         this.findOne({_id : new ObjectId(blogId)}).
-            select('-_user -type -bgPhoto -nick -profilePhoto -intro -iMissYous -location -createAt - updateAt -isActivated').
+            select('-_user -type -bgPhoto -nick -profilePhoto -intro -iMissYous -location -createAt -updateAt -isActivated').
             exec(callback);
     },
     findIMissYousOfBlog : function(blogId, callback){  //pagination 추가
         this.findOne({_id : new ObjectId(blogId)}).
-            select('-_user -type -bgPhoto -nick -profilePhoto -intro -fans -location -createAt - updateAt -isActivated').
+            select('-_user -type -bgPhoto -nick -profilePhoto -intro -fans -location -createAt -updateAt -isActivated').
+            exec(callback);
+    },
+    findProfilePhotoOfBlog : function(blogId, callback){
+        this.findOne({_id : new ObjectId(blogId)}).
+            select('-_id -_user -type -bgPhoto -nick -intro -fans -iMissYous -location -createAt -updateAt -isActivated').
+            exec(callback);
+    },
+    findBgPhotoOfBlog : function(blogId, callback){
+        this.findOne({_id : new ObjectId(blogId)}).
+            select('-_id -_user -type -nick -profilePhoto -intro -fans -iMissYous -location -createAt -updateAt -isActivated').
             exec(callback);
     }
+
 };
 
 

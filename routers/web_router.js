@@ -6,13 +6,15 @@ var router = express.Router();
 var fs = require('fs');
 //var reply = require('../controllers/Reply.js');
 var path = __dirname+'/../views';
-
+var showPost = require('./../controllers/ShowPosts');
 
 // menu(home)
 router.get('/', function(req, res){
     fs.createReadStream(path+'/menu.html').pipe(res);
 });
 
+
+router.get('/showPostsForm', showPost.getShowAddForm);
 //
 //// reply
 //router.get('/reply/:post_id', reply.findReplies)

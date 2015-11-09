@@ -1,7 +1,7 @@
 /**
  * Created by Moon Jung Hyun on 2015-11-08.
  */
-var Blog = require('./../models/schemas/Blogs');
+var Blog = require('./../models/Blogs');
 
 var userKey = '563ef1ca401ae00c19a15829'; // session에 있을 정보
 var blogKey = '563ef1ca401ae00c19a15832'; // session에 있을 정보

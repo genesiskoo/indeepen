@@ -22,8 +22,8 @@ var uploadUrl = __dirname + './../upload';
 var userKey = '563ef1ca401ae00c19a15829'; // session에 있을 정보
 var blogKey = '563ef1ca401ae00c19a15832'; // session에 있을 정보
 
-var Comment = require('./../models/schemas/Comments');
-var Post = require('./../models/schemas/Posts');
+var Comment = require('./../models/Comments');
+var Post = require('./../models/Posts');
 
 
 module.exports.getShowAddForm = function(req,res){

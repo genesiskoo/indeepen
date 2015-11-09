@@ -1,93 +1,51 @@
-var ObjectId = require('mongoose').Types.ObjectId;
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 
-var Reply = require('./schemas/Replies.js');
-var Blog = require('./schemas/Blogs');
+//var autoIncrement = require('mongoose-auto-increment');
+//autoIncrement.initialize(mongoose);
 
-/*
- 포스트를 저장하면 댓글 초기화 해야 함
- */
-module.exports.initReply = function(postId, callback){
-    Reply.create({_post : postId}, callback);
-};
+var Blog = require('./Blogs');
+var Post = require('./Posts');
 
-/*
- 댓글 저장.
- */
-module.exports.saveReply = function(postId, replyInfo, callback){
-    console.log("saveReply");
-    Reply.findOneAndUpdate({_post : postId}, {$push : {replies : replyInfo}}, callback);
-};
+//var replySchema = new Schema({
+//    _id : Number,
+//    _post : {
+//        type : Number,
+//        ref : 'Post'
+//    },
+//    replies : [{
+//        _writer : {  // Blog에서 _user, nick, profile_photo  가져옴
+//            type : Number,
+//            ref : 'Blog'
+//        },
+//        content : {type : String, trim : true},
+//        addAt : {
+//            type : Date,
+//            default : Date.now
+//        }
+//    }],
+//    isValid : {
+//        type : Boolean,
+//        default : true
+//    }
+//}, {versionKey : false});
 
-/*
-    댓글 count
- */
-module.exports.countReplies = function(postId, callback){
-    Reply.findOne({_post : postId}, function(err, doc){
-        var cnt = doc.replies.length;
-        console.log('cnt', cnt);
-        callback(err, cnt);
-    });
-};
-/*
-    댓글 최신 2개만 가져오기
- */
-module.exports.findLast2Replies = function(postId, callback){
-    Reply.aggregate([{
-        $match : {_post : postId}
-    },  {
-        $unwind : "$replies"
-    },{
-        $sort : {
-            'replies.rg_date' : -1
-        }
-    }])
-        .limit(2)
-        .exec(function(err, docs){
-            Blog.populate(docs, {path : "replies._writer", select : '_id  nick'}, callback);
-        });
-};
+var replySchema = new Schema({
+    _writer : {  // Blog에서 _user, nick, profile_photo  가져옴
+        type : Number,
+        ref : 'Blog'
+    },
+    content : {type : String, trim : true},
+    createAt : {
+        type : Date,
+        default : Date.now
+    }
+}, {versionKey : false});
 
-/*
-    20개씩 끊어서....
-    paginationInfo = {
-        total : 10,
-        nowPage : 0,
- */
-module.exports.findReplies = function(postId, callback) {
-    var unit = 20;
-    Reply.aggregate([{
-        $match : {_post : postId}
-    },  {
-        $unwind : "$replies"
-    },{
-        $sort : {
-            'replies.addAt' : -1
-        }
-    }])
-        //.skip(0) 지금은 페이징 안함요......
-        //.limit(20)
-        .exec(function(err, docs){
-            Blog.populate(docs, {path : "replies._writer", select : '_id _user nick profilePhoto'}, callback);
-        });
-};
+//
+//replySchema.plugin(autoIncrement.plugin, {model:'Reply', startAt : 1});
 
-module.exports.deleteReply = function(replyId, callback) {
-    // 작성자 비교는 어디서 할 지 몰라서 보류임
+module.exports = mongoose.model('Reply', replySchema);
 
-    Reply.update({'_post': postId }, {
-        $pull: {
-            replies : {_id : new ObjectId(replyId)}
-        }
-    }, callback)
-};
-
-
-module.exports.updateReply = function(postId, replyId, content, callback) {
-    // 작성자 비교는 어디서 할 지 몰라서 보류임
-
-    Reply.update({'_post': postId, 'replies._id': new ObjectId(replyId)}, {
-        $set: {
-            'replies.$.content': content
-        }
-    }, callback)
-};
+		
+		

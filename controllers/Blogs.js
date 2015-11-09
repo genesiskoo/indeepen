@@ -1,7 +1,7 @@
 /**
  * Created by Moon Jung Hyun on 2015-11-09.
  */
-var Blog = require('./../models/schemas/Blogs');
+var Blog = require('./../models/Blogs');
 
 var userKey = '563ef1ca401ae00c19a15829'; // session에 있을 정보
 var blogKey = '563ef1ca401ae00c19a15832'; // session에 있을 정보
@@ -118,7 +118,13 @@ module.exports.changeFanOfBlog = function(req, res, next){
     }
 };
 
-
+/**
+ * 공간/개인 블로그 i miss you 를 한 회원 목록 가져오기
+ * @param req
+ * @param res
+ * @param next
+ * @returns {*}
+ */
 module.exports.getiMissYous = function(req, res, next){
     var blogId = req.params.blogId;
     if(!blogId){

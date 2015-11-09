@@ -27,8 +27,8 @@ module.exports.showAddWorkPostPage = function(req, res){
     fs.createReadStream(__dirname + './../views/workPost.html').pipe(res);
 };
 
-var Comment = require('./../models/schemas/Comments');
-var Post = require('./../models/schemas/Posts');
+var Comment = require('./../models/Comments');
+var Post = require('./../models/Posts');
 
 /**
  * 예술 Post 저장하기

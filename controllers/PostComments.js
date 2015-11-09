@@ -2,7 +2,7 @@
  * Created by Moon Jung Hyun on 2015-11-07.
  */
 
-var Comment = require('./../models/schemas/Comments');
+var Comment = require('./../models/Comments');
 
 /**
  * 해당 Comment 삭제하기

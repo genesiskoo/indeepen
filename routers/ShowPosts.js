@@ -9,8 +9,8 @@ var showPost = require('./../controllers/ShowPosts');
 
 //list
 router.get('/', showPost.getShowList);
-//addform
-router.get('/showPostsForm', showPost.getShowAddForm);
+//addform-web
+//router.get('/showPostsForm', showPost.getShowAddForm);
 //add
 router.post('/', showPost.addShowPost);
 //detail

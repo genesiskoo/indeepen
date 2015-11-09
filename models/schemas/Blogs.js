@@ -1,29 +1,27 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+var ObjectId = mongoose.Types.ObjectId;
 
 var User = require('./Users');
 
-var autoIncrement = require('mongoose-auto-increment');
-autoIncrement.initialize(mongoose);
-
 var blogSchema = new Schema({
-	_id: Number,
-	_user: { type : Number, ref :'User'},
+	_user: { type : Schema.Types.ObjectId, ref :'User'},
 	type : {                         /// 0(개인) 1(블로그)
 		type : Number,
 		default : 0
 	},
 	bgPhoto: {
 		type : String,
-		default : '/images/bg_thumbnail/default.png'
+		default : 'https://s3-ap-northeast-1.amazonaws.com/in-deepen/images/bg/default_bg.png'
 	},
 	nick: String,
 	profilePhoto: {
 		type : String,
-		default : '/images/profile_thumbnail/default.png'
+		default : 'https://s3-ap-northeast-1.amazonaws.com/in-deepen/images/profile/icon-cafe.png'
 	},
 	intro : String,
-	fans: [{type : Number, ref : 'User'}],
+    iMissYous : [{type : Schema.Types.ObjectId, ref : 'Blog'}],
+	fans: [{type : Schema.Types.ObjectId, ref : 'Blog'}],
 	location: {
 		point: {
 			type: {
@@ -41,20 +39,53 @@ var blogSchema = new Schema({
     updateAt : {
         type : Date,
         default : Date.now
-    },
+    },  // blog 에 isActivated가 있는 것보다는 User에 활동 중인 blog의 _id가 있는 게  더 좋을 수도...
 	isActivated: {
 		type: Boolean,
 		default: true
-	},
-	isValid: {
-        type: Boolean,
-        default: true
-    }
+	}
 }, { versionKey: false });
 
-blogSchema.plugin(autoIncrement.plugin, {
-	model : 'Blog',
-	startAt : 1
-});
+blogSchema.statics = {
+    // 댓글 달때 사용자 id 편하게 하기 위해 한 것. 나중에 지워....
+    findBlogs: function (callback) {
+        return this.find().exec(callback);
+    },
+    saveBlog: function (blogInfo, callback) {
+        return this.create(blogInfo, callback);
+    },
+    findBlogsOfUser : function(userId, callback){
+        this.find({_user : new ObjectId(userId)}).
+            select('-intro -iMissYous -fans -location -createAt -updateAt').
+            exec(callback);
+    },
+    findOneBlog : function(blogId, callback){
+        this.findOne({_id : new ObjectId(blogId)}).
+            select('-intro -location -createAt -updateAt -isActivated').
+            exec(callback);
+    },
+    findFansOfBlog : function(blogId, callback){ // pagination 추가
+        this.findOne({_id : new ObjectId(blogId)}).
+            select('-_user -type -bgPhoto -nick -profilePhoto -intro -iMissYous -location -createAt -updateAt -isActivated').
+            exec(callback);
+    },
+    findIMissYousOfBlog : function(blogId, callback){  //pagination 추가
+        this.findOne({_id : new ObjectId(blogId)}).
+            select('-_user -type -bgPhoto -nick -profilePhoto -intro -fans -location -createAt -updateAt -isActivated').
+            exec(callback);
+    },
+    findProfilePhotoOfBlog : function(blogId, callback){
+        this.findOne({_id : new ObjectId(blogId)}).
+            select('-_id -_user -type -bgPhoto -nick -intro -fans -iMissYous -location -createAt -updateAt -isActivated').
+            exec(callback);
+    },
+    findBgPhotoOfBlog : function(blogId, callback){
+        this.findOne({_id : new ObjectId(blogId)}).
+            select('-_id -_user -type -nick -profilePhoto -intro -fans -iMissYous -location -createAt -updateAt -isActivated').
+            exec(callback);
+    }
+
+};
+
 
 module.exports = mongoose.model('Blog', blogSchema);

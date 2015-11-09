@@ -1,37 +1,59 @@
 /**
- * Created by moonjunghyun on 2015-11-04.
+ * Created by Moon Jung Hyun on 2015-11-07.
  */
 
-var mongoose = requrie('mongoose');
+var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var autoIncrement = require('mongoose-auto-increment');
-var Post = require('./Posts.js');
-var User = require('./Users');
+var ObjectId = mongoose.Types.ObjectId;
 
-autoIncrement.initialize(mongoose);
+var Post = require('./Posts');
+var User = require('./Blogs');
 
 var reportSchema = new Schema({
-    _id : Number,
     _post : {
-        type: Number,
+        type: Schema.Types.ObjectId,
         ref: 'Post'
     },
-    reports : [{
-        _report : {
-            type : Number,
-            ref : 'User'
-        },
-        reportAt : {
-            type : Date,
-            default : Date.now
-        },
-        handleAt : Date
-    }]
+    _reporter : {
+        type : Schema.Types.ObjectId,
+        ref : 'Blog'
+    },
+    createAt : {
+        type : Date,
+        default : Date.now
+    }
 }, {versionKey : false});
 
-reportSchema.plugin(autoIncrement.plugin, {
-    model:'Report',
-    startAt : 1
-});
+reportSchema.statics = {
+    saveReport : function(postId, blogId, callback){
+        var reportInfo = {
+            _post : new ObjectId(postId),
+            _reporter : new ObjectId(blogId)
+        };
+        this.create(reportInfo, callback);
+    },
+    isReported : function(postId, blogId, callback){
+        this.findOne({_post : new ObjectId(postId), _reporter : new ObjectId(blogId)}, function(err, doc){
+            if(err){
+                callback(err, null);
+            }else{
+                if(doc){
+                    callback(null, true);
+                }else{
+                    callback(null, false);
+                }
+            }
+        });
+    },
+    findReport : function(reportId, callback){
+        this.findOne({_id : new ObjectId(reportId)})
+            .exec(callback);
+    },
+    findReportsOfPost : function(postId, callback){
+        this.find({_post : new ObjectId(postId)})
+            .sort({createAt : -1})
+            .exec(callback);
+    }
+};
 
 module.exports = mongoose.model('Report', reportSchema);

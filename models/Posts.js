@@ -4,13 +4,10 @@ module.exports.savePost = function(postInfo, callback){
     Post.create(postInfo, callback);
 }
 
-module.exports.findPost = function(key, callback){
-	key['isValid'] = {
-		isValid : true
-	};
-	console.log('key, ', key);
-	Post.findOne(key)
-	.populate('_writer', 'user_id nick profile_photo')
+module.exports.findPost = function(postId, callback){
+	console.log('key, ', postId);
+	Post.findOne(postId)
+	.populate('_writer', '_user nick profile_photo')
 	.exec(callback);
 }
 

@@ -1,89 +1,94 @@
 /**
- * Created by heuneul on 2015-11-06.
+ * Created by Moon Jung Hyun on 2015-11-06.
  */
 
-var ObjectId = require('mongoose').Types.ObjectId;
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
+var ObjectId = mongoose.Types.ObjectId;
 
-var Comment = require('./schemas/Comments');
-//var Blog = require('./schemas/Blogs');
+var Blog = require('./Blogs');
 
-/*
- 댓글 저장.
- */
-module.exports.saveComment = function(commentInfo, callback){
-    Comment.create(commentInfo, callback);
+var commentSchema = new Schema({
+    _post : {
+        type : Schema.Types.ObjectId,
+        ref : 'Post',
+        index : true
+    },
+    _writer : {  // Blog에서 _user, nick, profile_photo  가져옴
+        type : Schema.Types.ObjectId,
+        ref : 'Blog'
+    },
+    content : {type : String, trim : true},
+    createAt : {
+        type : Date,
+        default : Date.now
+    }
+}, {versionKey : false});
+
+commentSchema.statics = {
+    /**
+     * comment 저장하기
+     * @param postId
+     * @param writer
+     * @param content
+     * @param callback
+     */
+    saveComment : function(postId, writer, content, callback){
+        var commentInfo = {
+            _post : postId,
+            _writer : writer,
+            content : content
+        };
+        this.create(commentInfo, callback);
+    },
+    /**
+     * 해당 post에 대한 댓글 모두 삭제하기
+     * @param postId
+     * @param callback
+     */
+    removeComments : function(postId, callback){
+        console.log('remove Comments statics method');
+        this.remove({_post : new ObjectId(postId)}, callback);
+    },
+    /**
+     * 특정 comment 한개 삭제하기
+     * @param commentId
+     * @param callback
+     */
+    removeComment : function(commentId, callback){
+        this.remove({_id : new ObjectId(commentId)}, callback);
+    },
+    /**
+     * 해당 post의 comment 개수 세기
+     * @param postId
+     * @param callback
+     */
+    countCommentsOfPost : function(postId, callback){
+        this.where('_post', new ObjectId(postId)).count(callback);
+    },
+    /**
+     * 해당 post의 가장 최신 comment 2개 가져오기
+     * @param postId
+     * @param callback
+     */
+    findLast2Comments : function(postId, callback){
+        this.find({_post : new ObjectId(postId)}, {_writer : 1, content : 1}).
+            sort({createAt : -1}).
+            limit(2).
+            populate('_writer', '-_id -_user -type -bgPhoto -intro -profilePhoto -iMissYous -fans -location -createAt -updateAt -isActivated').
+            exec(callback);
+    },
+    /**
+     * 해당 post의 comments 가져오기
+     * @param postId
+     * @param callback
+     */
+    findCommentsOfPost : function(postId, callback){
+        this.find({_post : new ObjectId(postId)}, {_id : 1, _writer : 1, content : 1, createAt : 1}).
+            sort({createAt : -1}).
+            populate('_writer', '-type -bgPhoto -intro -iMissYous -fans -location -createAt -updateAt -isActivated').
+            exec(callback);
+    }
 };
 
-/*
- 댓글 count
- */
-//module.exports.countReplies = function(postId, callback){
-//    Reply.findOne({_post : postId}, function(err, doc){
-//        var cnt = doc.replies.length;
-//        console.log('cnt', cnt);
-//        callback(err, cnt);
-//    });
-//};
-/*
- 댓글 최신 2개만 가져오기
- */
-module.exports.findLast2Replies = function(postId, callback){
-    Reply.aggregate([{
-        $match : {_post : postId}
-    },  {
-        $unwind : "$replies"
-    },{
-        $sort : {
-            'replies.rg_date' : -1
-        }
-    }])
-        .limit(2)
-        .exec(function(err, docs){
-            Blog.populate(docs, {path : "replies._writer", select : '_id  nick'}, callback);
-        });
-};
-
-/*
- 20개씩 끊어서....
- paginationInfo = {
- total : 10,
- nowPage : 0,
- */
-module.exports.findReplies = function(postId, callback) {
-    var unit = 20;
-    Reply.aggregate([{
-        $match : {_post : postId}
-    },  {
-        $unwind : "$replies"
-    },{
-        $sort : {
-            'replies.addAt' : -1
-        }
-    }])
-        //.skip(0) 지금은 페이징 안함요......
-        //.limit(20)
-        .exec(function(err, docs){
-            Blog.populate(docs, {path : "replies._writer", select : '_id _user nick profilePhoto'}, callback);
-        });
-};
-
-module.exports.deleteReply = function(replyId, callback) {
-    // 작성자 비교는 어디서 할 지 몰라서 보류임
-
-    Reply.update({'_post': postId }, {
-        $pull: {
-            replies : {_id : new ObjectId(replyId)}
-        }
-    }, callback)
-};
-
-
-module.exports.updateReply = function(postId, replyId, content, callback) {
-    // 작성자 비교는 어디서 할 지 몰라서 보류임
-
-    Reply.update({'_post': postId, 'replies._id': new ObjectId(replyId)}, {
-        $set: {
-            'replies.$.content': content
-        }
-    }, callback)
-};
+module.exports = mongoose.model('Comment', commentSchema);

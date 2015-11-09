@@ -4,11 +4,11 @@
 var userKey = '563ef1ca401ae00c19a15829'; // session에 있을 정보
 var blogKey = '563ef1ca401ae00c19a15832'; // session에 있을 정보
 
-var Blog = require('./../models/schemas/Blogs');  // web 에서 정보 입력시 편하게 하게 하려고 추가 나중에 지움요.
+var Blog = require('./../models/Blogs');  // web 에서 정보 입력시 편하게 하게 하려고 추가 나중에 지움요.
 
-var Comment = require('./../models/schemas/Comments');
-var Post = require('./../models/schemas/Posts');
-var Report = require('./../models/schemas/Reports');
+var Comment = require('./../models/Comments');
+var Post = require('./../models/Posts');
+var Report = require('./../models/Reports');
 
 /**
  * 모든 type의 Post 가져오기

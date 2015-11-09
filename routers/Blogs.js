@@ -9,7 +9,10 @@ var Blog = require('./../controllers/Blogs');
 router.get('/:blogId/myFans', Blog.getFansOfBlog);
 router.get('/:blogId/myArtists', Blog.getArtistsOfBlog);
 
-router.put('/:blogId/fan/:fanStatus', Blog.changeFanOfBlog);
+router.get('/:blogId/iMissYou', Blog.getiMissYous);
+router.post('/:blogId/iMissYou', Blog.addiMissYou);
+
+// 이 router 는 무조건 마지막에 있어야 함....
+router.put('/:blogId/:fanStatus', Blog.changeFanOfBlog);
 
 module.exports = router;
-

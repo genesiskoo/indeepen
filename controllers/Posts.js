@@ -1,34 +1,13 @@
 /**
  * Created by Moon Jung Hyun on 2015-11-06.
  */
-var formidable = require('formidable'),
-    pathUtil = require('path');
-var fs = require('fs');
-var async = require('async');
-var randomstring = require('randomstring');
-var AWS = require('aws-sdk');
+var userKey = '563ef1ca401ae00c19a15829'; // session에 있을 정보
+var blogKey = '563ef1ca401ae00c19a15832'; // session에 있을 정보
 
-var awsS3 = require('./../config/s3');
-AWS.config.region = awsS3.region;
-AWS.config.accessKeyId = awsS3.accessKeyId;
-AWS.config.secretAccessKey = awsS3.secretAccessKey;
-
-// Listup All Files
-var s3 = new AWS.S3();
-var bucketName = awsS3.bucketName;
-var uploadUrl = __dirname + './../upload';
-
-var userKey = '563cc592e1bdc2c8177dd104'; // session에 있을 정보
-var blogKey = '563cc593e1bdc2c8177dd10c'; // session에 있을 정보
-
-
-
-var Post = require('../models/Posts');
-var Reply = require('../models/Replies');
 var Blog = require('./../models/schemas/Blogs');  // web 에서 정보 입력시 편하게 하게 하려고 추가 나중에 지움요.
 
 var Comment = require('./../models/schemas/Comments');
-var PostSchema = require('./../models/schemas/Posts');
+var Post = require('./../models/schemas/Posts');
 var Report = require('./../models/schemas/Reports');
 
 /**
@@ -54,7 +33,7 @@ module.exports.deletePost = function(req, res, next){
         error.code = 400;
         return next(error);
     }
-    PostSchema.removePost(postId, function(err, doc){
+    Post.removePost(postId, function(err, doc){
         if(err){
             console.error('ERROR REMOVE POST ', err);
             var error = new Error('Post를 삭제할 수 없습니다.');
@@ -92,7 +71,7 @@ module.exports.changeLike = function(req, res, next){
     console.log('postId', id);
     console.log('likeStatus', status);
     if(status == 'like'){ // 좋아요
-        PostSchema.pushLike(id, blogKey, function(err, doc){
+        Post.pushLike(id, blogKey, function(err, doc){
             if(err){
                 console.error('ERROR PUSH LIKE', err);
                 var error = new Error('좋아요에 실패했습니다.');
@@ -107,7 +86,7 @@ module.exports.changeLike = function(req, res, next){
             res.status(msg.code).json(msg);
         });
     }else if(status == 'unlike'){ // 좋아요 취소
-        PostSchema.pullLike(id, blogKey, function(err, doc){
+        Post.pullLike(id, blogKey, function(err, doc){
             if(err){
                 console.error('ERROR PULL LIKE ', err);
                 var error = new Error('좋아요를 취소할 수가 없습니다.');

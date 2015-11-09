@@ -23,12 +23,12 @@
                     pic : <img src="<%=resource.originalPath%>" width="200" height="200"/><br>
                 <%})%><br>
             show.type : <%=show.show.type%><br>
-            show.point : <%=show.show.point%><br>
             show.startDate : <%=show.show.startDate%><br>
             show.endDate : <%=show.show.endDate%><br>
             show.startTime : <%=show.show.startTime%><br>
             show.endTime : <%=show.show.endTime%><br>
             show.fee : <%=show.show.fee%><br>
+            show.location : <img src="http://maps.googleapis.com/maps/api/staticmap?center=<%=show.show.location.point.coordinates[0]%>,<%=show.show.location.point.coordinates[1]%>&zoom=9&scale=true&size=400x200&maptype=roadmap&format=png&visual_refresh=true&markers=size:mid|color:red|label:<%=show.show.location.address%>|<%=show.show.location.point.coordinates[0]%>,<%=show.show.location.point.coordinates[1]%>"/>
         </li></div>
         <% });  %>
     </ol>

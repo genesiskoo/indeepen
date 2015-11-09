@@ -82,6 +82,7 @@ postSchema.methods.findByPostType =function(callback){
         sort({createAt : -1}).
         populate({path : '_writer', select : '_id _user nick profilePhoto'}).
         populate({path : 'likes', select : '_id _user nick profilePhoto'}).
+        populate({path : 'show.tags', select : '_id _user nick profilePhoto'}).
         exec(callback);
 };
 

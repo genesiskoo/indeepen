@@ -304,12 +304,13 @@ module.exports.addShowPost = function(req, res, next){
                     }else{
                         callback(null,uploadInfo.showType, uploadInfo.title, uploadInfo.startDate, uploadInfo.endDate,
                             uploadInfo.startTime, uploadInfo.endTime, uploadInfo.fee, uploadInfo.blogId,
-                            uploadInfo.content, uploadInfo.address, imageUrls);
+                            uploadInfo.content, uploadInfo.address, uploadInfo.latitude, uploadInfo.longitude, imageUrls);
+                    console.log(uploadInfo);
                     }
                 });
 
             },
-            function (showType, title, startDate, endDate, startTime,endTime,fee, blogId, content, address, urls, callback) {
+            function (showType, title, startDate, endDate, startTime,endTime,fee, blogId, content, address, latitude,longitude, urls, callback) {
 
 
 
@@ -341,6 +342,7 @@ module.exports.addShowPost = function(req, res, next){
                         fee : fee,
                         location : {
                             point : {
+                                coordinates : [latitude,longitude]
                             },
                             address : address
                         }//loc

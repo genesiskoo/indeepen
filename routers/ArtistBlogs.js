@@ -12,4 +12,6 @@ router.get('/:blogId/profilePhoto', ArtistBlog.getArtistBlogProfilePhoto);
 
 router.get('/:blogId/bgPhoto', ArtistBlog.getArtistBlogBgPhoto);
 
+router.get('/:blogId/profile', ArtistBlog.getArtistBlogProfile);
+
 module.exports = router;

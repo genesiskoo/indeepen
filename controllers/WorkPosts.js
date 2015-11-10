@@ -17,7 +17,7 @@ AWS.config.secretAccessKey = awsS3.secretAccessKey;
 // Listup All Files
 var s3 = new AWS.S3();
 var bucketName = awsS3.bucketName;
-var uploadUrl = __dirname + './../upload';
+var uploadUrl = __dirname + '/../upload';
 
 var userKey = '563ef1ca401ae00c19a15829'; // session에 있을 정보
 var blogKey = '563ef1ca401ae00c19a15832'; // session에 있을 정보
@@ -72,7 +72,7 @@ module.exports.addWorkPost = function(req, res, next){
                 var imageUrls = [];
                 var order = 0;
                 var randomStr = randomstring.generate(10); // 10자리 랜덤
-                async.each(uploadInfo.files, function(file, callback){
+                async.eachSeries(uploadInfo.files, function(file, callback){
                     var newFileName = 'content_'+ randomStr+'_' + (order++) ;
                     var extname = pathUtil.extname(file.name);
                     var contentType = file.type;
@@ -110,14 +110,9 @@ module.exports.addWorkPost = function(req, res, next){
                         }
                     });
 
-                }, function(err){
-                    if(err){
-                        callback(err);
-                    }else{
-                        callback(null, uploadInfo.workType, uploadInfo.emotion, uploadInfo.blogId, uploadInfo.content, imageUrls);
-                    }
+                }, function done(){
+                    callback(null, uploadInfo.workType, uploadInfo.emotion, uploadInfo.blogId, uploadInfo.content, imageUrls);
                 });
-
             },
             function (workType, emotion, blogId, content, urls, callback) {
                 // hash_tag 추출
@@ -176,14 +171,14 @@ module.exports.addWorkPost = function(req, res, next){
             }
             else {
                 // app..
-                /*
+
                 var msg = {
                     code : 200,
                     msg : 'Success'
                 };
                 res.status(msg.code).json(msg);
-                */
-                res.redirect('/workPosts/page');
+
+                //res.redirect('/workPosts/page');
             }
         });
 };
@@ -233,7 +228,7 @@ module.exports.getWorkPosts = function(req, res, next){
             });
         }, function done(){
 
-            /*
+
              var msg = {
              code : 200,
              msg : 'Success',
@@ -243,9 +238,9 @@ module.exports.getWorkPosts = function(req, res, next){
              }
              };
              res.status(msg.code).json(msg);
-             */
 
-            res.render('post', {works : works});
+           // console.log('doc ', works);
+           // res.render('post', {works : works});
         });
     });
 };

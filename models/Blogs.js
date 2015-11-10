@@ -81,6 +81,15 @@ blogSchema.statics = {
             populate('iMissYous', '-type -bgPhoto -intro -iMissYous -fans -location -createAt -updateAt -isActivated').
             exec(callback);
     },
+    findProfileOfArtistBlog : function(blogId, callback){
+        this.findOne({_id : new ObjectId(blogId)}).
+            select('-type -bgPhoto -nick -profilePhoto -iMissYous -fans -location -createAt -updateAt -isActivated').
+            populate('_user', '-password -profilePhoto -intro -createAt -updateAt').
+            exec(callback);
+    },
+    updateProfileOfArtistBlog : function(blogId, newInfo, callback){
+        this.findOneAndUpdate({_id : new ObjectId(blogId)}, { $set : newInfo}, callback);
+    },
     findProfilePhotoOfBlog : function(blogId, callback){
         this.findOne({_id : new ObjectId(blogId)}).
             select('-_id -_user -type -bgPhoto -nick -intro -fans -iMissYous -location -createAt -updateAt -isActivated').

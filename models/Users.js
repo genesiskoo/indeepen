@@ -52,6 +52,9 @@ userSchema.post('save', function(doc){
 userSchema.statics = {
     saveUser : function(userInfo, callback){
         return this.create(userInfo, callback);
+    },
+    updateProfileAtArtistBlog : function(userId, newInfo, callback){
+        this.findOneAndUpdate({_id : new ObjectId(blogId)}, {$set : newInfo}, callback);
     }
 };
 

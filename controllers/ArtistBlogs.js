@@ -2,6 +2,7 @@
  * Created by Moon Jung Hyun on 2015-11-08.
  */
 var Blog = require('./../models/Blogs');
+var User = require('./../models/Users');
 
 var userKey = '563ef1ca401ae00c19a15829'; // session에 있을 정보
 var blogKey = '563ef1ca401ae00c19a15832'; // session에 있을 정보
@@ -88,4 +89,34 @@ module.exports.getArtistBlogBgPhoto = function(req, res, next){
         };
         res.status(msg.code).json(msg);
     });
+}
+
+module.exports.getArtistBlogProfile = function(req, res, next){
+    var blogId = req.params.blogId;
+    if(!blogId){
+        var error = new Error('URL 확인 부탁해요.');
+        error.code = 400;
+        return next(error);
+    }
+    Blog.findProfileOfArtistBlog(blogId, function(err, doc){
+        if(err){
+            console.error('ERROR GETTING PROFILE OF ARTISTBLOG ', err);
+           var error = new Error('profile 을 가져올 수 없습니다.');
+           error.code = 400;
+           return next(error);
+        }
+        console.log('profile ', doc);
+        var msg = {
+            code : 200,
+            msg : 'Success',
+            result : doc
+        };
+        res.status(msg.code).json(msg);
+    });
+};
+
+module.exports.modifyArtistBlogProfile = function(req, res, next){
+    var blogId = req.params.blogId;
+    var newNick = req.body.nick;
+
 };

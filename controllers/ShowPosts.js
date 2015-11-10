@@ -19,17 +19,37 @@ var s3 = new AWS.S3();
 var bucketName = awsS3.bucketName;
 var uploadUrl = __dirname + './../upload';
 
-var userKey = 1; // session에 있을 정보
-var blogKey = 1; // session에 있을 정보
+var userKey = '563ef1ca401ae00c19a15829'; // session에 있을 정보
+var blogKey = '563ef1ca401ae00c19a15832'; // session에 있을 정보
 
-var Comment = require('./../models/schemas/Comments');
-var Post = require('./../models/schemas/Posts');
+var Comment = require('./../models/Comments');
+var Post = require('./../models/Posts');
 
-
+//add_form
 module.exports.getShowAddForm = function(req,res){
     fs.createReadStream(__dirname + './../views/showAddForm.html').pipe(res);
 }
 
+//List
+module.exports.getShowList = function(req,res){
+    var showList = new Post({postType : 1});
+    showList.findByPostType(function(err,shows){
+       if(err){
+           console.error(err);
+           var error = new Error('Show List 를 가져올 수 없다');
+           error.code = 400;
+           return next(error);
+       }
+        res.render('shows',{shows : shows});
+    });
+}
+//detail
+module.exports.getShowPost = function(req,res){
+    //상세표시 추가예정
+}
+
+
+//will remove
 module.exports.getShowPosts = function(req,res){
     var showPost = new Post({postType : 1});
     showPost.findByPostType(function(err, showPosts){

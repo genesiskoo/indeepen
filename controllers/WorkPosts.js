@@ -19,16 +19,16 @@ var s3 = new AWS.S3();
 var bucketName = awsS3.bucketName;
 var uploadUrl = __dirname + './../upload';
 
-var userKey = 1; // session에 있을 정보
-var blogKey = 1; // session에 있을 정보
+var userKey = '563ef1ca401ae00c19a15829'; // session에 있을 정보
+var blogKey = '563ef1ca401ae00c19a15832'; // session에 있을 정보
 
 //////////////////////// web 용
 module.exports.showAddWorkPostPage = function(req, res){
-    fs.createReadStream(__dirname + './../views/workPost.html').pipe(res);
+    fs.createReadStream(__dirname + '/../views/workPost.html').pipe(res);
 };
 
-var Comment = require('./../models/schemas/Comments');
-var Post = require('./../models/schemas/Posts');
+var Comment = require('./../models/Comments');
+var Post = require('./../models/Posts');
 
 /**
  * 예술 Post 저장하기

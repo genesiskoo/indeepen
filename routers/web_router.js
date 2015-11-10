@@ -14,7 +14,6 @@ router.get('/', function(req, res){
 });
 
 
-router.get('/showPostsForm', showPost.getShowAddForm);
 //
 //// reply
 //router.get('/reply/:post_id', reply.findReplies)

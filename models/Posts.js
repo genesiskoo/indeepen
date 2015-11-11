@@ -170,6 +170,17 @@ postSchema.statics = {
     },
     removePost : function(postId, callback){
         this.findOneAndRemove({_id : new ObjectId(postId)}, callback);
+    },
+
+    showList: function (options, cb) {
+        var criteria = options.criteria || {}
+
+        this.find(criteria)
+            .populate('_writer', '_id nick profilePhoto')
+            .sort({'createdAt': -1}) // sort by date
+            .limit(options.perPage)
+            .skip(options.perPage * options.page)
+            .exec(cb);
     }
 };
 

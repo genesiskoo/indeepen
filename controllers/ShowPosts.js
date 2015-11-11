@@ -53,7 +53,7 @@ module.exports.getShowList = function (req, res) {
                     return next(error);
                 }
                 result['commentCnt'] = count;
-                console.log('result, :', result);
+                //console.log('result, :', result);
                 showList.push(result);
                 callback();
             })//count
@@ -66,6 +66,7 @@ module.exports.getShowList = function (req, res) {
             };
             //res.render('shows',{shows : shows});
             res.status(msg.code).json(msg);
+            console.log(msg);
         });//async
     });//findPostType
     //post결과와 comment수 결과를 담을 객체 생성
@@ -75,18 +76,9 @@ module.exports.getShowList = function (req, res) {
 //detail
 module.exports.getShowPost = function (req, res) {
     //상세표시 추가예정
+    var showModel
 }
 
-
-//will remove
-module.exports.getShowPosts = function (req, res) {
-    var showPost = new Post({postType: 1});
-    showPost.findByPostType(function (err, showPosts) {
-        console.log(showPosts);
-        res.render('shows', {shows: showPosts});
-    });
-};
-//change
 //문화컨텐츠 추가 POST
 module.exports.addShowPost = function (req, res, next) {
     async.waterfall(

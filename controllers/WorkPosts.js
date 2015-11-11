@@ -230,12 +230,9 @@ module.exports.getWorkPosts = function(req, res, next){
 
 
              var msg = {
-             code : 200,
-             msg : 'Success',
-             result : {
-             // pagination 추가
-             works : works
-             }
+                 code : 200,
+                 msg : 'Success',
+                 result : works
              };
              res.status(msg.code).json(msg);
 

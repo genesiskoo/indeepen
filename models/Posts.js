@@ -91,7 +91,7 @@ postSchema.methods = {
             equals(this.postType).
             select(select).
             sort({createAt : -1}).
-            populate({path : '_writer', select : '-type -bgPhoto -intro -iMissYou -fans -location -createAt -updateAt -isActivated'}).
+            populate({path : '_writer', select : '-type -bgPhoto -intro -iMissYous -fans -location -createAt -updateAt -isActivated'}).
             //populate({path : 'likes', select : '_id _user nick profilePhoto'}).
             populate('show.tags._user', '_id _user nick profilePhoto').
             exec(callback);
@@ -111,7 +111,7 @@ postSchema.statics = {
     findPost : function(postId, postType, callback){
         var select = '';
         if(postType == 0){
-            select = 'createAt _writer content likes work resources';
+            select ='createAt _writer content likes work resources';
         }else{
             select = 'createAt _writer content likes show resources';
         }
@@ -121,6 +121,7 @@ postSchema.statics = {
             populate('show.tags._user', '_id _user nick profilePhoto').
             sort({createAt : -1}).
             exec(callback);
+
     },
     /**
      * 모든 type의 post들 가져오기

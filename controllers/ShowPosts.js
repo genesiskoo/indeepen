@@ -63,7 +63,7 @@ module.exports.getShowPosts = function(req,res){
         res.render('shows', {shows : showPosts});
     });
 };
-
+//change
 //문화컨텐츠 추가 POST
 module.exports.addShowPost = function(req, res, next){
     async.waterfall(

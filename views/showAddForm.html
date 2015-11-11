@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Show Form</title>
+</head>
+<body>
+<h3>Add Show Form</h3>
+    <form method="post" action="/showPosts" enctype="multipart/form-data">
+        작성자No<input type="text" name ="blogId" value="563ef1ca401ae00c19a15828"/><br>
+        파일1<input type='file' name="file" multiple="multiple"><br>
+        파일2<input type='file' name="file"><br>
+        파일3<input type='file' name="file"><br>
+        <p>게시 블로그
+        <select name='blogType'>
+            <option value="0">개인</option>
+            <option value="1">공간</option>
+        </select>
+        </p> 분야 선택
+        <select name="showType">
+            <option selected name='showType' value="0">전시</option>
+            <option value="1">공연</option>
+            <option value="2">상영</option>
+            <option value="3">예술 마켓</option>
+            <option value="4">페스티발</option>
+        </select></p>
+        </p> 시작일 <input type="date" name = 'startDate' min="2010-12-31" max="2020-12-31" value ='2015-11-6'/>
+        종료일<input type="date" name = 'endDate' min="2010-12-31" max="2020-12-31" value ='2015-11-6'/>
+        </p>
+
+        <p>시작 시간 :<input type ="text" name='startTime' placeholder="시작">
+            종료 시간 :<input type ="text" name='endTime' placeholder="끝"></p>
+        <p>입장료 :<input type ="text" name='fee' placeholder="입장료"></p>
+
+        <p>제목 :<input type ="text" name='title' placeholder="제목"></p>
+        소개 :<textarea row ='4' cols ='30' name='content'></textarea><br><br>
+        위치 : <br>
+        latitude :<input type='text' name ='latitude'> longitude : <input type="text" name ='longitude'><br>
+        address : <input type='text' name="address" size="140" placeholder="주소입력">
+        참여아티스트
+        <p><button>입력</button></p>
+    </form>
+
+</form>
+</body>
+</html>

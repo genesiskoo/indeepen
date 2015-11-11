@@ -13,14 +13,20 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.set('views', './views');
 app.set('view engine', 'ejs');
 
-app.use(require('./routers/post_router.js'));
+app.use('/posts', require('./routers/Posts.js'));
+app.use('/workPosts', require('./routers/WorkPosts'));
+app.use('/showPosts', require('./routers/ShowPosts'));
+app.use('/postComments', require('./routers/PostComments'));
+app.use('/artistBlogs', require('./routers/ArtistBlogs'));
+app.use('/blogs', require('./routers/Blogs'));
+
 app.use(require('./routers/web_router.js'));
-app.use(require('./routers/post_router.js'));
-//app.use(replyRouter);
-//app.use(postRouter);
+
 
 app.use(function (err, req, res, next) {
     //console.error(err.message);
+    console.log(req.method);
+    console.log(req.url);
     var msg = {
         code: err.code,
         msg: err.message

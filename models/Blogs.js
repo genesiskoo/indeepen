@@ -20,6 +20,8 @@ var blogSchema = new Schema({
 		default : 'https://s3-ap-northeast-1.amazonaws.com/in-deepen/images/profile/icon-cafe.png'
 	},
 	intro : String,
+    phone : String,
+    email : String,
     iMissYous : [{type : Schema.Types.ObjectId, ref : 'Blog'}],
 	fans: [{type : Schema.Types.ObjectId, ref : 'Blog'}],
 	location: {
@@ -94,6 +96,9 @@ blogSchema.statics = {
         this.findOne({_id : new ObjectId(blogId)}).
             select('-_id -_user -type -bgPhoto -nick -intro -fans -iMissYous -location -createAt -updateAt -isActivated').
             exec(callback);
+    },
+    updateProfilePhotoOfBlog : function(blogId, newUrl, callback){
+        this.findOneAndUpdate({_id : new ObjectId(blogId)}, {$set : {profilePhoto : newUrl}}, callback);
     },
     findBgPhotoOfBlog : function(blogId, callback){
         this.findOne({_id : new ObjectId(blogId)}).

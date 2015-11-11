@@ -91,7 +91,7 @@ postSchema.methods = {
             equals(this.postType).
             select(select).
             sort({createAt : -1}).
-            populate({path : '_writer', select : '-type -bgPhoto -intro -iMissYou -fans -location -createAt -updateAt -isActivated'}).
+            populate({path : '_writer', select : '-type -bgPhoto -intro -email -phone -iMissYous -fans -location -createAt -updateAt -isActivated'}).
            // populate({path : 'likes', select : '_id _user nick profilePhoto'}).
             exec(callback);
     }
@@ -116,7 +116,7 @@ postSchema.statics = {
         }
         return this.findOne({_id : new ObjectId(postId)}).
             select(select).
-            populate('_writer', '_id _user nick profilePhoto').
+            populate('_writer', '-type -bgPhoto -intro -email -phone -iMissYous -fans -location -createAt -updateAt -isActivated').
             populate('show.tags._user', '_id _user nick profilePhoto').
             sort({createAt : -1}).
             exec(callback);

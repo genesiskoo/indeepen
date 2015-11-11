@@ -26,47 +26,69 @@ var Comment = require('./../models/Comments');
 var Post = require('./../models/Posts');
 
 //add_form
-module.exports.getShowAddForm = function(req,res){
+module.exports.getShowAddForm = function (req, res) {
     fs.createReadStream(__dirname + './../views/showAddForm.html').pipe(res);
 }
 
 //List
-module.exports.getShowList = function(req,res){
-    var shows = [];
-    var showPost = new Post({postType : 1});
-    showPost.findByPostType(function(err,shows){
-       if(err){
-           console.error(err);
-           var error = new Error('Show List 를 가져올 수 없다');
-           error.code = 400;
-           return next(error);
-       }
-        //res.render('shows',{shows : shows});
-        var msg = {
-            code : 200,
-            msg : 'Success',
-            result : shows
-        };
-        res.status(msg.code).json(msg);
-    });
+module.exports.getShowList = function (req, res) {
+    var showList = [];
+    var showModel = new Post({postType: 1});
+    showModel.findByPostType(function (err, shows) {
+        if (err) {
+            console.error(err);
+            var error = new Error('Show List 를 가져올 수 없다');
+            error.code = 400;
+            return next(error);
+        }
+        async.eachSeries(shows, function (showModel, callback) {
+            var result = {
+                postInfo: showModel
+            };
+            Comment.countCommentsOfPost(showModel._id, function (err, count) {
+                if (err) {
+                    console.error('CANT COUNT DATGUL', err);
+                    var error = new Error('countComment Error');
+                    error.code = 400;
+                    return next(error);
+                }
+                result['commentCnt'] = count;
+                console.log('result, :', result);
+                showList.push(result);
+                callback();
+            })//count
+        }, function done() {
+
+            var msg = {
+                code: 200,
+                msg: 'Success',
+                result: showList
+            };
+            //res.render('shows',{shows : shows});
+            res.status(msg.code).json(msg);
+        });//async
+    });//findPostType
+    //post결과와 comment수 결과를 담을 객체 생성
 }
+
+
 //detail
-module.exports.getShowPost = function(req,res){
+module.exports.getShowPost = function (req, res) {
     //상세표시 추가예정
 }
 
 
 //will remove
-module.exports.getShowPosts = function(req,res){
-    var showPost = new Post({postType : 1});
-    showPost.findByPostType(function(err, showPosts){
+module.exports.getShowPosts = function (req, res) {
+    var showPost = new Post({postType: 1});
+    showPost.findByPostType(function (err, showPosts) {
         console.log(showPosts);
-        res.render('shows', {shows : showPosts});
+        res.render('shows', {shows: showPosts});
     });
 };
 //change
 //문화컨텐츠 추가 POST
-module.exports.addShowPost = function(req, res, next){
+module.exports.addShowPost = function (req, res, next) {
     async.waterfall(
         [
             function (callback) {
@@ -102,8 +124,8 @@ module.exports.addShowPost = function(req, res, next){
                 var imageUrls = [];
                 var order = 0;
                 var randomStr = randomstring.generate(10); // 10자리 랜덤
-                async.each(uploadInfo.files, function(file, callback){
-                    var newFileName = 'content_'+ randomStr+'_' + (order++) ;
+                async.each(uploadInfo.files, function (file, callback) {
+                    var newFileName = 'content_' + randomStr + '_' + (order++);
                     var extname = pathUtil.extname(file.name);
                     var contentType = file.type;
 
@@ -126,33 +148,33 @@ module.exports.addShowPost = function(req, res, next){
                             var imageUrl = s3.endpoint.href + bucketName + '/' + itemKey;
                             console.log('imageUrl ', imageUrl);
                             // aws의 upload에 생긴 파일 명시적으로 지워줘야 함
-                            console.log('filePath',file.path);
-                            fs.unlink(file.path, function(err){
-                                if(err){
+                            console.log('filePath', file.path);
+                            fs.unlink(file.path, function (err) {
+                                if (err) {
                                     var error = new Error('파일 삭제를 실패했습니다.');
                                     error.code = 400;
                                     return next(error);
-                                }else{
-                                    imageUrls.push({contentType : contentType, url :imageUrl});
+                                } else {
+                                    imageUrls.push({contentType: contentType, url: imageUrl});
                                     callback();
                                 }
                             });
                         }
                     });
 
-                }, function(err){
-                    if(err){
+                }, function (err) {
+                    if (err) {
                         callback(err);
-                    }else{
-                        callback(null,uploadInfo.showType, uploadInfo.title, uploadInfo.startDate, uploadInfo.endDate,
+                    } else {
+                        callback(null, uploadInfo.showType, uploadInfo.title, uploadInfo.startDate, uploadInfo.endDate,
                             uploadInfo.startTime, uploadInfo.endTime, uploadInfo.fee, uploadInfo.blogId,
-                            uploadInfo.content,uploadInfo.latitude,uploadInfo.longitude, uploadInfo.address, imageUrls);
+                            uploadInfo.content, uploadInfo.latitude, uploadInfo.longitude, uploadInfo.address, imageUrls);
                     }
                 });
 
             },
-            function (showType, title, startDate, endDate, startTime,endTime, fee,
-                      blogId, content, latitude,longitude, address, urls, callback) {
+            function (showType, title, startDate, endDate, startTime, endTime, fee,
+                      blogId, content, latitude, longitude, address, urls, callback) {
 
 
 
@@ -160,58 +182,58 @@ module.exports.addShowPost = function(req, res, next){
                 // hash_tag 추출
                 var tmpStr = content.split('#');
                 var hashTag = [];
-                for(var i=1; i<tmpStr.length; i++){
+                for (var i = 1; i < tmpStr.length; i++) {
                     var tmp = tmpStr[i].split(' ')[0];
-                    if(tmp != '')
+                    if (tmp != '')
                         hashTag.push(tmp);
                 }
 
                 // db 저장
                 var postInfo = {
-                    postType : 1,
-                    _writer : blogId,
-                    content : content,
-                    hashTags : hashTag,
-                    likes : [],
-                    show : {
-                        title : title,
-                        type : showType,
-                        tags : [],
-                        startDate : startDate,
-                        endDate : endDate,
-                        startTime : startTime,
-                        endTime : endTime,
-                        fee : fee,
-                        location : {
-                            point : {
-                                coordinates : [latitude, longitude]
+                    postType: 1,
+                    _writer: blogId,
+                    content: content,
+                    hashTags: hashTag,
+                    likes: [],
+                    show: {
+                        title: title,
+                        type: showType,
+                        tags: [],
+                        startDate: startDate,
+                        endDate: endDate,
+                        startTime: startTime,
+                        endTime: endTime,
+                        fee: fee,
+                        location: {
+                            point: {
+                                coordinates: [latitude, longitude]
                             },
-                            address : address
+                            address: address
                         }//loc
                     },
-                    resources : []
+                    resources: []
                 };
-                async.each(urls, function(url, callback){
+                async.each(urls, function (url, callback) {
                     console.log('url', url);
                     // s3 경로 저장
-                    postInfo.resources.push({type : url.contentType, originalPath : url.url});
+                    postInfo.resources.push({type: url.contentType, originalPath: url.url});
                     callback();
-                }, function(err){
-                    if(err){
+                }, function (err) {
+                    if (err) {
                         console.error('save workPosts async error ', err);
                         var error = new Error('file url 관리에서 실패.....');
                         console.error(err);
                         error.code = 400;
                         return next(error);
-                    }else{
+                    } else {
                         console.log("postInfo", postInfo);
-                        Post.savePost(postInfo, function(err, doc){
-                            if(err){
+                        Post.savePost(postInfo, function (err, doc) {
+                            if (err) {
                                 console.error('Error', err);
                                 var error = new Error('포스팅 실패');
                                 error.code = 400;
                                 next(error);
-                            }else{
+                            } else {
                                 console.log('Done');
                                 callback();
                             }
@@ -225,10 +247,10 @@ module.exports.addShowPost = function(req, res, next){
                 res.sendStatus(500);
             }
             else {
-                 var msg = {
-                 code : 200,
-                 msg : 'Success'
-                 };
+                var msg = {
+                    code: 200,
+                    msg: 'Success'
+                };
                 res.status(msg.code).json(msg);
                 res.redirect('/');
             }

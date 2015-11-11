@@ -85,14 +85,15 @@ postSchema.methods = {
         if(this.postType == 0)
             select = '_id createAt _writer content likes work resources';
         else
-            select = '_id createAt _writer content likes show resources';
+            select = '-content -hashTags -work -show.location.point'; //-수정
         return this.model('Post').find(options).
             where('postType').
             equals(this.postType).
             select(select).
             sort({createAt : -1}).
-            populate({path : '_writer', select : '-type -bgPhoto -intro -email -phone -iMissYous -fans -location -createAt -updateAt -isActivated'}).
-           // populate({path : 'likes', select : '_id _user nick profilePhoto'}).
+            populate({path : '_writer', select : '-type -bgPhoto -intro -iMissYous -fans -location -createAt -updateAt -isActivated'}).
+            //populate({path : 'likes', select : '_id _user nick profilePhoto'}).
+            populate('show.tags._user', '_id _user nick profilePhoto').
             exec(callback);
     }
 };
@@ -116,7 +117,7 @@ postSchema.statics = {
         }
         return this.findOne({_id : new ObjectId(postId)}).
             select(select).
-            populate('_writer', '-type -bgPhoto -intro -email -phone -iMissYous -fans -location -createAt -updateAt -isActivated').
+            populate('_writer', '_id _user nick profilePhoto').
             populate('show.tags._user', '_id _user nick profilePhoto').
             sort({createAt : -1}).
             exec(callback);

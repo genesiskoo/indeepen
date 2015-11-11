@@ -101,7 +101,8 @@ module.exports.addShowPost = function (req, res, next) {
                 form
                     .on('field', function (field, value) {
                         if(value == 'tag'){
-                            uploadInfo.tags.push(tag);
+                            var temTag = JSON.parse(value);
+                            uploadInfo.tags.push(temTag);
                         }
                         console.log('file 아님 ', field);
                         uploadInfo[field] = value;

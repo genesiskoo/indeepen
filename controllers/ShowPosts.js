@@ -27,7 +27,7 @@ var Post = require('./../models/Posts');
 
 //add_form
 module.exports.getShowAddForm = function(req,res){
-    fs.createReadStream(__dirname + './../views/showAddForm.html').pipe(res);
+    fs.createReadStream(__dirname + '/../views/showAddForm.html').pipe(res);
 }
 
 //List

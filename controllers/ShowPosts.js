@@ -32,8 +32,9 @@ module.exports.getShowAddForm = function(req,res){
 
 //List
 module.exports.getShowList = function(req,res){
-    var showList = new Post({postType : 1});
-    showList.findByPostType(function(err,shows){
+    var shows = [];
+    var showPost = new Post({postType : 1});
+    showPost.findByPostType(function(err,shows){
        if(err){
            console.error(err);
            var error = new Error('Show List 를 가져올 수 없다');

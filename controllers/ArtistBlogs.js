@@ -215,42 +215,51 @@ module.exports.modifyArtistBlogProfilePhoto = function(req, res, next){
                 });
             },
             function(file, callback){
-                console.log('file size ', file.size);
-                if(file.size == 0){
+                if(file == null){
                     console.log('not file');
-                    fs.unlik(file.path, function(err){
-                        if(err){
-                            var error = new Error('파일 삭제를 실패했습니다.');
-                            error.code = 400;
-                            return next(error);
-                        }else{
-                            callback(null, defaultArtistProfileUrl);
+                    callback(null, defaultArtistProfileUrl);
+                    //fs.unlink(file.path, function(err){
+                    //    if(err){
+                    //        var error = new Error('파일 삭제를 실패했습니다.');
+                    //        error.code = 400;
+                    //        return next(error);
+                    //    }else{
+                    //        callback(null, defaultArtistProfileUrl);
+                    //    }
+                    //});
+                }else {
+                    var randomStr = randomstring.generate(10);
+                    var newFileName = 'profile_' + randomStr;
+                    var extname = pathUtil.extname(file.name);
+                    var contentType = file.type;
+                    var fileStream = fs.createReadStream(file.path);
+                    var itemKey = 'images/profile/' + newFileName + extname;
+                    var params = {
+                        Bucket: bucketName,
+                        Key: itemKey,
+                        ACL: 'public-read',
+                        Body: fileStream,
+                        ContentType: contentType
+                    };
+                    s3.putObject(params, function (err, data) {
+                        if (err) {
+                            console.error('S3 PutObject Error', err);
+                            callback(err);
+                        }
+                        else {
+                            var imageUrl = s3.endpoint.href + bucketName + '/' + itemKey;
+                            fs.unlink(file.path, function (err) {
+                                if (err) {
+                                    var error = new Error('파일 삭제를 실패했습니다.');
+                                    error.code = 400;
+                                    return next(error);
+                                } else {
+                                    callback(null, imageUrl);
+                                }
+                            });
                         }
                     });
                 }
-                var randomStr = randomstring.generate(10);
-                var newFileName = 'profile_'+randomStr;
-                var extname = pathUtil.extname(file.name);
-                var contentType = file.type;
-                var fileStream = fs.createReadStream(file.path);
-                var itemKey = 'images/profile/'+newFileName+extname;
-                var params = {
-                    Bucket : bucketName,
-                    Key : itemKey,
-                    ACL : 'public-read',
-                    Body : fileStream,
-                    ContentType : contentType
-                };
-                s3.putObject(params, function (err, data) {
-                    if (err) {
-                        console.error('S3 PutObject Error', err);
-                        callback(err);
-                    }
-                    else {
-                        var imageUrl = s3.endpoint.href + bucketName + '/' + itemKey;
-                        callback(null, imageUrl);
-                    }
-                });
             },
             function(url, callback){
                 Blog.updateProfilePhotoOfBlog(blogId, url, function(err, doc){

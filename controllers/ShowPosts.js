@@ -40,7 +40,13 @@ module.exports.getShowList = function(req,res){
            error.code = 400;
            return next(error);
        }
-        res.render('shows',{shows : shows});
+        //res.render('shows',{shows : shows});
+        var msg = {
+            code : 200,
+            msg : 'Success',
+            result : shows
+        };
+        res.status(msg.code).json(msg);
     });
 }
 //detail
@@ -57,7 +63,7 @@ module.exports.getShowPosts = function(req,res){
         res.render('shows', {shows : showPosts});
     });
 };
-
+//change
 //문화컨텐츠 추가 POST
 module.exports.addShowPost = function(req, res, next){
     async.waterfall(
@@ -218,6 +224,11 @@ module.exports.addShowPost = function(req, res, next){
                 res.sendStatus(500);
             }
             else {
+                 var msg = {
+                 code : 200,
+                 msg : 'Success'
+                 };
+                res.status(msg.code).json(msg);
                 res.redirect('/');
             }
         });

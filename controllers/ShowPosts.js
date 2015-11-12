@@ -80,8 +80,8 @@ module.exports.getShowPost = function (req, res) {
         if(err){
             console.error('error message : ',err);
             var error = new Error('포스트없슴');
-
         }
+
     });//findPost
 }
 

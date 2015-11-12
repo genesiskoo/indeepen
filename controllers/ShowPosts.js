@@ -27,9 +27,8 @@ var Post = require('./../models/Posts');
 
 //add_form
 module.exports.getShowAddForm = function (req, res) {
-    fs.createReadStream(__dirname + './../views/showAddForm.html').pipe(res);
+    fs.createReadStream(__dirname + '/../views/showAddForm.html').pipe(res);
 }
-
 //List
 module.exports.getShowList = function (req, res) {
     var showList = [];
@@ -53,7 +52,7 @@ module.exports.getShowList = function (req, res) {
                     return next(error);
                 }
                 result['commentCnt'] = count;
-                console.log('result, :', result);
+                //console.log('result, :', result);
                 showList.push(result);
                 callback();
             })//count
@@ -66,6 +65,7 @@ module.exports.getShowList = function (req, res) {
             };
             //res.render('shows',{shows : shows});
             res.status(msg.code).json(msg);
+            console.log(msg);
         });//async
     });//findPostType
     //post결과와 comment수 결과를 담을 객체 생성
@@ -74,26 +74,25 @@ module.exports.getShowList = function (req, res) {
 
 //detail
 module.exports.getShowPost = function (req, res) {
-    //상세표시 추가예정
+    var id = req.params.postId;
+    var showModel = new Post({"PostType": 1});
+    showModel.findPost(id,1,function(err,doc){
+        if(err){
+            console.error('error message : ',err);
+            var error = new Error('포스트없슴');
+
+        }
+    });//findPost
 }
 
-
-//will remove
-module.exports.getShowPosts = function (req, res) {
-    var showPost = new Post({postType: 1});
-    showPost.findByPostType(function (err, showPosts) {
-        console.log(showPosts);
-        res.render('shows', {shows: showPosts});
-    });
-};
-//change
 //문화컨텐츠 추가 POST
 module.exports.addShowPost = function (req, res, next) {
     async.waterfall(
         [
             function (callback) {
                 var uploadInfo = {
-                    files: []
+                    files: [],
+                    tags: []
                 };
                 var form = new formidable.IncomingForm();
                 // aws 에 저장되는 경로....
@@ -101,6 +100,10 @@ module.exports.addShowPost = function (req, res, next) {
 
                 form
                     .on('field', function (field, value) {
+                        if(value == 'tag'){
+                            var temTag = JSON.parse(value);
+                            uploadInfo.tags.push(temTag);
+                        }
                         console.log('file 아님 ', field);
                         uploadInfo[field] = value;
                     })
@@ -166,18 +169,26 @@ module.exports.addShowPost = function (req, res, next) {
                     if (err) {
                         callback(err);
                     } else {
+                        //console.log('before',imageUrls);
+                        imageUrls.sort(function (a, b) {
+                            if (a.url < b.url)
+                                return -1;
+                            else if (a.url > b.url)
+                                return 1;
+                            else
+                                return 0;
+                        });
+                        //console.log('after',imageUrls);
                         callback(null, uploadInfo.showType, uploadInfo.title, uploadInfo.startDate, uploadInfo.endDate,
                             uploadInfo.startTime, uploadInfo.endTime, uploadInfo.fee, uploadInfo.blogId,
-                            uploadInfo.content, uploadInfo.latitude, uploadInfo.longitude, uploadInfo.address, imageUrls);
+                            uploadInfo.content, uploadInfo.latitude, uploadInfo.longitude, uploadInfo.address,
+                            uploadInfo.tags, imageUrls);
                     }
-                });
+                });//asyncEach
 
             },
             function (showType, title, startDate, endDate, startTime, endTime, fee,
-                      blogId, content, latitude, longitude, address, urls, callback) {
-
-
-
+                      blogId, content, latitude, longitude, address, tags, urls, callback) {
 
                 // hash_tag 추출
                 var tmpStr = content.split('#');
@@ -198,7 +209,7 @@ module.exports.addShowPost = function (req, res, next) {
                     show: {
                         title: title,
                         type: showType,
-                        tags: [],
+                        tags: tags,
                         startDate: startDate,
                         endDate: endDate,
                         startTime: startTime,
@@ -252,7 +263,7 @@ module.exports.addShowPost = function (req, res, next) {
                     msg: 'Success'
                 };
                 res.status(msg.code).json(msg);
-                res.redirect('/');
+                //res.redirect('/');
             }
         });
 };

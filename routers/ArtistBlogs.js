@@ -6,12 +6,11 @@ var express = require('express');
 var router = express.Router();
 var ArtistBlog = require('./../controllers/ArtistBlogs');
 
-router.get('/:blogId', ArtistBlog.getArtistBlog);
+//router.get('/:blogId', ArtistBlog.getArtistBlog);
 
 router.get('/:blogId/profilePhoto', ArtistBlog.getArtistBlogProfilePhoto);
 router.put('/:blogId/profilePhoto', ArtistBlog.modifyArtistBlogProfilePhoto);
 
-router.get('/:blogId/bgPhoto', ArtistBlog.getArtistBlogBgPhoto);
 
 router.get('/:blogId/profile', ArtistBlog.getArtistBlogProfile);
 router.put('/:blogId/profile', ArtistBlog.modifyArtistBlogProfile);

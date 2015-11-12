@@ -10,6 +10,10 @@ var Comment = require('./../models/Comments');
 var Post = require('./../models/Posts');
 var Report = require('./../models/Reports');
 
+// 이거.. session하면 메소드 안에 들어가야 겠...지???
+// c_+postId를 키값으로 lastseen값 저장....
+var lastSeenOfComments = null; // session에서 가져옴... 인데??? 음??? postId별로 되나???
+
 /**
  * 모든 type의 Post 가져오기
  * @param req
@@ -193,28 +197,27 @@ module.exports.addComment = function(req, res, next){
  */
 module.exports.getComments = function(req, res, next){
     var id = req.params.postId;
-    Comment.findCommentsOfPost(id, function(err, docs){
+    Comment.findCommentsOfPost(id, lastSeenOfComments, function(err, docs){
         if(err){
             var error = new Error('댓글을 불러올 수 없습니다.');
             error.code = 400;
             return next(error);
         }
         // web에서 입력할때 글쓴이를 편하게 하기 위해....;;;
-        Blog.findBlogs(function(err, blogs){
+       /* Blog.findBlogs(function(err, blogs){
             res.render('add_reply', {postId : id, replies : docs, users : blogs});
-        });
+        });*/
 
         // app...
-/*
+        lastSeenOfComments = docs.slice(-1)[0].createAt;
+        console.log('controllers쪽의 docs.slice(-1)', docs.slice(-1));
+        console.log('controllers쪽의 lastSeenOfComments ', lastSeenOfComments);
         var msg = {
             code : 200,
             msg : 'Success',
-            result : {
-                // pagination....
-                comments : docs.reverse()
-            }
+            result : docs.reverse()
         };
         res.status(msg.code).json(msg);
-*/
+
     });
 };

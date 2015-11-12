@@ -198,7 +198,6 @@ module.exports.addWorkPost = function(req, res, next){
         });
 };
 
-
 /**
  * 예술 Post List 가져오기
  * @param req
@@ -242,14 +241,14 @@ module.exports.getWorkPosts = function(req, res, next){
                 });
             });
         }, function done(){
-             var msg = {
+             /*var msg = {
                  code : 200,
                  msg : 'Success',
                  result : works
              };
-             res.status(msg.code).json(msg);
+             res.status(msg.code).json(msg);*/
 
-           // res.render('post', {works : works});
+            res.render('post', {works : works});
         });
     });
 };

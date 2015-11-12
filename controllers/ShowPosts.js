@@ -28,7 +28,8 @@ var Post = require('./../models/Posts');
 //add_form
 module.exports.getShowAddForm = function (req, res) {
     fs.createReadStream(__dirname + '/../views/showAddForm.html').pipe(res);
-}
+};
+
 //List
 module.exports.getShowList = function (req, res) {
     var showList = [];
@@ -44,6 +45,11 @@ module.exports.getShowList = function (req, res) {
             var result = {
                 postInfo: showModel
             };
+            async.each(result,function(list,cb){
+                list['resources'] = list.resources[0];
+                cb();
+            });
+
             Comment.countCommentsOfPost(showModel._id, function (err, count) {
                 if (err) {
                     console.error('CANT COUNT DATGUL', err);
@@ -66,24 +72,45 @@ module.exports.getShowList = function (req, res) {
             //res.render('shows',{shows : shows});
             res.status(msg.code).json(msg);
             console.log(msg);
+
         });//async
     });//findPostType
     //post결과와 comment수 결과를 담을 객체 생성
-}
-
+};
 
 //detail
 module.exports.getShowPost = function (req, res) {
     var id = req.params.postId;
-    var showModel = new Post({"PostType": 1});
-    showModel.findPost(id,1,function(err,doc){
-        if(err){
-            console.error('error message : ',err);
-            var error = new Error('포스트없슴');
+    var showPost = {};
+    Post.findPost(id, 1, function (err, doc) {
+        if (err) {
+            console.error('error message : ', err);
+            var error = new Error('포스트없슴')
+            error.code = 404;
+            return next(error);
         }
+        //console.log(doc);
+        showPost['postInfo'] = doc;
+        Comment.countCommentsOfPost(id, function (err, count) {
+            showPost['commentCnt'] = count;
+            var msg = {
+                code: 200,
+                msg: 'Success',
+                result: showPost
+            };
+            res.status(msg.code).json(msg);
+            //console.log(msg);
+            //fs.writeFile('/showPost.json', JSON.stringify(msg, null, 4), function(err) {
+            //    if(err) {
+            //        console.log(err);
+            //    } else {
+            //        console.log("JSON saved ");
+            //    }
+            //});
 
+        });
     });//findPost
-}
+};
 
 //문화컨텐츠 추가 POST
 module.exports.addShowPost = function (req, res, next) {
@@ -100,7 +127,7 @@ module.exports.addShowPost = function (req, res, next) {
 
                 form
                     .on('field', function (field, value) {
-                        if(value == 'tag'){
+                        if (value == 'tag') {
                             var temTag = JSON.parse(value);
                             uploadInfo.tags.push(temTag);
                         }

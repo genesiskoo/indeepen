@@ -230,7 +230,7 @@ module.exports.getComments = function(req, res, next){
             };
             res.status(msg.code).json(msg);
         }else{
-            var error = new Error('더 이상 댓글이 없습니다.');
+            var error = new Error('댓글이 없습니다.');
             error.code = 400;
             return next(error);
         }

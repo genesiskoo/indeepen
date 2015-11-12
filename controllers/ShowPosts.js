@@ -119,7 +119,7 @@ module.exports.addShowPost = function (req, res, next) {
             function (callback) {
                 var uploadInfo = {
                     files: [],
-                    tags: []
+                    artist:[]
                 };
                 var form = new formidable.IncomingForm();
                 // aws 에 저장되는 경로....
@@ -127,12 +127,12 @@ module.exports.addShowPost = function (req, res, next) {
 
                 form
                     .on('field', function (field, value) {
-                        if (value == 'tag') {
-                            var temTag = JSON.parse(value);
-                            uploadInfo.tags.push(temTag);
+                        if(field=='tag'){
+                            uploadInfo.artist.push(value);
+                        }else{
+                            console.log('file 아님 ', field);
+                            uploadInfo[field] = value;
                         }
-                        console.log('file 아님 ', field);
-                        uploadInfo[field] = value;
                     })
                     .on('file', function (field, file) {
                         if (field == 'file') {
@@ -209,13 +209,13 @@ module.exports.addShowPost = function (req, res, next) {
                         callback(null, uploadInfo.showType, uploadInfo.title, uploadInfo.startDate, uploadInfo.endDate,
                             uploadInfo.startTime, uploadInfo.endTime, uploadInfo.fee, uploadInfo.blogId,
                             uploadInfo.content, uploadInfo.latitude, uploadInfo.longitude, uploadInfo.address,
-                            uploadInfo.tags, imageUrls);
+                            uploadInfo.artist ,imageUrls);
                     }
                 });//asyncEach
 
             },
             function (showType, title, startDate, endDate, startTime, endTime, fee,
-                      blogId, content, latitude, longitude, address, tags, urls, callback) {
+                      blogId, content, latitude, longitude, address, artist, urls, callback) {
 
                 // hash_tag 추출
                 var tmpStr = content.split('#');
@@ -236,7 +236,7 @@ module.exports.addShowPost = function (req, res, next) {
                     show: {
                         title: title,
                         type: showType,
-                        tags: tags,
+                        tags: artist,
                         startDate: startDate,
                         endDate: endDate,
                         startTime: startTime,

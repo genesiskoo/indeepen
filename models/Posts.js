@@ -92,6 +92,7 @@ postSchema.methods = {
             equals(this.postType).
             select(select).
             sort({createAt : -1}).
+            limit(10).
             populate({path : '_writer', select : '-type -bgPhoto -intro -iMissYous -fans -location -createAt -updateAt -isActivated'}).
             //populate({path : 'likes', select : '_id _user nick profilePhoto'}).
             populate('show.tags._user', '_id _user nick profilePhoto').

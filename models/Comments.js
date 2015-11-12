@@ -98,7 +98,7 @@ commentSchema.statics = {
                 populate('_writer', '-type -bgPhoto -intro -email -phone -iMissYous -fans -location -createAt -updateAt -isActivated').
                 exec(callback);
         }else{
-            this.find({_post : new ObjectId(postId), createAt : {$lt : lastSeen}}, {_id : 1, _writer : 1, content : 1, createAt : 1}).
+            this.find({_post : new ObjectId(postId), _id : {$lt : lastSeen}}, {_id : 1, _writer : 1, content : 1, createAt : 1}).
                 sort({createAt : -1}).
                 limit(20).
                 populate('_writer', '-type -bgPhoto -intro -email -phone -iMissYous -fans -location -createAt -updateAt -isActivated').

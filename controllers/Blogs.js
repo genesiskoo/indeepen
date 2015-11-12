@@ -19,6 +19,7 @@ var bucketName = awsS3.bucketName;
 var uploadUrl = __dirname + '/../upload';
 
 var Blog = require('./../models/Blogs');
+var Post = require('./../models/Posts');
 
 var defaultBgPhotoUrl = 'https://s3-ap-northeast-1.amazonaws.com/in-deepen/images/bg/default_bg.png';
 var userKey = '563ef1ca401ae00c19a15829'; // session에 있을 정보
@@ -314,5 +315,51 @@ module.exports.addiMissYou = function(req, res, next){
             msg : 'Success'
         };
         res.status(msg.code).json(msg);
+    });
+};
+
+/**
+ * 해당 블로거가 등록한 Work Post 목록 가져오기
+ * @param req
+ * @param res
+ * @param next
+ */
+module.exports.getWorkPostsOfBlogger = function(req, res, next){
+    var blogId = req.params.blogId;
+    if(!blogId){
+        var error = new Error('URL 확인 부탁해요.');
+        error.code = 400;
+        return next(error);
+    }
+    Post.findWorkPostsAtBlog(blogId, function(err, docs){
+        if(err){
+            console.error('ERROR GETTING WORK PORST AT BLOG ', err);
+            var error = new Error('work post를 가져올 수 없습니다.');
+            error.code = 400;
+            return next(error);
+        }
+        async.each(docs, function(doc, callback){
+            doc.resources = doc.resources[0];
+            callback();
+        }, function(err){
+            if(err){
+                console.error('ERROR AFTER GETTING WORK PORST AT BLOG ', err);
+                var error = new Error('work post each 하는데 실패...');
+                error.code = 400;
+                return next(error);
+            }
+            var msg = {
+                code : 200,
+                msg : 'Success',
+                result : docs
+            };
+            res.status(msg.code).json(msg);
+        });
+       /* var msg = {
+            code : 200,
+            msg : 'Success',
+            result : docs
+        };
+        res.status(msg.code).json(msg);*/
     });
 };

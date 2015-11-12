@@ -241,14 +241,14 @@ module.exports.getWorkPosts = function(req, res, next){
                 });
             });
         }, function done(){
-             /*var msg = {
+             var msg = {
                  code : 200,
                  msg : 'Success',
                  result : works
              };
-             res.status(msg.code).json(msg);*/
+             res.status(msg.code).json(msg);
 
-            res.render('post', {works : works});
+            //res.render('post', {works : works});
         });
     });
 };

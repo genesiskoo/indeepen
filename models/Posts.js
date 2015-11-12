@@ -182,6 +182,20 @@ postSchema.statics = {
             .limit(options.perPage)
             .skip(options.perPage * options.page)
             .exec(cb);
+    },
+    findWorkPostsAtBlog : function(writer, callback){
+        //this.aggregate([
+        //    {$match : {_writer : writer}},
+        //    {$unwind : "$resources"},
+        //    {$sort : {createAt : -1}},
+        //    {$project : {postType : 0, updateAt : 0, content : 0, hashTags : 0, likes:0, worK : 0, show : 0}}
+        //]).
+        //    //limit().
+        //    exec(callback);
+        this.find({_writer : new ObjectId(writer)}).
+            select('-updateAt -hashTags -likes -work -show').
+            sort({createAt : -1}).
+            exec(callback);
     }
 };
 

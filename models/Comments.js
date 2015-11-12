@@ -75,7 +75,7 @@ commentSchema.statics = {
         this.find({_post : new ObjectId(postId)}, {_writer : 1, content : 1}).
             sort({createAt : -1}).
             limit(2).
-            populate('_writer', '-_id -_user -type -bgPhoto -intro -profilePhoto -iMissYous -fans -location -createAt -updateAt -isActivated').
+            populate('_writer', '-_id -_user -type -bgPhoto -intro -email -phone -profilePhoto -iMissYous -fans -location -createAt -updateAt -isActivated').
             exec(callback);
     },
     /**
@@ -83,11 +83,27 @@ commentSchema.statics = {
      * @param postId
      * @param callback
      */
-    findCommentsOfPost : function(postId, callback){
+    /*findCommentsOfPost : function(postId, callback){
         this.find({_post : new ObjectId(postId)}, {_id : 1, _writer : 1, content : 1, createAt : 1}).
             sort({createAt : -1}).
-            populate('_writer', '-type -bgPhoto -intro -iMissYous -fans -location -createAt -updateAt -isActivated').
+            populate('_writer', '-type -bgPhoto -intro -email -phone -iMissYous -fans -location -createAt -updateAt -isActivated').
             exec(callback);
+    }*/
+    findCommentsOfPost : function(postId, lastSeen, callback){
+        console.log('findCommentsOfPost  안에서의 lastSeen', lastSeen);
+        if(lastSeen == null){
+            this.find({_post : new ObjectId(postId)}, {_id : 1, _writer : 1, content : 1, createAt : 1}).
+                sort({createAt : -1}).
+                limit(20).
+                populate('_writer', '-type -bgPhoto -intro -email -phone -iMissYous -fans -location -createAt -updateAt -isActivated').
+                exec(callback);
+        }else{
+            this.find({_post : new ObjectId(postId), _id : {$lt : lastSeen}}, {_id : 1, _writer : 1, content : 1, createAt : 1}).
+                sort({createAt : -1}).
+                limit(20).
+                populate('_writer', '-type -bgPhoto -intro -email -phone -iMissYous -fans -location -createAt -updateAt -isActivated').
+                exec(callback);
+        }
     }
 };
 

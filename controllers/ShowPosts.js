@@ -27,8 +27,8 @@ var Post = require('./../models/Posts');
 
 //add_form
 module.exports.getShowAddForm = function (req, res) {
-    fs.createReadStream(__dirname + './../views/showAddForm.html').pipe(res);
-}
+    fs.createReadStream(__dirname + '/../views/showAddForm.html').pipe(res);
+};
 
 //List
 module.exports.getShowList = function (req, res) {
@@ -45,6 +45,11 @@ module.exports.getShowList = function (req, res) {
             var result = {
                 postInfo: showModel
             };
+            async.each(result,function(list,cb){
+                list['resources'] = list.resources[0];
+                cb();
+            });
+
             Comment.countCommentsOfPost(showModel._id, function (err, count) {
                 if (err) {
                     console.error('CANT COUNT DATGUL', err);
@@ -53,7 +58,7 @@ module.exports.getShowList = function (req, res) {
                     return next(error);
                 }
                 result['commentCnt'] = count;
-                console.log('result, :', result);
+                //console.log('result, :', result);
                 showList.push(result);
                 callback();
             })//count
@@ -66,34 +71,55 @@ module.exports.getShowList = function (req, res) {
             };
             //res.render('shows',{shows : shows});
             res.status(msg.code).json(msg);
+            console.log(msg);
+
         });//async
     });//findPostType
     //post결과와 comment수 결과를 담을 객체 생성
-}
-
+};
 
 //detail
 module.exports.getShowPost = function (req, res) {
-    //상세표시 추가예정
-}
+    var id = req.params.postId;
+    var showPost = {};
+    Post.findPost(id, 1, function (err, doc) {
+        if (err) {
+            console.error('error message : ', err);
+            var error = new Error('포스트없슴')
+            error.code = 404;
+            return next(error);
+        }
+        //console.log(doc);
+        showPost['postInfo'] = doc;
+        Comment.countCommentsOfPost(id, function (err, count) {
+            showPost['commentCnt'] = count;
+            var msg = {
+                code: 200,
+                msg: 'Success',
+                result: showPost
+            };
+            res.status(msg.code).json(msg);
+            //console.log(msg);
+            //fs.writeFile('/showPost.json', JSON.stringify(msg, null, 4), function(err) {
+            //    if(err) {
+            //        console.log(err);
+            //    } else {
+            //        console.log("JSON saved ");
+            //    }
+            //});
 
-
-//will remove
-module.exports.getShowPosts = function (req, res) {
-    var showPost = new Post({postType: 1});
-    showPost.findByPostType(function (err, showPosts) {
-        console.log(showPosts);
-        res.render('shows', {shows: showPosts});
-    });
+        });
+    });//findPost
 };
-//change
+
 //문화컨텐츠 추가 POST
 module.exports.addShowPost = function (req, res, next) {
     async.waterfall(
         [
             function (callback) {
                 var uploadInfo = {
-                    files: []
+                    files: [],
+                    artist:[]
                 };
                 var form = new formidable.IncomingForm();
                 // aws 에 저장되는 경로....
@@ -101,8 +127,12 @@ module.exports.addShowPost = function (req, res, next) {
 
                 form
                     .on('field', function (field, value) {
-                        console.log('file 아님 ', field);
-                        uploadInfo[field] = value;
+                        if(field=='tag'){
+                            uploadInfo.artist.push(value);
+                        }else{
+                            console.log('file 아님 ', field);
+                            uploadInfo[field] = value;
+                        }
                     })
                     .on('file', function (field, file) {
                         if (field == 'file') {
@@ -166,18 +196,26 @@ module.exports.addShowPost = function (req, res, next) {
                     if (err) {
                         callback(err);
                     } else {
+                        //console.log('before',imageUrls);
+                        imageUrls.sort(function (a, b) {
+                            if (a.url < b.url)
+                                return -1;
+                            else if (a.url > b.url)
+                                return 1;
+                            else
+                                return 0;
+                        });
+                        //console.log('after',imageUrls);
                         callback(null, uploadInfo.showType, uploadInfo.title, uploadInfo.startDate, uploadInfo.endDate,
                             uploadInfo.startTime, uploadInfo.endTime, uploadInfo.fee, uploadInfo.blogId,
-                            uploadInfo.content, uploadInfo.latitude, uploadInfo.longitude, uploadInfo.address, imageUrls);
+                            uploadInfo.content, uploadInfo.latitude, uploadInfo.longitude, uploadInfo.address,
+                            uploadInfo.artist ,imageUrls);
                     }
-                });
+                });//asyncEach
 
             },
             function (showType, title, startDate, endDate, startTime, endTime, fee,
-                      blogId, content, latitude, longitude, address, urls, callback) {
-
-
-
+                      blogId, content, latitude, longitude, address, artist, urls, callback) {
 
                 // hash_tag 추출
                 var tmpStr = content.split('#');
@@ -198,7 +236,7 @@ module.exports.addShowPost = function (req, res, next) {
                     show: {
                         title: title,
                         type: showType,
-                        tags: [],
+                        tags: artist,
                         startDate: startDate,
                         endDate: endDate,
                         startTime: startTime,
@@ -252,7 +290,7 @@ module.exports.addShowPost = function (req, res, next) {
                     msg: 'Success'
                 };
                 res.status(msg.code).json(msg);
-                res.redirect('/');
+                //res.redirect('/');
             }
         });
 };

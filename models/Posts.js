@@ -83,7 +83,8 @@ postSchema.methods = {
         if(!options) options = {};
         var select = '';
         if(this.postType == 0)
-            select = '_id createAt _writer content likes work resources';
+            //select = '_id createAt _writer content likes work resources';
+            select = '-updateAt -hashTags -show';
         else
             select = '-content -hashTags -work -show.location.point'; //-수정
         return this.model('Post').find(options).
@@ -91,7 +92,8 @@ postSchema.methods = {
             equals(this.postType).
             select(select).
             sort({createAt : -1}).
-            populate({path : '_writer', select : '-type -bgPhoto -intro -iMissYou -fans -location -createAt -updateAt -isActivated'}).
+            limit(10).
+            populate({path : '_writer', select : '-type -bgPhoto -intro -iMissYous -fans -location -createAt -updateAt -isActivated'}).
             //populate({path : 'likes', select : '_id _user nick profilePhoto'}).
             populate('show.tags._user', '_id _user nick profilePhoto').
             exec(callback);
@@ -111,7 +113,7 @@ postSchema.statics = {
     findPost : function(postId, postType, callback){
         var select = '';
         if(postType == 0){
-            select = 'createAt _writer content likes work resources';
+            select ='createAt _writer content likes work resources';
         }else{
             select = 'createAt _writer content likes show resources';
         }
@@ -121,6 +123,7 @@ postSchema.statics = {
             populate('show.tags._user', '_id _user nick profilePhoto').
             sort({createAt : -1}).
             exec(callback);
+
     },
     /**
      * 모든 type의 post들 가져오기
@@ -169,6 +172,31 @@ postSchema.statics = {
     },
     removePost : function(postId, callback){
         this.findOneAndRemove({_id : new ObjectId(postId)}, callback);
+    },
+
+    showList: function (options, cb) {
+        var criteria = options.criteria || {}
+
+        this.find(criteria)
+            .populate('_writer', '_id nick profilePhoto')
+            .sort({'createdAt': -1}) // sort by date
+            .limit(options.perPage)
+            .skip(options.perPage * options.page)
+            .exec(cb);
+    },
+    findWorkPostsAtBlog : function(writer, callback){
+        //this.aggregate([
+        //    {$match : {_writer : writer}},
+        //    {$unwind : "$resources"},
+        //    {$sort : {createAt : -1}},
+        //    {$project : {postType : 0, updateAt : 0, content : 0, hashTags : 0, likes:0, worK : 0, show : 0}}
+        //]).
+        //    //limit().
+        //    exec(callback);
+        this.find({_writer : new ObjectId(writer)}).
+            select('-updateAt -hashTags -likes -work -show').
+            sort({createAt : -1}).
+            exec(callback);
     }
 };
 

@@ -20,6 +20,8 @@ var blogSchema = new Schema({
 		default : 'https://s3-ap-northeast-1.amazonaws.com/in-deepen/images/profile/icon-cafe.png'
 	},
 	intro : String,
+    phone : String,
+    email : String,
     iMissYous : [{type : Schema.Types.ObjectId, ref : 'Blog'}],
 	fans: [{type : Schema.Types.ObjectId, ref : 'Blog'}],
 	location: {
@@ -95,10 +97,11 @@ blogSchema.statics = {
             select('-_id -_user -type -bgPhoto -nick -intro -fans -iMissYous -location -createAt -updateAt -isActivated').
             exec(callback);
     },
-    findBgPhotoOfBlog : function(blogId, callback){
-        this.findOne({_id : new ObjectId(blogId)}).
-            select('-_id -_user -type -nick -profilePhoto -intro -fans -iMissYous -location -createAt -updateAt -isActivated').
-            exec(callback);
+    updateProfilePhotoOfBlog : function(blogId, newUrl, callback){
+        this.findOneAndUpdate({_id : new ObjectId(blogId)}, {$set : {profilePhoto : newUrl}}, callback);
+    },
+    updateBgPhotoOfBlog : function(blogId, newUrl, callback){
+        this.findOneAndUpdate({_id : new ObjectId(blogId)}, {$set : {bgPhoto : newUrl}}, callback);
     },
     pushFanToBlog : function(blogId, userBlogId, callback){
         return this.findOneAndUpdate({_id : new ObjectId(blogId)}, {$push : {fans : new ObjectId(userBlogId)}}, callback);
@@ -108,19 +111,6 @@ blogSchema.statics = {
     },
     pushIMissYouToBlog : function(blogId, userBlogId, callback){
         return this.findOneAndUpdate({_id : new ObjectId(blogId)}, {$push : {iMissYous : new ObjectId(userBlogId)}}, callback);
-    },
-    isIMissYoued : function(blogId, userBlogId, callback){
-        this.findOne({_id : new ObjectId(blogId), iMissYous : new ObjectId(userBlogId)}, function(err, doc){
-            if(err){
-                callback(err, null);
-            }
-            if(doc){
-                console.log(doc);
-                callback(null, true);
-            }else {
-                callback(null, false);
-            }
-        });
     },
     removeBlog : function(blogId, callback){
         return this.findOneAndRemove({_id : new ObjectId(blogId)}, callback);

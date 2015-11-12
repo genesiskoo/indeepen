@@ -1,13 +1,15 @@
 var express = require('express');
 
 var mongoose = require('./config/mongoose_conn.js');
-var fs = require('fs');
+//var fs = require('fs');
 var bodyParser = require('body-parser');
-
-
-var path = __dirname + '/views';
+var session = require('express-session');
+var sessionOption = require('./config/sessionOption');
+//var path = __dirname + '/views';
 
 var app = express();
+app.use(session(sessionOption));
+
 app.use(bodyParser.urlencoded({extended: false}));
 
 app.set('views', './views');
@@ -30,10 +32,10 @@ app.use(function (err, req, res, next) {
     var msg = {
         code: err.code,
         msg: err.message
-    }
+    };
     res.status(err.code).json(msg);
 });
 
-app.listen(3333, function () {
+app.listen(80, function () {
     console.log('Server @ 3333');
-})
+});

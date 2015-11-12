@@ -72,7 +72,7 @@ module.exports.addWorkPost = function(req, res, next){
                 var imageUrls = [];
                 var order = 0;
                 var randomStr = randomstring.generate(10); // 10자리 랜덤
-                async.eachSeries(uploadInfo.files, function(file, callback){
+                async.each(uploadInfo.files, function(file, callback){
                     var newFileName = 'content_'+ randomStr+'_' + (order++) ;
                     var extname = pathUtil.extname(file.name);
                     var contentType = file.type;
@@ -110,7 +110,22 @@ module.exports.addWorkPost = function(req, res, next){
                         }
                     });
 
-                }, function done(){
+                }, function(err){
+                    if(err){
+                        var error = new Error('파일에서 실패...');
+                        error.code = 400;
+                        return next(error);
+                    }
+                    console.log('before ', imageUrls);
+                    imageUrls.sort(function(a, b){
+                        if(a.url < b.url)
+                            return -1;
+                        else if(a.url > b.url)
+                            return 1;
+                        else
+                            return 0;
+                    });
+                    console.log('after ', imageUrls);
                     callback(null, uploadInfo.workType, uploadInfo.emotion, uploadInfo.blogId, uploadInfo.content, imageUrls);
                 });
             },
@@ -138,7 +153,7 @@ module.exports.addWorkPost = function(req, res, next){
                     resources : []
                 };
                 async.each(urls, function(url, callback){
-                    console.log('url', url);
+                    //console.log('url', url);
                     // s3 경로 저장
                     postInfo.resources.push({type : url.contentType, originalPath : url.url});
                     callback();
@@ -183,7 +198,6 @@ module.exports.addWorkPost = function(req, res, next){
         });
 };
 
-
 /**
  * 예술 Post List 가져오기
  * @param req
@@ -227,20 +241,14 @@ module.exports.getWorkPosts = function(req, res, next){
                 });
             });
         }, function done(){
-
-
              var msg = {
-             code : 200,
-             msg : 'Success',
-             result : {
-             // pagination 추가
-             works : works
-             }
+                 code : 200,
+                 msg : 'Success',
+                 result : works
              };
              res.status(msg.code).json(msg);
 
-           // console.log('doc ', works);
-           // res.render('post', {works : works});
+            //res.render('post', {works : works});
         });
     });
 };

@@ -2,16 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fae20e81-4887-4d24-9dd7-a536ce0a01f8" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/controllers/ArtistBlogs.js" afterPath="$PROJECT_DIR$/controllers/ArtistBlogs.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routers/ArtistBlogs.js" afterPath="$PROJECT_DIR$/routers/ArtistBlogs.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/config/sessionOption.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/controllers/Blogs.js" afterPath="$PROJECT_DIR$/controllers/Blogs.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/models/Blogs.js" afterPath="$PROJECT_DIR$/models/Blogs.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routers/Blogs.js" afterPath="$PROJECT_DIR$/routers/Blogs.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/models/Comments.js" afterPath="$PROJECT_DIR$/models/Comments.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/controllers/Posts.js" afterPath="$PROJECT_DIR$/controllers/Posts.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/models/Posts.js" afterPath="$PROJECT_DIR$/models/Posts.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/controllers/WorkPosts.js" afterPath="$PROJECT_DIR$/controllers/WorkPosts.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/add_reply.ejs" afterPath="$PROJECT_DIR$/views/add_reply.ejs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app.js" afterPath="$PROJECT_DIR$/app.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/package.json" afterPath="$PROJECT_DIR$/package.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/post.ejs" afterPath="$PROJECT_DIR$/views/post.ejs" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="indeepen_mongo_test.iws" />
@@ -32,49 +33,89 @@
     <favorites_list name="indeepen_mongo_test" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="WorkPosts.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/controllers/WorkPosts.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="251" column="11" selection-start-line="251" selection-start-column="11" selection-end-line="251" selection-end-column="11" />
-              <folding>
-                <element signature="e#921#987#0" expanded="false" />
-                <element signature="e#1041#7516#0" expanded="false" />
-                <element signature="e#7519#7590#0" expanded="false" />
-                <element signature="e#9355#9430#0" expanded="false" />
-                <element signature="e#9484#10253#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Posts.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/controllers/Posts.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.7307692">
-              <caret line="19" column="13" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
-              <folding>
-                <element signature="e#818#1745#0" expanded="false" />
-                <element signature="e#1906#3199#0" expanded="false" />
-                <element signature="e#3355#4541#0" expanded="false" />
-                <element signature="e#4754#5355#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Comments.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/models/Comments.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="92" column="67" selection-start-line="92" selection-start-column="67" selection-end-line="92" selection-end-column="67" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <splitter split-orientation="horizontal" split-proportion="0.5">
+      <split-first>
+        <leaf>
+          <file leaf-file-name="Blogs.js" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/controllers/Blogs.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.0">
+                  <caret line="21" column="40" selection-start-line="21" selection-start-column="40" selection-end-line="21" selection-end-column="40" />
+                  <folding>
+                    <element signature="e#850#940#0" expanded="false" />
+                    <element signature="e#994#1567#0" expanded="false" />
+                    <element signature="e#1570#1644#0" expanded="false" />
+                    <element signature="e#1701#4765#0" expanded="false" />
+                    <element signature="e#4768#4858#0" expanded="false" />
+                    <element signature="e#4914#5534#0" expanded="false" />
+                    <element signature="e#5537#5629#0" expanded="false" />
+                    <element signature="e#5688#6299#0" expanded="false" />
+                    <element signature="e#6302#6391#0" expanded="false" />
+                    <element signature="e#6449#7765#0" expanded="false" />
+                    <element signature="e#7768#7873#0" expanded="false" />
+                    <element signature="e#7928#8495#0" expanded="false" />
+                    <element signature="e#8498#8593#0" expanded="false" />
+                    <element signature="e#8647#9239#0" expanded="false" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="post.ejs" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/views/post.ejs">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.7307692">
+                  <caret line="34" column="47" selection-start-line="34" selection-start-column="47" selection-end-line="34" selection-end-column="47" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="Blogs.js" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/routers/Blogs.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.0">
+                  <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-first>
+      <split-second>
+        <leaf>
+          <file leaf-file-name="WorkPosts.js" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/controllers/WorkPosts.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="1.147619">
+                  <caret line="247" column="15" selection-start-line="247" selection-start-column="15" selection-end-line="247" selection-end-column="15" />
+                  <folding>
+                    <element signature="e#921#987#0" expanded="false" />
+                    <element signature="e#1041#7516#0" expanded="false" />
+                    <element signature="e#7519#7590#0" expanded="false" />
+                    <element signature="e#9353#9428#0" expanded="false" />
+                    <element signature="e#9482#10251#0" expanded="false" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="Posts.js" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/models/Posts.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.0">
+                  <caret line="195" column="29" selection-start-line="195" selection-start-column="29" selection-end-line="195" selection-end-column="29" />
+                  <folding>
+                    <element signature="e#257#2031#0" expanded="false" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-second>
+    </splitter>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -112,7 +153,6 @@
         <option value="$PROJECT_DIR$/models/Replies.js" />
         <option value="$PROJECT_DIR$/db_test.js" />
         <option value="$PROJECT_DIR$/models/schemas/Notis.js" />
-        <option value="$PROJECT_DIR$/app.js" />
         <option value="$PROJECT_DIR$/config/mongoose_conn.js" />
         <option value="$PROJECT_DIR$/models/schemas/Blogs.js" />
         <option value="$PROJECT_DIR$/ex_show_save.js" />
@@ -127,14 +167,18 @@
         <option value="$PROJECT_DIR$/models/Users.js" />
         <option value="$PROJECT_DIR$/models/Blogs.js" />
         <option value="$PROJECT_DIR$/routers/ArtistBlogs.js" />
+        <option value="$PROJECT_DIR$/controllers/ArtistBlogs.js" />
+        <option value="$PROJECT_DIR$/views/add_reply.ejs" />
+        <option value="$PROJECT_DIR$/config/sessionOption.js" />
+        <option value="$PROJECT_DIR$/app.js" />
+        <option value="$PROJECT_DIR$/controllers/Posts.js" />
+        <option value="$PROJECT_DIR$/models/Comments.js" />
+        <option value="$PROJECT_DIR$/ex_comments_save.js" />
+        <option value="$PROJECT_DIR$/routers/Blogs.js" />
         <option value="$PROJECT_DIR$/controllers/Blogs.js" />
         <option value="$PROJECT_DIR$/models/Posts.js" />
-        <option value="$PROJECT_DIR$/controllers/ArtistBlogs.js" />
-        <option value="$PROJECT_DIR$/routers/Blogs.js" />
+        <option value="$PROJECT_DIR$/views/post.ejs" />
         <option value="$PROJECT_DIR$/controllers/WorkPosts.js" />
-        <option value="$PROJECT_DIR$/views/add_reply.ejs" />
-        <option value="$PROJECT_DIR$/models/Comments.js" />
-        <option value="$PROJECT_DIR$/controllers/Posts.js" />
       </list>
     </option>
   </component>
@@ -272,6 +316,8 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -342,20 +388,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="json" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="indeepen_mongo_test" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="indeepen" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="controllers" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -376,8 +408,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -617,16 +647,16 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="784" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17203514" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17203514" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.0913242" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.115555555" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32575756" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22518519" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.64592594" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -696,34 +726,11 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="8" />
+      <option name="time" value="10" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/models/Users.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="55" column="2" selection-start-line="55" selection-start-column="2" selection-end-line="55" selection-end-column="2" />
-          <folding>
-            <element signature="e#0#51#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/controllers/Posts.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="206" column="17" selection-start-line="206" selection-start-column="17" selection-end-line="206" selection-end-column="17" />
-          <folding>
-            <element signature="e#818#1745#0" expanded="false" />
-            <element signature="e#1906#3199#0" expanded="false" />
-            <element signature="e#3355#4541#0" expanded="false" />
-            <element signature="e#4754#5355#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -889,32 +896,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/models/Reports.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="44" column="13" selection-start-line="44" selection-start-column="13" selection-end-line="44" selection-end-column="13" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/views/workPost.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="10" column="70" selection-start-line="10" selection-start-column="70" selection-end-line="10" selection-end-column="70" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/views/post.ejs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="28" column="28" selection-start-line="28" selection-start-column="28" selection-end-line="28" selection-end-column="28" />
         </state>
       </provider>
     </entry>
@@ -981,13 +967,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/config/mongoose_conn.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.030254778">
-          <caret line="1" column="58" selection-start-line="1" selection-start-column="58" selection-end-line="1" selection-end-column="58" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/models/Users.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.69734514">
@@ -1022,57 +1001,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/controllers/Blogs.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.64344263">
-          <caret line="82" column="41" selection-start-line="82" selection-start-column="41" selection-end-line="82" selection-end-column="41" />
-          <folding>
-            <element signature="e#809#899#0" expanded="false" />
-            <element signature="e#953#1526#0" expanded="false" />
-            <element signature="e#1529#1603#0" expanded="false" />
-            <element signature="e#4727#4817#0" expanded="false" />
-            <element signature="e#4873#5493#0" expanded="false" />
-            <element signature="e#5496#5588#0" expanded="false" />
-            <element signature="e#5647#6258#0" expanded="false" />
-            <element signature="e#6261#6350#0" expanded="false" />
-            <element signature="e#6408#7724#0" expanded="false" />
-            <element signature="e#7727#7832#0" expanded="false" />
-            <element signature="e#7887#8454#0" expanded="false" />
-            <element signature="e#8457#8552#0" expanded="false" />
-            <element signature="e#8606#9198#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/models/Posts.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.06495727">
-          <caret line="71" column="0" selection-start-line="71" selection-start-column="0" selection-end-line="71" selection-end-column="0" />
-          <folding>
-            <element signature="e#257#2031#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/models/Replies.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.9094017">
           <caret line="28" column="22" selection-start-line="28" selection-start-column="22" selection-end-line="28" selection-end-column="22" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/controllers/WorkPosts.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="251" column="11" selection-start-line="251" selection-start-column="11" selection-end-line="251" selection-end-column="11" />
-          <folding>
-            <element signature="e#921#987#0" expanded="false" />
-            <element signature="e#1041#7516#0" expanded="false" />
-            <element signature="e#7519#7590#0" expanded="false" />
-            <element signature="e#9355#9430#0" expanded="false" />
-            <element signature="e#9484#10253#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1084,19 +1017,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routers/Blogs.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.48407644">
-          <caret line="16" column="31" selection-start-line="16" selection-start-column="31" selection-end-line="16" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/json/d.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1108,24 +1032,133 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/config/mongoose_conn.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.039748956">
+          <caret line="1" column="46" selection-start-line="1" selection-start-column="28" selection-end-line="1" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/sessionOption.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.19874477">
+          <caret line="7" column="2" selection-start-line="7" selection-start-column="2" selection-end-line="7" selection-end-column="2" />
+          <folding>
+            <element signature="e#0#44#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.43723848">
+          <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/models/Comments.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="92" column="67" selection-start-line="92" selection-start-column="67" selection-end-line="92" selection-end-column="67" />
-          <folding />
+        <state vertical-scroll-proportion="0.6122449">
+          <caret line="100" column="56" selection-start-line="100" selection-start-column="56" selection-end-line="100" selection-end-column="56" />
+          <folding>
+            <element signature="e#223#568#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/controllers/Posts.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7307692">
-          <caret line="19" column="13" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
+        <state vertical-scroll-proportion="0.80333954">
+          <caret line="227" column="32" selection-start-line="227" selection-start-column="32" selection-end-line="227" selection-end-column="32" />
           <folding>
-            <element signature="e#818#1745#0" expanded="false" />
-            <element signature="e#1906#3199#0" expanded="false" />
-            <element signature="e#3355#4541#0" expanded="false" />
-            <element signature="e#4754#5355#0" expanded="false" />
+            <element signature="e#820#1747#0" expanded="false" />
+            <element signature="e#1908#3201#0" expanded="false" />
+            <element signature="e#3357#4543#0" expanded="false" />
+            <element signature="e#4756#5357#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ex_comments_save.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.50718683">
+          <caret line="15" column="46" selection-start-line="15" selection-start-column="46" selection-end-line="15" selection-end-column="46" />
+          <folding>
+            <element signature="e#0#44#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routers/Blogs.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/workPost.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.32793522">
+          <caret line="10" column="70" selection-start-line="10" selection-start-column="70" selection-end-line="10" selection-end-column="70" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/Posts.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="195" column="29" selection-start-line="195" selection-start-column="29" selection-end-line="195" selection-end-column="29" />
+          <folding>
+            <element signature="e#257#2031#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controllers/Blogs.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="21" column="40" selection-start-line="21" selection-start-column="40" selection-end-line="21" selection-end-column="40" />
+          <folding>
+            <element signature="e#850#940#0" expanded="false" />
+            <element signature="e#994#1567#0" expanded="false" />
+            <element signature="e#1570#1644#0" expanded="false" />
+            <element signature="e#1701#4765#0" expanded="false" />
+            <element signature="e#4768#4858#0" expanded="false" />
+            <element signature="e#4914#5534#0" expanded="false" />
+            <element signature="e#5537#5629#0" expanded="false" />
+            <element signature="e#5688#6299#0" expanded="false" />
+            <element signature="e#6302#6391#0" expanded="false" />
+            <element signature="e#6449#7765#0" expanded="false" />
+            <element signature="e#7768#7873#0" expanded="false" />
+            <element signature="e#7928#8495#0" expanded="false" />
+            <element signature="e#8498#8593#0" expanded="false" />
+            <element signature="e#8647#9239#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controllers/WorkPosts.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.147619">
+          <caret line="247" column="15" selection-start-line="247" selection-start-column="15" selection-end-line="247" selection-end-column="15" />
+          <folding>
+            <element signature="e#921#987#0" expanded="false" />
+            <element signature="e#1041#7516#0" expanded="false" />
+            <element signature="e#7519#7590#0" expanded="false" />
+            <element signature="e#9353#9428#0" expanded="false" />
+            <element signature="e#9482#10251#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/post.ejs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7307692">
+          <caret line="34" column="47" selection-start-line="34" selection-start-column="47" selection-end-line="34" selection-end-column="47" />
+          <folding />
         </state>
       </provider>
     </entry>

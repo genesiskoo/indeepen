@@ -100,10 +100,8 @@ blogSchema.statics = {
     updateProfilePhotoOfBlog : function(blogId, newUrl, callback){
         this.findOneAndUpdate({_id : new ObjectId(blogId)}, {$set : {profilePhoto : newUrl}}, callback);
     },
-    findBgPhotoOfBlog : function(blogId, callback){
-        this.findOne({_id : new ObjectId(blogId)}).
-            select('-_id -_user -type -nick -profilePhoto -intro -fans -iMissYous -location -createAt -updateAt -isActivated').
-            exec(callback);
+    updateBgPhotoOfBlog : function(blogId, newUrl, callback){
+        this.findOneAndUpdate({_id : new ObjectId(blogId)}, {$set : {bgPhoto : newUrl}}, callback);
     },
     pushFanToBlog : function(blogId, userBlogId, callback){
         return this.findOneAndUpdate({_id : new ObjectId(blogId)}, {$push : {fans : new ObjectId(userBlogId)}}, callback);
@@ -113,19 +111,6 @@ blogSchema.statics = {
     },
     pushIMissYouToBlog : function(blogId, userBlogId, callback){
         return this.findOneAndUpdate({_id : new ObjectId(blogId)}, {$push : {iMissYous : new ObjectId(userBlogId)}}, callback);
-    },
-    isIMissYoued : function(blogId, userBlogId, callback){
-        this.findOne({_id : new ObjectId(blogId), iMissYous : new ObjectId(userBlogId)}, function(err, doc){
-            if(err){
-                callback(err, null);
-            }
-            if(doc){
-                console.log(doc);
-                callback(null, true);
-            }else {
-                callback(null, false);
-            }
-        });
     },
     removeBlog : function(blogId, callback){
         return this.findOneAndRemove({_id : new ObjectId(blogId)}, callback);

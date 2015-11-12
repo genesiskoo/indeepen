@@ -83,7 +83,8 @@ postSchema.methods = {
         if(!options) options = {};
         var select = '';
         if(this.postType == 0)
-            select = '_id createAt _writer content likes work resources';
+            //select = '_id createAt _writer content likes work resources';
+            select = '-updateAt -hashTags -show';
         else
             select = '-content -hashTags -work -show.location.point'; //-수정
         return this.model('Post').find(options).

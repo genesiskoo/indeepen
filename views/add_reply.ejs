@@ -15,8 +15,8 @@
             <%= reply.content %> <%= reply.createAt %> </li>
         <% })%>
             <form method="POST" action="/posts/<%= postId %>/comments">
-                writer : <input type="text" name="writer"><br>
-                content : <input type="text" name="content"><br>
+                writer : <input type="text" name="writer" value="563ef1cb401ae00c19a1583a"><br>
+                content : <input type="text" name="content" autofocus><br>
                 <button type="submit">댓글 달기</button>
             </form>
         </ul>

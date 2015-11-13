@@ -1,8 +1,8 @@
 /**
  * Created by Moon Jung Hyun on 2015-11-06.
  */
-var userKey = '563ef1ca401ae00c19a15829'; // session에 있을 정보
-var blogKey = '563ef1ca401ae00c19a15832'; // session에 있을 정보
+var userKey = '563ef1ca401ae00c19a15828'; // session에 있을 정보
+var blogKey = '563ef1cb401ae00c19a15838'; // session에 있을 정보
 
 var Blog = require('./../models/Blogs');  // web 에서 정보 입력시 편하게 하게 하려고 추가 나중에 지움요.
 

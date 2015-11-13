@@ -20,9 +20,10 @@ var uploadUrl = __dirname + '/../upload';
 
 var Blog = require('./../models/Blogs');
 var Post = require('./../models/Posts');
+var User = require('./../models/Users');
 
 var defaultBgPhotoUrl = 'https://s3-ap-northeast-1.amazonaws.com/in-deepen/images/bg/default_bg.png';
-var userKey = '563ef1ca401ae00c19a15829'; // session에 있을 정보
+var userKey = '563ef1ca401ae00c19a15828'; // session에 있을 정보
 var blogKey = '563ef1cb401ae00c19a15838'; // session에 있을 정보
 
 /**
@@ -225,17 +226,26 @@ module.exports.changeFanOfBlog = function(req, res, next){
     }
     if(fanStatus == 'fan'){
         Blog.pushFanToBlog(blogId, blogKey, function(err, doc){
-           if(err){
-               console.error('ERROR PUSHING FAN TO BLOG', err);
-               var error = new Error('fan을 할 수가 없습니다.');
-               error.code = 400;
-               return next(error);
-           }
-            var msg = {
-                code : 200,
-                msg : 'Success'
-            };
-            res.status(msg.code).json(msg);
+            if(err){
+                console.error('ERROR PUSHING FAN TO BLOG', err);
+                var error = new Error('fan을 할 수가 없습니다.');
+                error.code = 400;
+                return next(error);
+            }
+            User.pushMyArtists(userKey, blogId, function(err, doc){
+                if(err){
+                    console.error('ERROR PUSHING MY ARTISTS TO USER',err);
+                    var error = new Error('My Artist 추가 오류... ㅠㅡㅠ');
+                    error.code = 400;
+                    return next(error);
+                }
+                console.log('user doc ', doc);
+                var msg = {
+                    code : 200,
+                    msg : 'Success'
+                };
+                res.status(msg.code).json(msg);
+            });
         });
     }else if(fanStatus == 'unfan'){
         Blog.pullFanFromBlog(blogId, blogKey, function(err, doc){
@@ -245,11 +255,20 @@ module.exports.changeFanOfBlog = function(req, res, next){
                 error.code = 400;
                 return next(error);
             }
-            var msg = {
-                code : 200,
-                msg : 'Success'
-            };
-            res.status(msg.code).json(msg);
+            User.pullMyArtists(userKey, blogId, function(err, doc){
+                if(err){
+                   console.error('ERROR PULLING MY ARTISTS FROM USER ', err);
+                   var error = new Error('My Artist 제거 오류... ㅠㅜㅠ');
+                   error.code = 400;
+                   return next(error);
+                }
+                console.log('user doc ', doc);
+                var msg = {
+                    code : 200,
+                    msg : 'Success'
+                };
+                res.status(msg.code).json(msg);
+            });
         });
     }else{
         var error = new Error('fanStatus is only "fan" or "unfan"');

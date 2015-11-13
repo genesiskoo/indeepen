@@ -1,14 +1,15 @@
 /**
  * Created by Moon Jung Hyun on 2015-11-06.
  */
-var userKey = '563ef1ca401ae00c19a15829'; // session에 있을 정보
-var blogKey = '563ef1ca401ae00c19a15832'; // session에 있을 정보
+var userKey = '563ef1ca401ae00c19a15828'; // session에 있을 정보
+var blogKey = '563ef1cb401ae00c19a15838'; // session에 있을 정보
 
 var Blog = require('./../models/Blogs');  // web 에서 정보 입력시 편하게 하게 하려고 추가 나중에 지움요.
 
 var Comment = require('./../models/Comments');
 var Post = require('./../models/Posts');
 var Report = require('./../models/Reports');
+var User = require('./../models/Users');
 
 // 이거.. session하면 메소드 안에 들어가야 겠...지???
 // c_+postId를 키값으로 lastseen값 저장....
@@ -16,12 +17,24 @@ var Report = require('./../models/Reports');
 
 /**
  * 모든 type의 Post 가져오기
+ * 회원이 등록한 workPost
+ * 회원의 artist가 등록한 workPost, showPost
  * @param req
  * @param res
  * @param next
  */
-module.exports.getPosts = function (req, res, next) {
-    // PostSchema.findPosts();
+module.exports.getPosts = function(req, res, next){
+    //1. 회원의 myArtists를 가져온다.
+    User.findOneMyArtists(userKey, function(err, myArtists){
+        if(err){
+            console.error('ERROR GETTING MY ARTISTS ', err);
+            var error = new Error('myArtists 가져오기 실패');
+            error.code = 400;
+            return next(error);
+        }
+        console.log('myArtist ', myArtists.myArtists);
+
+    });
 };
 
 /**
@@ -159,7 +172,6 @@ module.exports.reportPost = function (req, res, next) {
 
 
 ////////////////////////////////////////////////////////////////////////////////
-// 댓글 관련.....
 /**
  * 댓글 저장하기
  * @param req
@@ -221,7 +233,7 @@ module.exports.getComments = function (req, res, next) {
 
         // app...
         //lastSeenOfComments = docs.slice(-1)[0].createAt;
-        if (docs.slice(-1).length != 0) {
+        if(docs.length != 0){
             req.session[id] = docs.slice(-1)[0]._id;
             var msg = {
                 code: 200,

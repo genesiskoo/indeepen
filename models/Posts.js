@@ -80,15 +80,16 @@ postSchema.methods = {
      * @param callback
      * @returns {Promise}
      */
-    findByPostType : function(options, callback){
+    findByPostType : function(options,lastSeen,callback){
         if(!options) options = {};
         var select = '';
-        if(this.postType == 0)
-            //select = '_id createAt _writer content likes work resources';
-            select = '-updateAt -hashTags -show';
+        if(lastSeen == null){
+            if(this.postType == 0)
+                //select = '_id createAt _writer content likes work resources';
+                select = '-updateAt -hashTags -show';
         else
             select = '-content -hashTags -work -show.location.point'; //-수정
-        return this.model('Post').find(options).
+            this.model('Post').find(options).
             where('postType').
             equals(this.postType).
             select(select).
@@ -98,6 +99,18 @@ postSchema.methods = {
             //populate({path : 'likes', select : '_id _user nick profilePhoto'}).
             populate('show.tags._user', '_id _user nick profilePhoto').
             exec(callback);
+        }else{
+            this.model('Post').find({_id : {$lt : lastSeen}}).
+            where('postType').
+            equals(this.postType).
+            select(select).
+            sort({createAt : -1}).
+            limit(10).
+            populate({path : '_writer', select : '-type -bgPhoto -intro -iMissYous -fans -location -createAt -updateAt -isActivated'}).
+            //populate({path : 'likes', select : '_id _user nick profilePhoto'}).
+            populate('show.tags._user', '_id _user nick profilePhoto').
+            exec(callback);
+        }
     }
 };
 

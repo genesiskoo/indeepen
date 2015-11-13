@@ -60,6 +60,7 @@ var postSchema = new Schema({
             address : {type : String, trim : true}
         }
     },
+    youTube : String,
     resources : [{
         _id : false,
         type : {type : String},            //0(이미지), 1(동영상), 2(음원)
@@ -184,19 +185,35 @@ postSchema.statics = {
             .skip(options.perPage * options.page)
             .exec(cb);
     },
-    findWorkPostsAtBlog : function(writer, callback){
-        //this.aggregate([
-        //    {$match : {_writer : writer}},
-        //    {$unwind : "$resources"},
-        //    {$sort : {createAt : -1}},
-        //    {$project : {postType : 0, updateAt : 0, content : 0, hashTags : 0, likes:0, worK : 0, show : 0}}
-        //]).
-        //    //limit().
-        //    exec(callback);
-        this.find({_writer : new ObjectId(writer)}).
-            select('-updateAt -hashTags -likes -work -show').
-            sort({createAt : -1}).
-            exec(callback);
+    findWorkPostsAtBlog : function(writer, lastSeen, callback){
+        if(lastSeen == null){
+            this.find({_writer : new ObjectId(writer), postType : 0}).
+                select('-postType -_writer -createAt -updateAt -content -hashTags -likes -work.emotion -show').
+                sort({createAt : -1}).
+                limit(15).
+                exec(callback);
+        }else{
+            this.find({_writer : new ObjectId(writer), postType : 0, _id : {$lt : lastSeen}}).
+                select('-postType -_writer -createAt -updateAt -content -hashTags -likes -work.emotion -show').
+                sort({createAt : -1}).
+                limit(15).
+                exec(callback);
+        }
+    },
+    findLikePostsAtBlog : function(artistBlogId, lastSeen, callback){
+        if(lastSeen == null){
+            this.find({likes : new ObjectId(artistBlogId), postType : 0}).
+                select('-updateAt -content -hashTags -work.emotion -show').
+                sort({createAt : -1}).
+                limit(15).
+                exec(callback);
+        }else{
+            this.find({likes : new ObjectId(artistBlogId), postType : 0, _id : {$lt : lastSeen}}).
+                select('-updateAt -content -hashTags -work.emotion -show').
+                sort({createAt : -1}).
+                limit(15).
+                exec(callback);
+        }
     }
 };
 

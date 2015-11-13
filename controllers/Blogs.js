@@ -326,40 +326,90 @@ module.exports.addiMissYou = function(req, res, next){
  */
 module.exports.getWorkPostsOfBlogger = function(req, res, next){
     var blogId = req.params.blogId;
+    var isStart = req.query.isStart;
     if(!blogId){
         var error = new Error('URL 확인 부탁해요.');
         error.code = 400;
         return next(error);
     }
-    Post.findWorkPostsAtBlog(blogId, function(err, docs){
+    var lastSeenOfMyWork = null;
+    var tmpKey = 'mw'+blogId;
+    if(!isStart){
+        lastSeenOfMyWork = req.session[tmpKey];
+    }
+
+    Post.findWorkPostsAtBlog(blogId, lastSeenOfMyWork, function(err, docs){
         if(err){
             console.error('ERROR GETTING WORK PORST AT BLOG ', err);
             var error = new Error('work post를 가져올 수 없습니다.');
             error.code = 400;
             return next(error);
         }
-        async.each(docs, function(doc, callback){
-            doc.resources = doc.resources[0];
-            callback();
-        }, function(err){
-            if(err){
-                console.error('ERROR AFTER GETTING WORK PORST AT BLOG ', err);
-                var error = new Error('work post each 하는데 실패...');
-                error.code = 400;
-                return next(error);
-            }
+        if(docs.slice(-1).length != 0){
+            async.each(docs, function(doc, callback){
+                doc.resources = doc.resources[0];
+                callback();
+            }, function(err){
+                if(err){
+                    console.error('ERROR AFTER GETTING WORK PORST AT BLOG ', err);
+                    var error = new Error('work post each 하는데 실패...');
+                    error.code = 400;
+                    return next(error);
+                }
+                req.session[tmpKey] = docs.slice(-1)[0]._id;
+                var msg = {
+                    code : 200,
+                    msg : 'Success',
+                    result : docs
+                };
+                res.status(msg.code).json(msg);
+            });
+        }else{
+            var error = new Error('더 이상 없음.');
+            error.code = 404;
+            return next(error);
+        }
+    });
+};
+
+/**
+ * 해당 블로거가 좋아요 한 예술콘텐츠 목록 가져오기
+ * @param req
+ * @param res
+ * @param next
+ */
+module.exports.getLikePostsOfBlogger = function(req, res, next){
+    var blogId = req.params.blogId;
+    if(!blogId){
+        var error =new Error('URL 확인 부탁해요.');
+        error.code = 400;
+        return next(error);
+    }
+    var isStart = req.query.isStart;
+    var lastSeenOfLikes = null;
+    var tmpKey = 'ml'+blogId;
+    if(!isStart){
+        lastSeenOfLikes = req.session[tmpKey];
+    }
+    Post.findLikePostsAtBlog(blogId, lastSeenOfLikes, function(err, docs){
+        if(err){
+            console.error('ERROR GETTING LIKE POSTS AT BLOG ', err);
+            var error = new Error('like posts를 가져올 수 없습니다.');
+            error.code = 400;
+            return next(error);
+        }
+        if(docs.slice(-1).length != 0){
+            req.session[tmpKey] = doc.slice(-1)[0]._id;
             var msg = {
                 code : 200,
                 msg : 'Success',
                 result : docs
             };
             res.status(msg.code).json(msg);
-        });
-       /* var msg = {
-            code : 200,
-            msg : 'Success',
-            result : docs
-        };
-        res.status(msg.code).json(msg);*/
+        }else{
+            var error =new Error('더 이상 없음');
+            error.code = 404;
+            return next(error);
+        }
     });
 };

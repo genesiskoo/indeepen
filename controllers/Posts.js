@@ -231,7 +231,7 @@ module.exports.getComments = function(req, res, next){
             res.status(msg.code).json(msg);
         }else{
             var error = new Error('댓글이 없습니다.');
-            error.code = 400;
+            error.code = 404;
             return next(error);
         }
     });

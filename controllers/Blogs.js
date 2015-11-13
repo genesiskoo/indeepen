@@ -380,12 +380,12 @@ module.exports.getWorkPostsOfBlogger = function(req, res, next){
  */
 module.exports.getLikePostsOfBlogger = function(req, res, next){
     var blogId = req.params.blogId;
+    var isStart = req.query.isStart;
     if(!blogId){
         var error =new Error('URL 확인 부탁해요.');
         error.code = 400;
         return next(error);
     }
-    var isStart = req.query.isStart;
     var lastSeenOfLikes = null;
     var tmpKey = 'ml'+blogId;
     if(!isStart){
@@ -399,13 +399,18 @@ module.exports.getLikePostsOfBlogger = function(req, res, next){
             return next(error);
         }
         if(docs.slice(-1).length != 0){
-            req.session[tmpKey] = doc.slice(-1)[0]._id;
-            var msg = {
-                code : 200,
-                msg : 'Success',
-                result : docs
-            };
-            res.status(msg.code).json(msg);
+            req.session[tmpKey] = docs.slice(-1)[0]._id;
+            async.each(docs, function(doc, callback){
+                doc.resources = doc.resources[0];
+                callback();
+            }, function(err){
+                var msg = {
+                    code : 200,
+                    msg : 'Success',
+                    result : docs
+                };
+                res.status(msg.code).json(msg);
+            });
         }else{
             var error =new Error('더 이상 없음');
             error.code = 404;

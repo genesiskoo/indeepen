@@ -227,13 +227,13 @@ postSchema.statics = {
     findLikePostsAtBlog : function(artistBlogId, lastSeen, callback){
         if(lastSeen == null){
             this.find({likes : new ObjectId(artistBlogId), postType : 0}).
-                select('-updateAt -content -hashTags -work.emotion -show').
+                select('-postType -_writer -likes -createAt -updateAt -content -hashTags -work.emotion -show').
                 sort({createAt : -1}).
                 limit(15).
                 exec(callback);
         }else{
             this.find({likes : new ObjectId(artistBlogId), postType : 0, _id : {$lt : lastSeen}}).
-                select('-updateAt -content -hashTags -work.emotion -show').
+                select('-postType -_writer -likes -createAt -updateAt -content -hashTags -work.emotion -show').
                 sort({createAt : -1}).
                 limit(15).
                 exec(callback);

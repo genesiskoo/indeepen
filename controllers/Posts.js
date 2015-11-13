@@ -16,12 +16,14 @@ var Report = require('./../models/Reports');
 
 /**
  * 모든 type의 Post 가져오기
+ * 회원이 등록한 workPost
+ * 회원의 artist가 등록한 workPost, showPost
  * @param req
  * @param res
  * @param next
  */
 module.exports.getPosts = function(req, res, next){
-   // PostSchema.findPosts();
+
 };
 
 /**
@@ -159,7 +161,6 @@ module.exports.reportPost = function(req, res, next){
 
 
 ////////////////////////////////////////////////////////////////////////////////
-// 댓글 관련.....
 /**
  * 댓글 저장하기
  * @param req

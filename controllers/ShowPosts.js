@@ -45,7 +45,7 @@ module.exports.getShowList = function (req, res) {
             var result = {
                 postInfo: showModel
             };
-            async.each(result,function(list,cb){
+            async.each(result, function (list, cb) {
                 list['resources'] = list.resources[0];
                 cb();
             });
@@ -119,7 +119,7 @@ module.exports.addShowPost = function (req, res, next) {
             function (callback) {
                 var uploadInfo = {
                     files: [],
-                    tags: []
+                    artist: []
                 };
                 var form = new formidable.IncomingForm();
                 // aws 에 저장되는 경로....
@@ -127,12 +127,12 @@ module.exports.addShowPost = function (req, res, next) {
 
                 form
                     .on('field', function (field, value) {
-                        if (value == 'tag') {
-                            var temTag = JSON.parse(value);
-                            uploadInfo.tags.push(temTag);
+                        if (field == 'tag') {
+                            uploadInfo.artist.push(JSON.parse(value));
+                        } else {
+                            console.log('file 아님 ', field);
+                            uploadInfo[field] = value;
                         }
-                        console.log('file 아님 ', field);
-                        uploadInfo[field] = value;
                     })
                     .on('file', function (field, file) {
                         if (field == 'file') {
@@ -209,13 +209,13 @@ module.exports.addShowPost = function (req, res, next) {
                         callback(null, uploadInfo.showType, uploadInfo.title, uploadInfo.startDate, uploadInfo.endDate,
                             uploadInfo.startTime, uploadInfo.endTime, uploadInfo.fee, uploadInfo.blogId,
                             uploadInfo.content, uploadInfo.latitude, uploadInfo.longitude, uploadInfo.address,
-                            uploadInfo.tags, imageUrls);
+                            uploadInfo.artist, imageUrls);
                     }
                 });//asyncEach
 
             },
             function (showType, title, startDate, endDate, startTime, endTime, fee,
-                      blogId, content, latitude, longitude, address, tags, urls, callback) {
+                      blogId, content, latitude, longitude, address, artist, urls, callback) {
 
                 // hash_tag 추출
                 var tmpStr = content.split('#');
@@ -236,7 +236,7 @@ module.exports.addShowPost = function (req, res, next) {
                     show: {
                         title: title,
                         type: showType,
-                        tags: tags,
+                        tags: artist,
                         startDate: startDate,
                         endDate: endDate,
                         startTime: startTime,
@@ -293,4 +293,46 @@ module.exports.addShowPost = function (req, res, next) {
                 //res.redirect('/');
             }
         });
+};
+
+//ex
+/**
+ * Load
+ */
+
+exports.load = function (req, res, next, id) {
+    var User = mongoose.model('User');
+
+    Article.load(id, function (err, article) {
+        if (err) return next(err);
+        if (!article) return next(new Error('not found'));
+        req.article = article;
+        next();
+    });
+};
+
+/**
+ * List
+ */
+
+exports.index = function (req, res) {
+    var page = (req.query.page > 0 ? req.query.page : 1) - 1;
+    console.log(page);
+    var perPage = 1;
+    var options = {
+        perPage: perPage,
+        page: page
+    };
+    Post.list(options, function (err, articles) {
+        if (err) return res.render('500');
+        Post.count().exec(function (err, count) {
+            res.json(articles);
+            //res.render('articles/index', {
+            //    title: 'Articles',
+            //    articles: articles,
+            //    page: page + 1,
+            //    pages: Math.ceil(count / perPage)
+            //});
+        });
+    });
 };

@@ -82,7 +82,7 @@ postSchema.methods = {
     findByPostType: function (options, lastSeen, callback) {
         if (!options) options = {};
         var select = '';
-        if (lastSeen != null) {
+        if (lastSeen == null) {
             if (this.postType == 0){
             //select = '_id createAt _writer content likes work resources';
                 select = '-updateAt -hashTags -show';}
@@ -103,7 +103,6 @@ postSchema.methods = {
             exec(callback);
             console.log('lastseen is null');
         } else {
-            var lastSeen = '5642cd704056b9741b622f62';
             console.log('lastseen isnt null');
             this.model('Post').find({_id: {$lt: lastSeen}}).
             where('postType').

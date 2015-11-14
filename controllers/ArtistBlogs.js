@@ -23,8 +23,6 @@ var defaultArtistProfileUrl = 'https://s3-ap-northeast-1.amazonaws.com/in-deepen
 var Blog = require('./../models/Blogs');
 var User = require('./../models/Users');
 
-var userKey = '563ef1ca401ae00c19a15829'; // session에 있을 정보
-var blogKey = '563ef1ca401ae00c19a15832'; // session에 있을 정보
 
 /**
  * 개인 Blog 기본 정보 가져오기

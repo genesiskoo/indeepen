@@ -19,9 +19,6 @@ var s3 = new AWS.S3();
 var bucketName = awsS3.bucketName;
 var uploadUrl = __dirname + './../upload';
 
-var userKey = '563ef1ca401ae00c19a15829'; // session에 있을 정보
-var blogKey = '563ef1ca401ae00c19a15832'; // session에 있을 정보
-
 var Comment = require('./../models/Comments');
 var Post = require('./../models/Posts');
 
@@ -32,23 +29,32 @@ module.exports.getShowAddForm = function (req, res) {
 
 //List
 module.exports.getShowList = function (req, res) {
+    var isStart = req.query.isStart;
+    var lastSeen = '5642cd704056b9741b622f62';
+
+    req.session.visit =1;
+    console.log(req.session.visit);
+    if(!isStart){
+        lastSeen = req.session[visit];
+    }
     var showList = [];
     var showModel = new Post({postType: 1});
-    showModel.findByPostType(function (err, shows) {
+    showModel.findByPostType({},lastSeen,function(err,shows){
         if (err) {
             console.error(err);
             var error = new Error('Show List 를 가져올 수 없다');
             error.code = 400;
             return next(error);
         }
-        async.eachSeries(shows, function (showModel, callback) {
+        var order = 0;
+        async.each(shows, function (showModel, callback) {
             var result = {
+                seq : (order++),
                 postInfo: showModel
             };
-            async.each(result,function(list,cb){
-                list['resources'] = list.resources[0];
-                cb();
-            });
+
+            //resource 한개만 가져오기
+            result.postInfo['resources'] = result.postInfo.resources[0];
 
             Comment.countCommentsOfPost(showModel._id, function (err, count) {
                 if (err) {
@@ -62,17 +68,28 @@ module.exports.getShowList = function (req, res) {
                 showList.push(result);
                 callback();
             })//count
-        }, function done() {
+        }, function (err) {
+            if(err){
+                //error 처리
+            }
+            showList.sort(function(a,b){
+                return a.seq - b.seq;
+            });
 
-            var msg = {
-                code: 200,
-                msg: 'Success',
-                result: showList
-            };
-            //res.render('shows',{shows : shows});
-            res.status(msg.code).json(msg);
-            console.log(msg);
-
+            if(showList.slice(-1).length != 0){
+                //req.session[req.params.showSeen] = showList.slice(-1)[0]._id;
+                //console.log(showList.slice(-1).postType);
+                var msg = {
+                    code : 200,
+                    msg : 'Success',
+                    result : showList
+                };
+                res.status(msg.code).json(msg);
+            }else{
+                var error = new Error('글이 없습니다.');
+                error.code = 404;
+                return next(error);
+            }
         });//async
     });//findPostType
     //post결과와 comment수 결과를 담을 객체 생성
@@ -119,7 +136,7 @@ module.exports.addShowPost = function (req, res, next) {
             function (callback) {
                 var uploadInfo = {
                     files: [],
-                    artist:[]
+                    artist: []
                 };
                 var form = new formidable.IncomingForm();
                 // aws 에 저장되는 경로....
@@ -127,9 +144,9 @@ module.exports.addShowPost = function (req, res, next) {
 
                 form
                     .on('field', function (field, value) {
-                        if(field=='tag'){
-                            uploadInfo.artist.push(value);
-                        }else{
+                        if (field == 'tag') {
+                            uploadInfo.artist.push(JSON.parse(value));
+                        } else {
                             console.log('file 아님 ', field);
                             uploadInfo[field] = value;
                         }
@@ -209,7 +226,7 @@ module.exports.addShowPost = function (req, res, next) {
                         callback(null, uploadInfo.showType, uploadInfo.title, uploadInfo.startDate, uploadInfo.endDate,
                             uploadInfo.startTime, uploadInfo.endTime, uploadInfo.fee, uploadInfo.blogId,
                             uploadInfo.content, uploadInfo.latitude, uploadInfo.longitude, uploadInfo.address,
-                            uploadInfo.artist ,imageUrls);
+                            uploadInfo.artist, imageUrls);
                     }
                 });//asyncEach
 
@@ -294,3 +311,45 @@ module.exports.addShowPost = function (req, res, next) {
             }
         });
 };
+
+//ex
+/**
+ * Load
+ */
+
+//exports.load = function (req, res, next, id) {
+//    var User = mongoose.model('User');
+//
+//    Article.load(id, function (err, article) {
+//        if (err) return next(err);
+//        if (!article) return next(new Error('not found'));
+//        req.article = article;
+//        next();
+//    });
+//};
+//
+///**
+// * List
+// */
+//
+//exports.index = function (req, res) {
+//    var page = (req.query.page > 0 ? req.query.page : 1) - 1;
+//    console.log(page);
+//    var perPage = 1;
+//    var options = {
+//        perPage: perPage,
+//        page: page
+//    };
+//    Post.list(options, function (err, articles) {
+//        if (err) return res.render('500');
+//        Post.count().exec(function (err, count) {
+//            res.json(articles);
+//            //res.render('articles/index', {
+//            //    title: 'Articles',
+//            //    articles: articles,
+//            //    page: page + 1,
+//            //    pages: Math.ceil(count / perPage)
+//            //});
+//        });
+//    });
+//};

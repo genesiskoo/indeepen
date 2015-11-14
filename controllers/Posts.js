@@ -131,23 +131,23 @@ module.exports.getPosts = function(req, res, next){
  * @param res
  * @param next
  */
-module.exports.deletePost = function(req, res, next){
+module.exports.deletePost = function (req, res, next) {
     var postId = req.params.postId;
-    if(!postId){
+    if (!postId) {
         var error = new Error('URL 확인 부탁해요.');
         error.code = 400;
         return next(error);
     }
-    Post.removePost(postId, function(err, doc){
-        if(err){
+    Post.removePost(postId, function (err, doc) {
+        if (err) {
             console.error('ERROR REMOVE POST ', err);
             var error = new Error('Post를 삭제할 수 없습니다.');
             error.code = 400;
             return next(error);
         }
         //console.log(doc);
-        Comment.removeComments(doc._id, function(err, docs){
-            if(err){
+        Comment.removeComments(doc._id, function (err, docs) {
+            if (err) {
                 console.error('ERROR REMOVE COMMENTS ', err);
                 var error = new Error('Comments를 삭제할 수 없습니다. ');
                 error.code = 400;
@@ -155,8 +155,8 @@ module.exports.deletePost = function(req, res, next){
             }
             //console.log(docs);
             var msg = {
-                code : 200,
-                msg : 'Success'
+                code: 200,
+                msg: 'Success'
             };
             res.status(msg.code).json(msg);
         });
@@ -170,14 +170,14 @@ module.exports.deletePost = function(req, res, next){
  * @param next
  * @returns {*}
  */
-module.exports.changeLike = function(req, res, next){
+module.exports.changeLike = function (req, res, next) {
     var id = req.params.postId;
     var status = req.params.likeStatus;
     console.log('postId', id);
     console.log('likeStatus', status);
-    if(status == 'like'){ // 좋아요
-        Post.pushLike(id, blogKey, function(err, doc){
-            if(err){
+    if (status == 'like') { // 좋아요
+        Post.pushLike(id, blogKey, function (err, doc) {
+            if (err) {
                 console.error('ERROR PUSH LIKE', err);
                 var error = new Error('좋아요에 실패했습니다.');
                 error.code = 400;
@@ -185,14 +185,14 @@ module.exports.changeLike = function(req, res, next){
             }
             console.log('push like ', doc);
             var msg = {
-                code : 200,
-                msg : 'Success'
+                code: 200,
+                msg: 'Success'
             };
             res.status(msg.code).json(msg);
         });
-    }else if(status == 'unlike'){ // 좋아요 취소
-        Post.pullLike(id, blogKey, function(err, doc){
-            if(err){
+    } else if (status == 'unlike') { // 좋아요 취소
+        Post.pullLike(id, blogKey, function (err, doc) {
+            if (err) {
                 console.error('ERROR PULL LIKE ', err);
                 var error = new Error('좋아요를 취소할 수가 없습니다.');
                 error.code = 400;
@@ -200,12 +200,12 @@ module.exports.changeLike = function(req, res, next){
             }
             console.log('pull like ', doc);
             var msg = {
-                code : 200,
-                msg : 'Success',
+                code: 200,
+                msg: 'Success',
             };
             res.status(msg.code).json(msg);
         });
-    }else{
+    } else {
         var error = new Error('Only like Or unlike');
         error.code = 400;
         return next(error);
@@ -220,23 +220,23 @@ module.exports.changeLike = function(req, res, next){
  * @param next
  * @returns {*}
  */
-module.exports.reportPost = function(req, res, next){
+module.exports.reportPost = function (req, res, next) {
     var postId = req.params.postId;
-    if(!postId){
+    if (!postId) {
         var error = new Error('URL 확인 부탁해요.');
         error.code = 400;
         return next(error);
     }
-    Report.isReported(postId, blogKey, function(err, isReported){
-        if(err){
+    Report.isReported(postId, blogKey, function (err, isReported) {
+        if (err) {
             console.error('ERROR CHECK REPORTER ', err);
             var error = new Error('신고 여부를 확인할 수 없습니다.');
-            error.code =400;
+            error.code = 400;
             return next(error);
         }
-        if(!isReported){
-            Report.saveReport(postId, blogKey, function(err, doc){
-                if(err){
+        if (!isReported) {
+            Report.saveReport(postId, blogKey, function (err, doc) {
+                if (err) {
                     console.error('ERROR SAVE REPORT ', err);
                     var error = new Error('신고 실패했습니다.');
                     error.code = 400;
@@ -244,12 +244,12 @@ module.exports.reportPost = function(req, res, next){
                 }
                 console.log('RESULT SAVE REPORT ', doc);
                 var msg = {
-                    code : 200,
-                    msg : 'Success'
+                    code: 200,
+                    msg: 'Success'
                 };
                 res.status(msg.code).json(msg);
             });
-        }else{
+        } else {
             console.log('이미 신고함...');
             var error = new Error('이미 신고한 Post입니다.');
             error.code = 400;
@@ -266,27 +266,27 @@ module.exports.reportPost = function(req, res, next){
  * @param res
  * @param next
  */
-module.exports.addComment = function(req, res, next){
+module.exports.addComment = function (req, res, next) {
     console.log('addComment');
     var postId = req.params.postId;
-    Comment.saveComment(postId, req.body.writer, req.body.content, function(err, doc){
-        if(err){
+    Comment.saveComment(postId, req.body.writer, req.body.content, function (err, doc) {
+        if (err) {
             console.error('ERROR AT ADD REPLY - ', err);
             var error = new Error('댓글을 입력할 수 없습니다.');
             error.code = 400;
             return next(error);
         }
         // web....
-        res.redirect('/posts/'+postId+'/comments');
+        res.redirect('/posts/' + postId + '/comments');
 
         // app ...
         /*
-        var msg = {
-            code : 200,
-            msg : 'Success'
-        };
-        res.status(msg.code).json(msg);
-        */
+         var msg = {
+         code : 200,
+         msg : 'Success'
+         };
+         res.status(msg.code).json(msg);
+         */
     });
 };
 /**
@@ -295,41 +295,41 @@ module.exports.addComment = function(req, res, next){
  * @param res
  * @param next
  */
-module.exports.getComments = function(req, res, next){
+module.exports.getComments = function (req, res, next) {
     var id = req.params.postId;
     var isStart = req.query.isStart;
-    if(!id){
+    if (!id) {
         var error = new Error('URL 확인 부탁해요.');
         error.code = 400;
         return next(error);
     }
     var lastSeenOfComments = null;
-    if(!isStart){
+    if (!isStart) {
         lastSeenOfComments = req.session[id];
     }
 
-    Comment.findCommentsOfPost(id, lastSeenOfComments, function(err, docs){
-        if(err){
+    Comment.findCommentsOfPost(id, lastSeenOfComments, function (err, docs) {
+        if (err) {
             var error = new Error('댓글을 불러올 수 없습니다.');
             error.code = 400;
             return next(error);
         }
         // web에서 입력할때 글쓴이를 편하게 하기 위해....;;;
-       /* Blog.findBlogs(function(err, blogs){
-            res.render('add_reply', {postId : id, replies : docs, users : blogs});
-        });*/
+        /* Blog.findBlogs(function(err, blogs){
+         res.render('add_reply', {postId : id, replies : docs, users : blogs});
+         });*/
 
         // app...
         //lastSeenOfComments = docs.slice(-1)[0].createAt;
         if(docs.length != 0){
             req.session[id] = docs.slice(-1)[0]._id;
             var msg = {
-                code : 200,
-                msg : 'Success',
-                result : docs.reverse()
+                code: 200,
+                msg: 'Success',
+                result: docs.reverse()
             };
             res.status(msg.code).json(msg);
-        }else{
+        } else {
             var error = new Error('댓글이 없습니다.');
             error.code = 404;
             return next(error);

@@ -15,7 +15,7 @@ router.get('/showPostsForm', showPost.getShowAddForm);
 router.post('/', showPost.addShowPost);
 
 //ex
-router.get('/ex', showPost.index);
+//router.get('/ex', showPost.index);
 
 //detail
 router.get('/:postId', showPost.getShowPost);

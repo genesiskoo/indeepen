@@ -283,8 +283,7 @@ postSchema.statics = {
                 limit(15).
                 exec(callback);
         }
-    },
-
+    }
 };
 
 module.exports = mongoose.model('Post', postSchema);

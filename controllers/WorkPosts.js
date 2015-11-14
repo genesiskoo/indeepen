@@ -211,11 +211,12 @@ module.exports.getWorkPosts = function(req, res, next){
             error.code = 400;
             return next(error);
         }
-        async.eachSeries(workPosts, function(workPost, callback){
+        var order = 0;
+        async.each(workPosts, function(workPost, callback){
             var tmp = {
+                seq : (order++),
                 postInfo : workPost
             };
-
             Comment.countCommentsOfPost(workPost._id, function(err, count){
                 if(err){
                     console.error('ERROR COUNT COMMENTS ', err);
@@ -237,7 +238,15 @@ module.exports.getWorkPosts = function(req, res, next){
                     callback();
                 });
             });
-        }, function done(){
+        }, function (err){
+            if(err){
+                var error = new Error('async error');
+                error.code = 400;
+                return next(error);
+            }
+            works.sort(function(a, b){
+                return a.seq - b.seq;
+            });
              var msg = {
                  code : 200,
                  msg : 'Success',

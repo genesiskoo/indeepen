@@ -87,8 +87,8 @@ postSchema.methods = {
             if(this.postType == 0)
                 //select = '_id createAt _writer content likes work resources';
                 select = '-updateAt -hashTags -show';
-        else
-            select = '-content -hashTags -work -show.location.point'; //-수정
+            else
+                select = '-content -hashTags -work -show.location.point'; //-수정
             this.model('Post').find(options).
             where('postType').
             equals(this.postType).
@@ -145,8 +145,13 @@ postSchema.statics = {
      * @param callback
      * @returns {Promise}
      */
-    findPosts : function(options, callback){
+    findPosts : function(options, lastSeen, callback){
         if(!options) options = {};
+        if(lastSeen == null){
+
+        }else{
+
+        }
 
         return this.find(options).
             select('postType createAt _writer content likes work show resources').
@@ -154,6 +159,33 @@ postSchema.statics = {
             populate('show.tags._user', '_id _user nick profilePhoto').
             sort({createAt : -1}).
             exec(callback);
+    },
+    /**
+     * 모든 type의 posts 가져오기 (fan page)
+     * @param userBlogId
+     * @param userArtists
+     * @param lastSeen
+     * @param callback
+     */
+    findPostsAtFanPage : function(userBlogId, userArtists, lastSeen, callback){
+        if(lastSeen == null){
+            this.find({$or : [{$and : [{_writer : new ObjectId(userBlogId)}, {postType : 0}]},{_writer : {$in : userArtists}}]}).
+                sort({createAt : -1}).
+                select('-updateAt -hashTags -show.location.point').
+                limit(2).
+                populate('_writer', '-type -bgPhoto -intro -iMissYous -fans -location -createAt -updateAt -isActivated').
+                populate('show.tags._user', '-_user -type -bgPhoto -intro -iMissYous -fans -location -createAt -updateAt -isActivated').
+                exec(callback);
+        }else{
+            this.find({$or : [{$and : [{_writer : new ObjectId(userBlogId)}, {postType : 0}]},{_writer : {$in : userArtists}}],_id : {$lt : lastSeen}}).
+                sort({createAt : -1}).
+                select('-updateAt -hashTags -show.location.point').
+                limit(2).
+                populate('_writer', '-type -bgPhoto -intro -iMissYous -fans -location -createAt -updateAt -isActivated').
+                populate('show.tags._user', '-_user -type -bgPhoto -intro -iMissYous -fans -location -createAt -updateAt -isActivated').
+                exec(callback);
+        }
+
     },
     /**
      * Post정보 저장하기
@@ -251,7 +283,8 @@ postSchema.statics = {
                 limit(15).
                 exec(callback);
         }
-    }
+    },
+
 };
 
 module.exports = mongoose.model('Post', postSchema);

@@ -62,6 +62,11 @@ userSchema.statics = {
     updateProfilePhoto : function(userId, newUrl, callback){
         this.findOneAndUpdate({_id : new ObjectId(userId)}, {$set : {profilePhoto : newUrl}}, callback);
     },
+    findOneMyArtists : function(userId, callback){
+        this.findOne({_id : new ObjectId(userId)}).
+            select('-_id -email -password -name -nick -profilePhoto -intro -phone -createAt -updateAt -isPublic').
+            exec(callback);
+    },
     pushMyArtists : function(userId, blogId, callback){
         this.findOneAndUpdate({_id : new ObjectId(userId)}, {$push : {myArtists : new ObjectId(blogId)}}, callback);
     },

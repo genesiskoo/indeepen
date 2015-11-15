@@ -364,7 +364,7 @@ module.exports.getWorkPostsOfBlogger = function(req, res, next){
             error.code = 400;
             return next(error);
         }
-        if(docs.slice(-1).length != 0){
+        if(docs.length != 0){
             async.each(docs, function(doc, callback){
                 doc.resources = doc.resources[0];
                 callback();
@@ -417,7 +417,7 @@ module.exports.getLikePostsOfBlogger = function(req, res, next){
             error.code = 400;
             return next(error);
         }
-        if(docs.slice(-1).length != 0){
+        if(docs.length != 0){
             req.session[tmpKey] = docs.slice(-1)[0]._id;
             async.each(docs, function(doc, callback){
                 doc.resources = doc.resources[0];

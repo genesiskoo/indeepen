@@ -4,6 +4,8 @@
 var userKey = '563ef1ca401ae00c19a15828'; // session에 있을 정보
 var blogKey = '563ef1cb401ae00c19a15838'; // session에 있을 정보
 
+var async = require('async');
+
 var Blog = require('./../models/Blogs');  // web 에서 정보 입력시 편하게 하게 하려고 추가 나중에 지움요.
 
 var Comment = require('./../models/Comments');
@@ -11,9 +13,6 @@ var Post = require('./../models/Posts');
 var Report = require('./../models/Reports');
 var User = require('./../models/Users');
 
-// 이거.. session하면 메소드 안에 들어가야 겠...지???
-// c_+postId를 키값으로 lastseen값 저장....
-//var lastSeenOfComments = null; // session에서 가져옴... 인데??? 음??? postId별로 되나???
 
 /**
  * 모든 type의 Post 가져오기
@@ -24,6 +23,7 @@ var User = require('./../models/Users');
  * @param next
  */
 module.exports.getPosts = function(req, res, next){
+    var isStart = req.query.isStart;
     //1. 회원의 myArtists를 가져온다.
     User.findOneMyArtists(userKey, function(err, myArtists){
         if(err){
@@ -32,8 +32,96 @@ module.exports.getPosts = function(req, res, next){
             error.code = 400;
             return next(error);
         }
-        console.log('myArtist ', myArtists.myArtists);
-
+        //console.log('myArtist ', myArtists.myArtists);
+        var lastSeen = null;
+        if(!isStart){
+            lastSeen = req.session['fanPage'];
+        }
+        // 2. 회원이 등록한 work post와 회원의 artist가 등록한 work/show post를 가져온다.
+        Post.findPostsAtFanPage(blogKey, myArtists.myArtists, lastSeen, function(err, docs){
+            if(err){
+                console.error('ERROR GETTING FAN PAGE ', err);
+                var error = new Error('posts 를 가져올 수 없음.');
+                error.code = 400;
+                return next(error);
+            }
+            if(docs.length == 0){
+                var error = new Error('더 이상 없음');
+                error.code = 404;
+                return next(error);
+            }else{
+                // 3. work post 일 경우에는 comment cnt 와 commnet 2개를
+                // show post 일 경우에는 comment cnt만 가져온다.
+                var order = 0;
+                var posts = [];
+                async.each(docs, function(doc, callback){
+                    var tmp ={
+                        seq : (order++),
+                        postInfo : doc
+                    };
+                    if(doc.postType == 0){
+                        // workPost
+                        Comment.countCommentsOfPost(doc._id, function(err, count){
+                            if(err){
+                                console.error('ERROR COUNT COMMENTS ', err);
+                                var error = new Error('댓글 개수를 셀 수 없습니다.');
+                                error.code = 400;
+                                return next(error);
+                            }
+                            tmp['commentCnt'] = count;
+                            Comment.findLast2Comments(doc._id, function(err, docs){
+                                if(err){
+                                    console.error('ERROR FIND LAST 2 COMMENTS ', err);
+                                    var error = new Error('최신 댓글 2개를 가져오는데 실패했습니다.');
+                                    error.code = 400;
+                                    return next(error);
+                                }
+                                tmp['comments'] = docs.reverse();
+                                //console.log('final workPost ', tmp);
+                                posts.push(tmp);
+                                callback();
+                            });
+                        });
+                    }else{
+                        // showPost
+                        Comment.countCommentsOfPost(doc._id, function (err, count) {
+                            if (err) {
+                                console.error('CANT COUNT DATGUL', err);
+                                var error = new Error('countComment Error');
+                                error.code = 400;
+                                return next(error);
+                            }
+                            tmp['commentCnt'] = count;
+                            //console.log('result, :', result);
+                            posts.push(tmp);
+                            callback();
+                        })
+                    }
+                }, function(err){
+                    if(err){
+                        var error = new Error('error at async each');
+                        error.code = 400;
+                        return next(error);
+                    }
+                    req.session['fanPage'] = docs.splice(-1)[0]._id;
+                    posts.sort(function(a, b){
+                        return a.seq - b.seq;
+                        /*if(a.postInfo.createAt < b.postInfo.createAt)
+                         return 1;
+                         else if(a.postInfo.createAt > b.postInfo.createAt)
+                         return -1;
+                         else
+                         return 0;*/
+                    });
+                    var msg = {
+                        code : 200,
+                        msg : 'Success',
+                        result : posts
+                    };
+                    res.status(msg.code).json(msg);
+                });
+            }
+        });
     });
 };
 
@@ -234,7 +322,9 @@ module.exports.getComments = function (req, res, next) {
         // app...
         //lastSeenOfComments = docs.slice(-1)[0].createAt;
         if(docs.length != 0){
+            //console.log(docs.slice(-1)[0]._id);
             req.session[id] = docs.slice(-1)[0]._id;
+
             var msg = {
                 code: 200,
                 msg: 'Success',

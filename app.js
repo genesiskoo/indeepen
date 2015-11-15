@@ -21,6 +21,7 @@ app.use('/showPosts', require('./routers/ShowPosts'));
 app.use('/postComments', require('./routers/PostComments'));
 app.use('/artistBlogs', require('./routers/ArtistBlogs'));
 app.use('/blogs', require('./routers/Blogs'));
+app.use('/users', require('./routers/Users'));
 
 app.use(require('./routers/web_router.js'));
 

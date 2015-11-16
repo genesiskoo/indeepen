@@ -57,8 +57,8 @@ blogSchema.statics = {
         return this.create(blogInfo, callback);
     },
     findBlogsOfUser : function(userId, callback){
-        this.find({_user : new ObjectId(userId)}).
-            select('-intro -iMissYous -fans -location -createAt -updateAt').
+        this.find({ _user : new ObjectId(userId) }).
+            select('-_user -bgPhoto -intro -iMissYous -fans -location -createAt -updateAt').
             exec(callback);
     },
     findOneBlog : function(blogId, callback){
@@ -114,8 +114,17 @@ blogSchema.statics = {
     },
     removeBlog : function(blogId, callback){
         return this.findOneAndRemove({_id : new ObjectId(blogId)}, callback);
+    },
+    updateIsActivated: function(userId, blogId, callback){
+        var that = this;
+        this.update({_user : new ObjectId(userId)}, {$set : {isActivated : false}}, {multi : true}, function(err, docs){
+            if(err){
+                callback(err, null);
+            }else{
+                that.findOneAndUpdate({_id : new ObjectId(blogId)}, {$set : {isActivated : true}}, callback);
+            }
+        });
     }
-
 };
 
 

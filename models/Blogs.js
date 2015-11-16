@@ -89,10 +89,11 @@ blogSchema.statics = {
             populate('_user', '-password -profilePhoto -intro -createAt -updateAt').
             exec(callback);
     },
-    updateProfileOfArtistBlog : function(blogId, newInfo, callback){
+
+    //공용
+    updateProfileOfBlog : function(blogId, newInfo, callback){
         this.findOneAndUpdate({_id : new ObjectId(blogId)}, { $set : newInfo}, callback);
     },
-    //공용
     findProfilePhotoOfBlog : function(blogId, callback){
         this.findOne({_id : new ObjectId(blogId)}).
             select('-_id -_user -type -bgPhoto -nick -intro -fans -iMissYous -location -createAt -updateAt -isActivated').
@@ -125,7 +126,18 @@ blogSchema.statics = {
                 that.findOneAndUpdate({_id : new ObjectId(blogId)}, {$set : {isActivated : true}}, callback);
             }
         });
+    },
+    findLocation : function (blogId, callback){
+        return  this.findOne({_id : new ObjectId(blogId)})
+                      .select('location')
+                      .exec(callback);
+    },
+    findProfileOfSpaceBlog : function(blogId, callback){
+        return this.findOne({_id: new Object(blogId)})
+                    .select('-type  -bgPhoto -profilePhoto -iMissYous -fans -location -createAt -updateAt -isActivated')
+                    .exec(callback);
     }
+
 };
 
 

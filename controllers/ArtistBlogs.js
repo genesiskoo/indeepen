@@ -118,7 +118,7 @@ module.exports.modifyArtistBlogProfile = function(req, res, next){
     };
     console.log('newInfo ', newInfo);
 
-    Blog.updateProfileOfArtistBlog(blogId, newInfo, function(err, doc){
+    Blog.updateProfileOfBlog(blogId, newInfo, function(err, doc){
         if(err){
             console.error('ERROR UPDATING PROFILE AT ARTISTBLOG ', err);
             var error = new Error('Blogs 쪽 update 실패 ㅠㅜ');

@@ -1,4 +1,5 @@
 var express = require('express');
+var passport = require('passport');
 
 var mongoose = require('./config/mongoose_conn.js');
 //var fs = require('fs');
@@ -8,9 +9,16 @@ var sessionOption = require('./config/sessionOption');
 //var path = __dirname + '/views';
 
 var app = express();
+
+// session
 app.use(session(sessionOption));
 
+// body parser
 app.use(bodyParser.urlencoded({extended: false}));
+
+// passport
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.set('views', './views');
 app.set('view engine', 'ejs');
@@ -26,7 +34,9 @@ app.use('/users', require('./routers/Users'));
 
 app.use(require('./routers/web_router.js'));
 
-
+/**
+ * error catch
+ */
 app.use(function (err, req, res, next) {
     //console.error(err.message);
     console.log(req.method);

@@ -6,7 +6,7 @@ var User = require('./Users');
 
 var blogSchema = new Schema({
 	_user: { type : Schema.Types.ObjectId, ref :'User'},
-	type : {                         /// 0(개인) 1(블로그)
+	type : {                         /// 0(개인) 1(공간)
 		type : Number,
 		default : 0
 	},
@@ -92,6 +92,7 @@ blogSchema.statics = {
     updateProfileOfArtistBlog : function(blogId, newInfo, callback){
         this.findOneAndUpdate({_id : new ObjectId(blogId)}, { $set : newInfo}, callback);
     },
+    //공용
     findProfilePhotoOfBlog : function(blogId, callback){
         this.findOne({_id : new ObjectId(blogId)}).
             select('-_id -_user -type -bgPhoto -nick -intro -fans -iMissYous -location -createAt -updateAt -isActivated').

@@ -114,7 +114,7 @@ module.exports.getUserInfo = function(req, res, next){
 };
 
 /**
- *
+ * 회원 활동모드 변경하기
  * @param req
  * @param res
  * @param next

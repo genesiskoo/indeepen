@@ -40,7 +40,7 @@ module.exports.getShowList = function (req, res, next) {
     var showList = [];
     var showModel = new Post({postType: 1});
     //showModel.findByPostType으로 결과리스트 배열 shows를 가져온다
-
+ 
     showModel.findByPostType({}, lastSeen, function (err, shows) {
         if (err) {
             console.error(err);

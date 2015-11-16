@@ -20,6 +20,7 @@ app.use('/workPosts', require('./routers/WorkPosts'));
 app.use('/showPosts', require('./routers/ShowPosts'));
 app.use('/postComments', require('./routers/PostComments'));
 app.use('/artistBlogs', require('./routers/ArtistBlogs'));
+app.use('/spaceBlogs', require('./routers/SpaceBlogs'));
 app.use('/blogs', require('./routers/Blogs'));
 app.use('/users', require('./routers/Users'));
 

@@ -322,7 +322,9 @@ module.exports.getComments = function (req, res, next) {
         // app...
         //lastSeenOfComments = docs.slice(-1)[0].createAt;
         if(docs.length != 0){
+            //console.log(docs.slice(-1)[0]._id);
             req.session[id] = docs.slice(-1)[0]._id;
+
             var msg = {
                 code: 200,
                 msg: 'Success',

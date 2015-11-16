@@ -23,33 +23,36 @@ var Comment = require('./../models/Comments');
 var Post = require('./../models/Posts');
 
 //add_form
-module.exports.getShowAddForm = function (req, res) {
+module.exports.getShowAddForm = function (req, res, next) {
     fs.createReadStream(__dirname + '/../views/showAddForm.html').pipe(res);
 };
 
 //List
-module.exports.getShowList = function (req, res) {
+module.exports.getShowList = function (req, res, next) {
+    var showPageSession = null;
     var isStart = req.query.isStart;
-    var lastSeen = '5642cd704056b9741b622f62';
+    var lastSeen = null;
 
-    req.session.visit =1;
-    console.log(req.session.visit);
-    if(!isStart){
-        lastSeen = req.session[visit];
+    if (!isStart) {
+        lastSeen = req.session[showPageSession];
     }
+
     var showList = [];
     var showModel = new Post({postType: 1});
-    showModel.findByPostType({},lastSeen,function(err,shows){
+    //showModel.findByPostType으로 결과리스트 배열 shows를 가져온다
+
+    showModel.findByPostType({}, lastSeen, function (err, shows) {
         if (err) {
             console.error(err);
             var error = new Error('Show List 를 가져올 수 없다');
             error.code = 400;
             return next(error);
-        }
+        }//if-err
         var order = 0;
+
         async.each(shows, function (showModel, callback) {
             var result = {
-                seq : (order++),
+                seq: (order++),
                 postInfo: showModel
             };
 
@@ -67,36 +70,41 @@ module.exports.getShowList = function (req, res) {
                 //console.log('result, :', result);
                 showList.push(result);
                 callback();
-            })//count
-        }, function (err) {
-            if(err){
-                //error 처리
-            }
-            showList.sort(function(a,b){
-                return a.seq - b.seq;
-            });
+            });//countCommentsOfPost
 
-            if(showList.slice(-1).length != 0){
-                //req.session[req.params.showSeen] = showList.slice(-1)[0]._id;
-                //console.log(showList.slice(-1).postType);
-                var msg = {
-                    code : 200,
-                    msg : 'Success',
-                    result : showList
-                };
-                res.status(msg.code).json(msg);
-            }else{
+        }, function (err) {
+            if (err) {
                 var error = new Error('글이 없습니다.');
                 error.code = 404;
                 return next(error);
             }
-        });//async
-    });//findPostType
-    //post결과와 comment수 결과를 담을 객체 생성
-};
+            showList.sort(function (a, b) {
+                return a.seq - b.seq;
+            });
+            //마지막 게시물의 id값
+            //console.log(showList.slice(-1)[0].postInfo._id);
+            console.log(showList.length);
+            if(showList.length != 0) {
+                req.session[showPageSession] = showList.slice(-1)[0].postInfo._id;
+                var msg = {
+                    code: 200,
+                    msg: 'Success',
+                    result: showList
+                };
+                res.status(msg.code).json(msg);
+            }else{
+                var error = new Error('댓글이 없습니다.');
+                error.code = 404;
+                return next(error);
+            }
+    });//async.each
+
+});//findPostType
+//post결과와 comment수 결과를 담을 객체 생성
+};//getShowList
 
 //detail
-module.exports.getShowPost = function (req, res) {
+module.exports.getShowPost = function (req, res, next) {
     var id = req.params.postId;
     var showPost = {};
     Post.findPost(id, 1, function (err, doc) {

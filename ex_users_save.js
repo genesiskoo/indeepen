@@ -1,7 +1,5 @@
 
 var mongoose = require('./config/mongoose_conn.js');
-
-
 var Users = require('./models/Users.js');
 
 

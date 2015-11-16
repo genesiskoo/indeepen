@@ -72,6 +72,18 @@ userSchema.statics = {
     },
     pullMyArtists : function(userId, blogId, callback){
         this.findOneAndUpdate({_id : new ObjectId(userId)}, {$pull : {myArtists : new ObjectId(blogId)}}, callback);
+    },
+    isExistEmail : function(email, callback){
+        this.findOne({email : email}, function(err, doc){
+            if(doc == null){
+                callback(err, false);
+            }else{
+                callback(err, true);
+            }
+        });
+    },
+    updatePassword : function(userId, pw, callback){
+        this.findOneAndUpdate({_id : new ObjectId(userId), password : pw.oldPw}, {$set : {password : pw.newPw}}, callback);
     }
 };
 

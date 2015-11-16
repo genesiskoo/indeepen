@@ -309,5 +309,23 @@ exports.modifyProfile = function (req, res, next) {
  * @returns {*}
  */
 exports.deleteSpaceBlog = function (req, res, next) {
-    res.end('deleteSpaceBlog');
+    var blogId = req.params.blogId;
+    if (!blogId) {
+        var error = new Error('URL 확인 부탁합니다.');
+        error.code = 400;
+        return next(error);
+    };
+    Blog.removeBlog(blogId, function(err,doc){
+        if (err) {
+            console.error('ERROR DELETING THE BLOG', err);
+            var error = new Error('지우기 실패했어요!');
+            error.code = 400;
+            return next(error);
+        }
+        var msg = {
+            code: 200,
+            msg: '제거 완료'
+        };
+        res.status(msg.code).json(msg);
+    });
 };

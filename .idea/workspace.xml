@@ -2,14 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fae20e81-4887-4d24-9dd7-a536ce0a01f8" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/controllers/SpaceBlogs.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/routers/SpaceBlogs.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app.js" afterPath="$PROJECT_DIR$/app.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/controllers/ArtistBlogs.js" afterPath="$PROJECT_DIR$/controllers/ArtistBlogs.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/controllers/Users.js" afterPath="$PROJECT_DIR$/controllers/Users.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ex_users_save.js" afterPath="$PROJECT_DIR$/ex_users_save.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/models/Blogs.js" afterPath="$PROJECT_DIR$/models/Blogs.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/models/Users.js" afterPath="$PROJECT_DIR$/models/Users.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/controllers/SpaceBlogs.js" afterPath="$PROJECT_DIR$/controllers/SpaceBlogs.js" />
     </list>
     <ignored path="indeepen_mongo_test.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -35,8 +29,8 @@
           <file leaf-file-name="SpaceBlogs.js" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/controllers/SpaceBlogs.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.7545582">
-                  <caret line="311" column="8" selection-start-line="311" selection-start-column="0" selection-end-line="312" selection-end-column="0" />
+                <state vertical-scroll-proportion="0.33380085">
+                  <caret line="313" column="29" selection-start-line="313" selection-start-column="29" selection-end-line="313" selection-end-column="29" />
                   <folding>
                     <element signature="e#736#816#0" expanded="false" />
                     <element signature="e#866#1587#0" expanded="false" />
@@ -69,8 +63,8 @@
           <file leaf-file-name="Blogs.js" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/models/Blogs.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.36886394">
-                  <caret line="115" column="6" selection-start-line="115" selection-start-column="6" selection-end-line="115" selection-end-column="6" />
+                <state vertical-scroll-proportion="0.43899018">
+                  <caret line="117" column="13" selection-start-line="117" selection-start-column="13" selection-end-line="117" selection-end-column="13" />
                   <folding />
                 </state>
               </provider>
@@ -143,8 +137,8 @@
         <option value="$PROJECT_DIR$/models/Posts.js" />
         <option value="$PROJECT_DIR$/controllers/ShowPosts.js" />
         <option value="$PROJECT_DIR$/controllers/ArtistBlogs.js" />
-        <option value="$PROJECT_DIR$/controllers/SpaceBlogs.js" />
         <option value="$PROJECT_DIR$/models/Blogs.js" />
+        <option value="$PROJECT_DIR$/controllers/SpaceBlogs.js" />
       </list>
     </option>
   </component>
@@ -669,7 +663,19 @@
       <option name="project" value="LOCAL" />
       <updated>1447645854461</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="공간블로그 작업중&#10;Blog model 수정">
+      <created>1447652824362</created>
+      <option name="number" value="00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1447652824362</updated>
+    </task>
+    <task id="LOCAL-00037" summary="공간블로그 작업중&#10;Blog model 수정">
+      <created>1447652842513</created>
+      <option name="number" value="00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1447652842513</updated>
+    </task>
+    <option name="localTasksCounter" value="38" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -678,6 +684,7 @@
     <layout>
       <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14986226" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32683983" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.19588745" sideWeight="0.50421494" order="11" side_tool="true" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.19530416" sideWeight="0.49578503" order="8" side_tool="false" content_ui="tabs" />
@@ -687,7 +694,6 @@
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32683983" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -730,7 +736,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="update mongodb connect info" />
     <MESSAGE value="Counters.js 관련 부분 삭제" />
     <MESSAGE value="수정" />
     <MESSAGE value="Camel 수정&#10;ex_show_save 실 데이터 입력" />
@@ -755,7 +760,8 @@
     <MESSAGE value="11-14&#10;다시 commit" />
     <MESSAGE value="11-14&#10;pull 후 push" />
     <MESSAGE value="11-16&#10;그랑그랑" />
-    <option name="LAST_COMMIT_MESSAGE" value="11-16&#10;그랑그랑" />
+    <MESSAGE value="공간블로그 작업중&#10;Blog model 수정" />
+    <option name="LAST_COMMIT_MESSAGE" value="공간블로그 작업중&#10;Blog model 수정" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1166,10 +1172,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/models/Blogs.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.43899018">
+          <caret line="117" column="13" selection-start-line="117" selection-start-column="13" selection-end-line="117" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/controllers/SpaceBlogs.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7545582">
-          <caret line="311" column="8" selection-start-line="311" selection-start-column="0" selection-end-line="312" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.33380085">
+          <caret line="313" column="29" selection-start-line="313" selection-start-column="29" selection-end-line="313" selection-end-column="29" />
           <folding>
             <element signature="e#736#816#0" expanded="false" />
             <element signature="e#866#1587#0" expanded="false" />
@@ -1181,14 +1195,6 @@
             <element signature="e#6761#7279#0" expanded="false" />
             <element signature="e#7282#7370#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/models/Blogs.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.36886394">
-          <caret line="115" column="6" selection-start-line="115" selection-start-column="6" selection-end-line="115" selection-end-column="6" />
-          <folding />
         </state>
       </provider>
     </entry>

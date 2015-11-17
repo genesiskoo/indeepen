@@ -21,10 +21,22 @@ var uploadUrl = __dirname + './../upload';
 
 var Comment = require('./../models/Comments');
 var Post = require('./../models/Posts');
+var Blog = require('./../models/Blogs');
 
 //add_form
 module.exports.getShowAddForm = function (req, res, next) {
-    fs.createReadStream(__dirname + '/../views/showAddForm.html').pipe(res);
+    console.log('here');
+    Blog.findAllBlogsNick(function(err,docs){
+        if(err){
+            console.error(err);
+            var err = new Error("err");
+            //error처리
+            return next(err);
+        }
+        console.log(docs);
+        res.render('showForm',{blogs : docs});
+
+    });
 };
 
 //List

@@ -141,6 +141,12 @@ blogSchema.statics = {
         return this.findOne({_id: new Object(blogId)})
                     .select('-type  -bgPhoto -profilePhoto -iMissYous -fans -location -createAt -updateAt -isActivated')
                     .exec(callback);
+    },
+    findAllBlogsNick : function(callback){
+        return this.find()
+            .select('-bgPhoto -profilePhoto -intro -phone -email -iMissYous -fans -location -createAt -updateAt')
+            .populate({path: '_user' , select : '-provider -hashed_password -salt -authToken -facebook -profilePhoto -intro -phone -myArtists -createAt -updateAt'})
+            .exec(callback);
     }
 
 };

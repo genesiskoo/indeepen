@@ -34,6 +34,6 @@ app.use(function (err, req, res, next) {
     res.status(err.code).json(msg);
 });
 
-app.listen(3333, function () {
+app.listen(80, function () {
     console.log('Server @ 3333');
 })

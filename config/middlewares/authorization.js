@@ -20,4 +20,10 @@ module.exports.user = {
         }
         next();
     }
+};
+
+module.exports.artistBlog = {
+    hasAuthorization : function(req, res, next){
+        console.log('req.blogId')
+    }
 }

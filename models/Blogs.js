@@ -61,6 +61,11 @@ blogSchema.statics = {
             select('-_user -bgPhoto -intro -iMissYous -fans -location -createAt -updateAt').
             exec(callback);
     },
+    findBlogIdOfUser : function(userId, callback){
+        this.find({_user : new ObjectId(userId)}).
+            select('-_user -bgPhoto -nick -profilePhoto -intro -iMissYous -fans -location -createAt -updateAt -isActivated').
+            exec(callback);
+    },
     findOneBlog : function(blogId, callback){
         this.findOne({_id : new ObjectId(blogId)}).
             select('-intro -location -createAt -updateAt -isActivated').

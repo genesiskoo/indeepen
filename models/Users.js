@@ -27,7 +27,7 @@ var userSchema = new mongoose.Schema({
     facebook : {},
     profilePhoto: {
         type : String,
-        default : 'https://s3-ap-northeast-1.amazonaws.com/in-deepen/images/profile/icon-person.png'
+        default : 'https://s3-ap-northeast-1.amazonaws.com/in-deepen/images/profile/icon-person.jpg'
     },
     intro: {type : String, trim : true},
     phone: {type : String, trim : true},
@@ -138,8 +138,6 @@ userSchema.statics = {
     },
     findUser : function(options, callback){
         options.select = options.select || '_id';
-        console.log('select : ', options.select);
-        console.log('callback : ', callback);
         this.findOne(options.criteria)
             .select(options.select)
             .exec(callback);

@@ -3,7 +3,7 @@
  */
 
 var mongoose = require('mongoose');
-var LocalStrategy = require('passport-local').Strategy;
+//var LocalStrategy = require('passport-local').Strategy;
 var User = require('./../models/Users');
 
 var local = require('./passport/local');
@@ -12,13 +12,15 @@ var local = require('./passport/local');
 module.exports = function(passport){
     // session 저장
     passport.serializeUser(function(user, done){
-        done(null, user._id);
+        console.log('serializeUser ', user);
+        done(null, user);
     });
 
-    passport.deserializeUser(function(id, done){
-        User.findUser({criteria : {_id : id}}, function(err, user){
+    passport.deserializeUser(function(user, done){
+        console.log('deserializeUser ', user);
+        //User.findUser({criteria : {_id : id}}, function(err, user){
             done(err, user);
-        });
+        //});
     });
 
     // 사용하는 strategy...

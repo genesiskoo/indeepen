@@ -13,6 +13,10 @@ router.get('/', showPost.getShowList);
 router.get('/showPostsForm', showPost.getShowAddForm);
 //add
 router.post('/', showPost.addShowPost);
+
+//ex
+//router.get('/ex', showPost.index);
+
 //detail
 router.get('/:postId', showPost.getShowPost);
 

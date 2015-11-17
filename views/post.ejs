@@ -23,7 +23,7 @@
     <h3><a href="/">Go To Menu......</a></h3>
     <% works.forEach(function(work){ %>
         <div class="container">
-            <a href="/posts/<%= work.postInfo._id %>/comments" class="goRe">댓글 작성하기... </a><br><br>
+            <a href="/posts/<%= work.postInfo._id %>/comments?isStart=true" class="goRe">댓글 작성하기... </a><br><br>
             _id : <%= work.postInfo._id %><br>
             createAt : <%= work.postInfo.createAt %><br>
             writer의 블로그 id  : <%= work.postInfo._writer._id %><br>

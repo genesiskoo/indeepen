@@ -3,23 +3,35 @@
  */
 
 var mongoose = require('mongoose');
+var crypto = require('crypto');
+
 var Blog = require('./Blogs');
 var ObjectId = mongoose.Types.ObjectId;
+var Schema = mongoose.Schema;
+var oAuthTypes = [
+    'facebook'
+];
 
 var userSchema = new mongoose.Schema({
     email: {type : String, unique : true},
-    password : String,
+    //password : String,
     name: String,
     nick: {
         type : String,
         trim : true
     },
+    provider : String,
+    hashed_password : String,
+    salt : String,
+    authToken : String,
+    facebook : {},
     profilePhoto: {
         type : String,
         default : 'https://s3-ap-northeast-1.amazonaws.com/in-deepen/images/profile/icon-person.png'
     },
     intro: {type : String, trim : true},
     phone: {type : String, trim : true},
+    myArtists : [{type : Schema.Types.ObjectId, ref:'Blog'}],
     createAt: {
         type: Date,
         default: Date.now
@@ -33,6 +45,18 @@ var userSchema = new mongoose.Schema({
         default: true
     }
 }, { versionKey: false });
+
+/**
+ *  Virtual
+ */
+userSchema
+    .virtual('password')
+    .set(function(password){
+        this._password = password;
+        this.salt = this.makeSalt();
+        this.hashed_password = this.encryptPassword(password);
+    })
+    .get(function(){return this._password});
 
 userSchema.post('save', function(doc){
     console.log('Save User _id', doc._id);
@@ -50,6 +74,35 @@ userSchema.post('save', function(doc){
     });
 });
 
+userSchema.methods = {
+    /**
+     * 암호 일치 여부 확인
+     * @param text
+     * @returns {boolean}
+     */
+    authenticate : function(text){
+        return this.encryptPassword(text) === this.hashed_password;
+    },
+    /**
+     * 양념 뿌리기 ㅋㅋ
+     * @returns {string}
+     */
+    makeSalt : function(){
+        return Math.round((new Date().valueOf() * Math.random())) + '';
+    },
+    encryptPassword : function(password){
+        if(!password) return '';
+        try{
+            return crypto
+                .createHmac('sha1', this.salt)
+                .update(password)
+                .digest('hex');
+        }catch(err){
+            return '';
+        }
+    }
+};
+
 userSchema.statics = {
     saveUser : function(userInfo, callback){
         return this.create(userInfo, callback);
@@ -59,6 +112,37 @@ userSchema.statics = {
     },
     updateProfilePhoto : function(userId, newUrl, callback){
         this.findOneAndUpdate({_id : new ObjectId(userId)}, {$set : {profilePhoto : newUrl}}, callback);
+    },
+    findOneMyArtists : function(userId, callback){
+        this.findOne({_id : new ObjectId(userId)}).
+            select('-_id -email -password -name -nick -profilePhoto -intro -phone -createAt -updateAt -isPublic').
+            exec(callback);
+    },
+    pushMyArtists : function(userId, blogId, callback){
+        this.findOneAndUpdate({_id : new ObjectId(userId)}, {$push : {myArtists : new ObjectId(blogId)}}, callback);
+    },
+    pullMyArtists : function(userId, blogId, callback){
+        this.findOneAndUpdate({_id : new ObjectId(userId)}, {$pull : {myArtists : new ObjectId(blogId)}}, callback);
+    },
+    isExistEmail : function(email, callback){
+        this.findOne({email : email}, function(err, doc){
+            if(doc == null){
+                callback(err, false);
+            }else{
+                callback(err, true);
+            }
+        });
+    },
+    updatePassword : function(userId, pw, callback){
+        this.findOneAndUpdate({_id : new ObjectId(userId), password : pw.oldPw}, {$set : {password : pw.newPw}}, callback);
+    },
+    findUser : function(options, callback){
+        options.select = options.select || '_id';
+        console.log('select : ', options.select);
+        console.log('callback : ', callback);
+        this.findOne(options.criteria)
+            .select(options.select)
+            .exec(callback);
     }
 };
 

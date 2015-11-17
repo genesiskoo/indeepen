@@ -19,31 +19,46 @@ var s3 = new AWS.S3();
 var bucketName = awsS3.bucketName;
 var uploadUrl = __dirname + './../upload';
 
-var userKey = '563ef1ca401ae00c19a15829'; // session에 있을 정보
-var blogKey = '563ef1ca401ae00c19a15832'; // session에 있을 정보
-
 var Comment = require('./../models/Comments');
 var Post = require('./../models/Posts');
 
 //add_form
-module.exports.getShowAddForm = function (req, res) {
+module.exports.getShowAddForm = function (req, res, next) {
     fs.createReadStream(__dirname + '/../views/showAddForm.html').pipe(res);
-}
+};
+
 //List
-module.exports.getShowList = function (req, res) {
+module.exports.getShowList = function (req, res, next) {
+    var showPageSession = null;
+    var isStart = req.query.isStart;
+    var lastSeen = null;
+
+    if (!isStart) {
+        lastSeen = req.session[showPageSession];
+    }
+
     var showList = [];
     var showModel = new Post({postType: 1});
-    showModel.findByPostType(function (err, shows) {
+    //showModel.findByPostType으로 결과리스트 배열 shows를 가져온다
+ 
+    showModel.findByPostType({}, lastSeen, function (err, shows) {
         if (err) {
             console.error(err);
             var error = new Error('Show List 를 가져올 수 없다');
             error.code = 400;
             return next(error);
-        }
-        async.eachSeries(shows, function (showModel, callback) {
+        }//if-err
+        var order = 0;
+
+        async.each(shows, function (showModel, callback) {
             var result = {
+                seq: (order++),
                 postInfo: showModel
             };
+
+            //resource 한개만 가져오기
+            result.postInfo['resources'] = result.postInfo.resources[0];
+
             Comment.countCommentsOfPost(showModel._id, function (err, count) {
                 if (err) {
                     console.error('CANT COUNT DATGUL', err);
@@ -55,35 +70,72 @@ module.exports.getShowList = function (req, res) {
                 //console.log('result, :', result);
                 showList.push(result);
                 callback();
-            })//count
-        }, function done() {
+            });//countCommentsOfPost
 
+        }, function (err) {
+            if (err) {
+                var error = new Error('글이 없습니다.');
+                error.code = 404;
+                return next(error);
+            }
+            showList.sort(function (a, b) {
+                return a.seq - b.seq;
+            });
+            //마지막 게시물의 id값
+            //console.log(showList.slice(-1)[0].postInfo._id);
+            console.log(showList.length);
+            if(showList.length != 0) {
+                req.session[showPageSession] = showList.slice(-1)[0].postInfo._id;
+                var msg = {
+                    code: 200,
+                    msg: 'Success',
+                    result: showList
+                };
+                res.status(msg.code).json(msg);
+            }else{
+                var error = new Error('댓글이 없습니다.');
+                error.code = 404;
+                return next(error);
+            }
+    });//async.each
+
+});//findPostType
+//post결과와 comment수 결과를 담을 객체 생성
+};//getShowList
+
+//detail
+module.exports.getShowPost = function (req, res, next) {
+    var id = req.params.postId;
+    var showPost = {};
+    Post.findPost(id, 1, function (err, doc) {
+        if (err) {
+            console.error('error message : ', err);
+            var error = new Error('포스트없슴')
+            error.code = 404;
+            return next(error);
+        }
+        //console.log(doc);
+        showPost['postInfo'] = doc;
+        Comment.countCommentsOfPost(id, function (err, count) {
+            showPost['commentCnt'] = count;
             var msg = {
                 code: 200,
                 msg: 'Success',
-                result: showList
+                result: showPost
             };
-            //res.render('shows',{shows : shows});
             res.status(msg.code).json(msg);
-            console.log(msg);
-        });//async
-    });//findPostType
-    //post결과와 comment수 결과를 담을 객체 생성
-}
+            //console.log(msg);
+            //fs.writeFile('/showPost.json', JSON.stringify(msg, null, 4), function(err) {
+            //    if(err) {
+            //        console.log(err);
+            //    } else {
+            //        console.log("JSON saved ");
+            //    }
+            //});
 
-
-//detail
-module.exports.getShowPost = function (req, res) {
-    var id = req.params.postId;
-    var showModel = new Post({"PostType": 1});
-    showModel.findPost(id,1,function(err,doc){
-        if(err){
-            console.error('error message : ',err);
-            var error = new Error('포스트없슴');
-
-        }
+        });
     });//findPost
-}
+};
 
 //문화컨텐츠 추가 POST
 module.exports.addShowPost = function (req, res, next) {
@@ -92,7 +144,7 @@ module.exports.addShowPost = function (req, res, next) {
             function (callback) {
                 var uploadInfo = {
                     files: [],
-                    tags: []
+                    artist: []
                 };
                 var form = new formidable.IncomingForm();
                 // aws 에 저장되는 경로....
@@ -100,12 +152,12 @@ module.exports.addShowPost = function (req, res, next) {
 
                 form
                     .on('field', function (field, value) {
-                        if(value == 'tag'){
-                            var temTag = JSON.parse(value);
-                            uploadInfo.tags.push(temTag);
+                        if (field == 'tag') {
+                            uploadInfo.artist.push(JSON.parse(value));
+                        } else {
+                            console.log('file 아님 ', field);
+                            uploadInfo[field] = value;
                         }
-                        console.log('file 아님 ', field);
-                        uploadInfo[field] = value;
                     })
                     .on('file', function (field, file) {
                         if (field == 'file') {
@@ -182,13 +234,13 @@ module.exports.addShowPost = function (req, res, next) {
                         callback(null, uploadInfo.showType, uploadInfo.title, uploadInfo.startDate, uploadInfo.endDate,
                             uploadInfo.startTime, uploadInfo.endTime, uploadInfo.fee, uploadInfo.blogId,
                             uploadInfo.content, uploadInfo.latitude, uploadInfo.longitude, uploadInfo.address,
-                            uploadInfo.tags, imageUrls);
+                            uploadInfo.artist, imageUrls);
                     }
                 });//asyncEach
 
             },
             function (showType, title, startDate, endDate, startTime, endTime, fee,
-                      blogId, content, latitude, longitude, address, tags, urls, callback) {
+                      blogId, content, latitude, longitude, address, artist, urls, callback) {
 
                 // hash_tag 추출
                 var tmpStr = content.split('#');
@@ -209,7 +261,7 @@ module.exports.addShowPost = function (req, res, next) {
                     show: {
                         title: title,
                         type: showType,
-                        tags: tags,
+                        tags: artist,
                         startDate: startDate,
                         endDate: endDate,
                         startTime: startTime,
@@ -267,3 +319,45 @@ module.exports.addShowPost = function (req, res, next) {
             }
         });
 };
+
+//ex
+/**
+ * Load
+ */
+
+//exports.load = function (req, res, next, id) {
+//    var User = mongoose.model('User');
+//
+//    Article.load(id, function (err, article) {
+//        if (err) return next(err);
+//        if (!article) return next(new Error('not found'));
+//        req.article = article;
+//        next();
+//    });
+//};
+//
+///**
+// * List
+// */
+//
+//exports.index = function (req, res) {
+//    var page = (req.query.page > 0 ? req.query.page : 1) - 1;
+//    console.log(page);
+//    var perPage = 1;
+//    var options = {
+//        perPage: perPage,
+//        page: page
+//    };
+//    Post.list(options, function (err, articles) {
+//        if (err) return res.render('500');
+//        Post.count().exec(function (err, count) {
+//            res.json(articles);
+//            //res.render('articles/index', {
+//            //    title: 'Articles',
+//            //    articles: articles,
+//            //    page: page + 1,
+//            //    pages: Math.ceil(count / perPage)
+//            //});
+//        });
+//    });
+//};

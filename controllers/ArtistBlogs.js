@@ -19,12 +19,10 @@ var s3 = new AWS.S3();
 var bucketName = awsS3.bucketName;
 var uploadUrl = __dirname + '/../upload';
 var defaultArtistProfileUrl = 'https://s3-ap-northeast-1.amazonaws.com/in-deepen/images/profile/icon-person.jpg';
-var defaultSpaceProfileUrl = 'https://s3-ap-northeast-1.amazonaws.com/in-deepen/images/profile/icon-cafe.jpg';
+
 var Blog = require('./../models/Blogs');
 var User = require('./../models/Users');
 
-var userKey = '563ef1ca401ae00c19a15829'; // session에 있을 정보
-var blogKey = '563ef1ca401ae00c19a15832'; // session에 있을 정보
 
 /**
  * 개인 Blog 기본 정보 가져오기
@@ -34,27 +32,7 @@ var blogKey = '563ef1ca401ae00c19a15832'; // session에 있을 정보
  * @returns {*}
  */
 module.exports.getArtistBlog = function(req, res, next){
-    var blogId = req.params.blogId;
-    if(!blogId){
-        var error = new Error('URL 확인 부탁해요.');
-        error.code = 400;
-        return next(error);
-    }
 
-    Blog.findOneBlog(blogId, function(err, doc){
-        if(err){
-           console.error('ERROR GETTING BLOG INFO ', err);
-           var error = new Error('블로그에 들어갈 수 없습니다.');
-           error.code =400;
-           return next(error);
-        }
-        var msg = {
-            code : 200,
-            msg : 'Success',
-            result : doc
-        };
-        res.status(msg.code).json(msg);
-    });
 };
 
 /**
@@ -77,30 +55,6 @@ module.exports.getArtistBlogProfilePhoto = function(req, res, next){
             error.code = 400;
             return next(error);
         }
-        var msg = {
-            code : 200,
-            msg : 'Success',
-            result : doc
-        };
-        res.status(msg.code).json(msg);
-    });
-};
-
-/**
- * 개인 블로그 배경 사진 가져오기
- * @param req
- * @param res
- * @param next
- * @returns {*}
- */
-module.exports.getArtistBlogBgPhoto = function(req, res, next){
-    var blogId = req.params.blogId;
-    if(!blogId){
-        var error = new Error('URL 확인 부탁해요.');
-        error.code = 400;
-        return next(err);
-    }
-    Blog.findBgPhotoOfBlog(blogId, function(err, doc){
         var msg = {
             code : 200,
             msg : 'Success',
@@ -159,11 +113,12 @@ module.exports.modifyArtistBlogProfile = function(req, res, next){
         nick : req.body.nick,
         intro : req.body.intro,
         name : req.body.name,
-        phone : req.body.phone
+        phone : req.body.phone,
+        isPublic : req.body.isPublic
     };
     console.log('newInfo ', newInfo);
 
-    Blog.updateProfileOfArtistBlog(blogId, newInfo, function(err, doc){
+    Blog.updateProfileOfBlog(blogId, newInfo, function(err, doc){
         if(err){
             console.error('ERROR UPDATING PROFILE AT ARTISTBLOG ', err);
             var error = new Error('Blogs 쪽 update 실패 ㅠㅜ');
@@ -251,7 +206,7 @@ module.exports.modifyArtistBlogProfilePhoto = function(req, res, next){
                             fs.unlink(file.path, function (err) {
                                 if (err) {
                                     var error = new Error('파일 삭제를 실패했습니다.');
-                                    error.code = 400;
+                                    error.code = 500;
                                     return next(error);
                                 } else {
                                     callback(null, imageUrl);
@@ -266,7 +221,7 @@ module.exports.modifyArtistBlogProfilePhoto = function(req, res, next){
                     if(err){
                         console.error('ERROR UPDATING PROFILE PHOTO AT ARTIST BLOG ', err);
                         var error = new Error('Blog Profile 사진을 변경하는데 실패했습니다.');
-                        error.code = 400;
+                        error.code = 500;
                         return next(error);
                     }
                     console.log('doc ', doc);
@@ -274,7 +229,7 @@ module.exports.modifyArtistBlogProfilePhoto = function(req, res, next){
                         if(err){
                             console.error('ERROR UPDATING PROFILE PHOTO OF USER ', err);
                             var error = new Error('User Profile 사진을 변경하는데 실패했습니다.');
-                            error.code=  400;
+                            error.code=  500;
                             return next(error);
                         }
                         callback();

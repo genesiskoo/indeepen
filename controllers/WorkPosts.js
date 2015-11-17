@@ -19,9 +19,6 @@ var s3 = new AWS.S3();
 var bucketName = awsS3.bucketName;
 var uploadUrl = __dirname + '/../upload';
 
-var userKey = '563ef1ca401ae00c19a15829'; // session에 있을 정보
-var blogKey = '563ef1ca401ae00c19a15832'; // session에 있을 정보
-
 //////////////////////// web 용
 module.exports.showAddWorkPostPage = function(req, res){
     fs.createReadStream(__dirname + '/../views/workPost.html').pipe(res);
@@ -198,7 +195,6 @@ module.exports.addWorkPost = function(req, res, next){
         });
 };
 
-
 /**
  * 예술 Post List 가져오기
  * @param req
@@ -215,11 +211,12 @@ module.exports.getWorkPosts = function(req, res, next){
             error.code = 400;
             return next(error);
         }
-        async.eachSeries(workPosts, function(workPost, callback){
+        var order = 0;
+        async.each(workPosts, function(workPost, callback){
             var tmp = {
+                seq : (order++),
                 postInfo : workPost
             };
-
             Comment.countCommentsOfPost(workPost._id, function(err, count){
                 if(err){
                     console.error('ERROR COUNT COMMENTS ', err);
@@ -241,7 +238,15 @@ module.exports.getWorkPosts = function(req, res, next){
                     callback();
                 });
             });
-        }, function done(){
+        }, function (err){
+            if(err){
+                var error = new Error('async error');
+                error.code = 400;
+                return next(error);
+            }
+            works.sort(function(a, b){
+                return a.seq - b.seq;
+            });
              var msg = {
                  code : 200,
                  msg : 'Success',
@@ -249,7 +254,7 @@ module.exports.getWorkPosts = function(req, res, next){
              };
              res.status(msg.code).json(msg);
 
-           // res.render('post', {works : works});
+            //res.render('post', {works : works});
         });
     });
 };

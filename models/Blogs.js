@@ -6,7 +6,7 @@ var User = require('./Users');
 
 var blogSchema = new Schema({
 	_user: { type : Schema.Types.ObjectId, ref :'User'},
-	type : {                         /// 0(개인) 1(블로그)
+	type : {                         /// 0(개인) 1(공간)
 		type : Number,
 		default : 0
 	},
@@ -57,8 +57,8 @@ blogSchema.statics = {
         return this.create(blogInfo, callback);
     },
     findBlogsOfUser : function(userId, callback){
-        this.find({_user : new ObjectId(userId)}).
-            select('-intro -iMissYous -fans -location -createAt -updateAt').
+        this.find({ _user : new ObjectId(userId) }).
+            select('-_user -bgPhoto -intro -iMissYous -fans -location -createAt -updateAt').
             exec(callback);
     },
     findOneBlog : function(blogId, callback){
@@ -89,7 +89,9 @@ blogSchema.statics = {
             populate('_user', '-password -profilePhoto -intro -createAt -updateAt').
             exec(callback);
     },
-    updateProfileOfArtistBlog : function(blogId, newInfo, callback){
+
+    //공용
+    updateProfileOfBlog : function(blogId, newInfo, callback){
         this.findOneAndUpdate({_id : new ObjectId(blogId)}, { $set : newInfo}, callback);
     },
     findProfilePhotoOfBlog : function(blogId, callback){
@@ -100,10 +102,8 @@ blogSchema.statics = {
     updateProfilePhotoOfBlog : function(blogId, newUrl, callback){
         this.findOneAndUpdate({_id : new ObjectId(blogId)}, {$set : {profilePhoto : newUrl}}, callback);
     },
-    findBgPhotoOfBlog : function(blogId, callback){
-        this.findOne({_id : new ObjectId(blogId)}).
-            select('-_id -_user -type -nick -profilePhoto -intro -fans -iMissYous -location -createAt -updateAt -isActivated').
-            exec(callback);
+    updateBgPhotoOfBlog : function(blogId, newUrl, callback){
+        this.findOneAndUpdate({_id : new ObjectId(blogId)}, {$set : {bgPhoto : newUrl}}, callback);
     },
     pushFanToBlog : function(blogId, userBlogId, callback){
         return this.findOneAndUpdate({_id : new ObjectId(blogId)}, {$push : {fans : new ObjectId(userBlogId)}}, callback);
@@ -114,21 +114,28 @@ blogSchema.statics = {
     pushIMissYouToBlog : function(blogId, userBlogId, callback){
         return this.findOneAndUpdate({_id : new ObjectId(blogId)}, {$push : {iMissYous : new ObjectId(userBlogId)}}, callback);
     },
-    isIMissYoued : function(blogId, userBlogId, callback){
-        this.findOne({_id : new ObjectId(blogId), iMissYous : new ObjectId(userBlogId)}, function(err, doc){
+    removeBlog : function(blogId, callback){
+        return this.findOneAndRemove({_id : new ObjectId(blogId)}, callback);
+    },
+    updateIsActivated: function(userId, blogId, callback){
+        var that = this;
+        this.update({_user : new ObjectId(userId)}, {$set : {isActivated : false}}, {multi : true}, function(err, docs){
             if(err){
                 callback(err, null);
-            }
-            if(doc){
-                console.log(doc);
-                callback(null, true);
-            }else {
-                callback(null, false);
+            }else{
+                that.findOneAndUpdate({_id : new ObjectId(blogId)}, {$set : {isActivated : true}}, callback);
             }
         });
     },
-    removeBlog : function(blogId, callback){
-        return this.findOneAndRemove({_id : new ObjectId(blogId)}, callback);
+    findLocation : function (blogId, callback){
+        return  this.findOne({_id : new ObjectId(blogId)})
+                      .select('location')
+                      .exec(callback);
+    },
+    findProfileOfSpaceBlog : function(blogId, callback){
+        return this.findOne({_id: new Object(blogId)})
+                    .select('-type  -bgPhoto -profilePhoto -iMissYous -fans -location -createAt -updateAt -isActivated')
+                    .exec(callback);
     }
 
 };

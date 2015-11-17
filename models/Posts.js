@@ -172,7 +172,7 @@ postSchema.statics = {
             this.find({$or : [{$and : [{_writer : new ObjectId(userBlogId)}, {postType : 0}]},{_writer : {$in : userArtists}}]}).
                 sort({createAt : -1}).
                 select('-updateAt -hashTags -show.location.point').
-                limit(2).
+                limit(10).
                 populate('_writer', '-type -bgPhoto -intro -iMissYous -fans -location -createAt -updateAt -isActivated').
                 populate('show.tags._user', '-_user -type -bgPhoto -intro -iMissYous -fans -location -createAt -updateAt -isActivated').
                 exec(callback);
@@ -180,7 +180,7 @@ postSchema.statics = {
             this.find({$or : [{$and : [{_writer : new ObjectId(userBlogId)}, {postType : 0}]},{_writer : {$in : userArtists}}],_id : {$lt : lastSeen}}).
                 sort({createAt : -1}).
                 select('-updateAt -hashTags -show.location.point').
-                limit(2).
+                limit(10).
                 populate('_writer', '-type -bgPhoto -intro -iMissYous -fans -location -createAt -updateAt -isActivated').
                 populate('show.tags._user', '-_user -type -bgPhoto -intro -iMissYous -fans -location -createAt -updateAt -isActivated').
                 exec(callback);

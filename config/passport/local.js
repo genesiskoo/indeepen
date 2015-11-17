@@ -6,6 +6,8 @@ var mongoose = require('mongoose');
 var LocalStrategy = require('passport-local').Strategy;
 
 var User = require('./../../models/Users');
+var Blog = require('./../../models/Blogs');
+var async = require('async');
 
 module.exports = new LocalStrategy({
     usernameField : 'email',
@@ -14,7 +16,7 @@ module.exports = new LocalStrategy({
 function(email, password, done){
     var options = {
         criteria : {email : email},
-        select : '_id name nick email hashed_password salt'
+        select : '-email -name -provider -authToken -facebook -intro -phone -myArtists -createAt -updateAt -isPublic'
     };
     User.findUser(options, function(err, doc){
         if(err) done(err);
@@ -24,6 +26,32 @@ function(email, password, done){
         if(!doc.authenticate(password)){
             return done(null, false, {message : '일치하는 정보가 없습니다.'});
         }
-        return done(null, user);
+        Blog.findBlogIdOfUser(doc._id, function(err, blogIds){
+            console.log('local.js 에서의 blogIds ', blogIds);
+            var artistBlog;
+            var spaceBlog = [];
+            async.each(blogIds, function(blogId, callback){
+                if(blogId.type == 0){  // artistBlog
+                    artistBlog = blogId._id;
+                    console.log('artistBlog ', artistBlog);
+                }else{   // spaceBlog
+                    spaceBlog.push(blogId._id);
+                    console.log('spaceBlog ', spaceBlog);
+                }
+                callback();
+            }, function(err){
+                if(err){
+                    return done(null, false, {message : '서버 오류..'});
+                }else{
+                    var user = {
+                        userKey : doc._id,
+                        artistBlogKey : artistBlog,
+                        spaceBlogKeys : spaceBlog
+                    };
+                    console.log('user... ', user);
+                    return done(null, user);
+                }
+            });
+        });
     });
 });

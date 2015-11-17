@@ -14,4 +14,6 @@ module.exports = function(app, passport){
 
     app.get('/loginSuc', TheRest.loginSuc);
     app.get('/loginFail', TheRest.logFail);
+
+    app.get('/logout', TheRest.logout);
 };

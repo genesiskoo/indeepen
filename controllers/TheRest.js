@@ -22,3 +22,13 @@ module.exports.logFail = function(req, res, next){
     error.code = 400;
     return next(error);
 };
+
+module.exports.logout = function(req, res){
+    req.logout();   // passport session 지우기
+    // session 지워줌...
+    var msg = {
+        code : 200,
+        msg : 'Success'
+    };
+    res.status(msg.code).json(msg);
+};

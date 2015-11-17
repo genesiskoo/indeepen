@@ -11,8 +11,9 @@ var sessionOption = require('./config/sessionOption');
 //var path = __dirname + '/views';
 
 // passport serialize / deserialize 설정..
-//require('./config/passport')(passport);
+require('./config/passport')(passport);
 
+/*
 passport.serializeUser(function(user, done){
     console.log('serializeUser ', user);
     done(null, user);
@@ -75,6 +76,7 @@ passport.use( new LocalStrategy({
             });
         });
     }));
+*/
 
 
 var app = express();
@@ -85,26 +87,20 @@ app.use(session(sessionOption));
 // body parser
 app.use(bodyParser.urlencoded({extended: false}));
 
-
-
 // passport
 app.use(passport.initialize());
 app.use(passport.session());
-
-// 이건 뭘까....?????
-//app.user(flash());
 
 app.set('views', './views');
 app.set('view engine', 'ejs');
 
 app.use(require('./routers/web_router.js'));
 
-app.post('/login',
+/*app.post('/login',
     passport.authenticate('local',{
+        successRedirect : '/loginSuc',
         failureRedirect : '/loginFail'
-    }), function(req, res){
-        res.redirect('/loginSuc');
-    });
+    }));
 
 app.get('/loginSuc', function(req, res){
    console.log('loginSuc', req.user);
@@ -114,8 +110,9 @@ app.get('/loginFail', function(req, res, next){
     var error = new Error('로그인 실패');
     error.code = 400;
     return next(error);
-});
-//app.use(require('./routers/TheRest'));
+});*/
+require('./routers/TheRest.js')(app, passport);
+//app.use();
 app.use('/posts', require('./routers/Posts.js'));
 app.use('/workPosts', require('./routers/WorkPosts'));
 app.use('/showPosts', require('./routers/ShowPosts'));

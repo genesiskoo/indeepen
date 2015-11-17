@@ -4,6 +4,7 @@
 
 var mongoose = require('mongoose');
 var Blog = require('./Blogs');
+var ObjectId = mongoose.Types.ObjectId;
 
 var userSchema = new mongoose.Schema({
     email: {type : String, unique : true},
@@ -54,7 +55,10 @@ userSchema.statics = {
         return this.create(userInfo, callback);
     },
     updateProfileAtArtistBlog : function(userId, newInfo, callback){
-        this.findOneAndUpdate({_id : new ObjectId(blogId)}, {$set : newInfo}, callback);
+        this.findOneAndUpdate({_id : new ObjectId(userId)}, {$set : newInfo}, callback);
+    },
+    updateProfilePhoto : function(userId, newUrl, callback){
+        this.findOneAndUpdate({_id : new ObjectId(userId)}, {$set : {profilePhoto : newUrl}}, callback);
     }
 };
 

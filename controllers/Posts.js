@@ -37,6 +37,7 @@ module.exports.getPosts = function(req, res, next){
         if(!isStart){
             lastSeen = req.session['fanPage'];
         }
+        console.log('session id ', req.sessionID);
         // 2. 회원이 등록한 work post와 회원의 artist가 등록한 work/show post를 가져온다.
         Post.findPostsAtFanPage(blogKey, myArtists.myArtists, lastSeen, function(err, docs){
             if(err){

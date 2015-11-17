@@ -112,7 +112,7 @@ app.get('/loginFail', function(req, res, next){
     return next(error);
 });*/
 require('./routers/TheRest.js')(app, passport);
-//app.use();
+
 app.use('/posts', require('./routers/Posts.js'));
 app.use('/workPosts', require('./routers/WorkPosts'));
 app.use('/showPosts', require('./routers/ShowPosts'));

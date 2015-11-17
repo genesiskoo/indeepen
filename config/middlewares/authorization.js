@@ -9,6 +9,21 @@ module.exports.requiresLogin = function(req, res, next){
     return next(error);
 };
 
+module.exports.post = {
+    hasAuthorization : function(req, res, next){
+        console.log('req.body.writer ', req.body.writer);
+        console.log('req.user.userKey ', req.user.userKey);
+        if(req.body.writer === req.user.userKey){
+            console.log('본인 맞음');
+            next();
+        }else{
+            var error = new Error('권한 없음요.');
+            error.code = 401;
+            return next(error);
+        }
+    }
+};
+
 module.exports.user = {
     hasAuthorization : function(req, res, next){
         if(req.profile.id != req.user.id){
@@ -22,8 +37,10 @@ module.exports.user = {
     }
 };
 
+
+
 module.exports.artistBlog = {
     hasAuthorization : function(req, res, next){
         console.log('req.blogId')
     }
-}
+};

@@ -11,7 +11,7 @@
     <ol>
         <%shows.forEach(function(show){ %>
         <div id="contents"><li>
-            <h2><a href="">제목 : <%=show.postInfo.show.title%></a></h2>
+            <h2><a href="/showPosts/<%=show.postInfo._id%>">제목 : <%=show.postInfo.show.title%></a></h2>
             createAt : <%=show.postInfo.createAt%><br>
             _writer : <%=show.postInfo._writer%><br>
             content : <%=show.postInfo.content%><br>

@@ -14,8 +14,8 @@ router.get('/showPostsForm', showPost.getShowAddForm);
 //add
 router.post('/', showPost.addShowPost);
 
-//ex
-//router.get('/ex', showPost.index);
+router.get('/webTest', showPost.getWebShowList);
+
 
 //detail
 router.get('/:postId', showPost.getShowPost);

@@ -7,6 +7,7 @@ var router = express.Router();
 var User = require('./../controllers/Users');
 
 router.post('/', User.join);
+
 router.post('/emailCheck', User.checkEmail);
 
 router.put('/pw', User.changePw);

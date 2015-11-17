@@ -17,6 +17,10 @@ router.get('/login', function(req, res){
     fs.createReadStream(path+'/login.html').pipe(res);
 });
 
+router.get('/join', function(req, res){
+    fs.createReadStream(path+'/join.html').pipe(res);
+});
+
 //
 //// reply
 //router.get('/reply/:post_id', reply.findReplies)

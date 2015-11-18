@@ -204,7 +204,7 @@ module.exports.changeLike = function (req, res, next) {
             console.log('pull like ', doc);
             var msg = {
                 code: 200,
-                msg: 'Success',
+                msg: 'Success'
             };
             res.status(msg.code).json(msg);
         });
@@ -331,7 +331,7 @@ module.exports.getComments = function (req, res, next) {
             var msg = {
                 code: 200,
                 msg: 'Success',
-                result: docs.reverse()
+                result: docs
             };
             res.status(msg.code).json(msg);
         } else {

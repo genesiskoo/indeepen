@@ -331,7 +331,7 @@ module.exports.getComments = function (req, res, next) {
             var msg = {
                 code: 200,
                 msg: 'Success',
-                result: docs
+                result: docs.reverse()
             };
             res.status(msg.code).json(msg);
         } else {

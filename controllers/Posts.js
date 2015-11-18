@@ -24,6 +24,8 @@ var User = require('./../models/Users');
  */
 module.exports.getPosts = function(req, res, next){
     var isStart = req.query.isStart;
+    var emotion = req.query.emotion;
+    var field = req.query.field;
     //1. 회원의 myArtists를 가져온다.
     User.findOneMyArtists(userKey, function(err, myArtists){
         if(err){
@@ -39,7 +41,7 @@ module.exports.getPosts = function(req, res, next){
         }
         console.log('session id ', req.sessionID);
         // 2. 회원이 등록한 work post와 회원의 artist가 등록한 work/show post를 가져온다.
-        Post.findPostsAtFanPage(blogKey, myArtists.myArtists, lastSeen, function(err, docs){
+        Post.findPostsAtFanPage(blogKey, myArtists.myArtists, emotion, field, lastSeen, function(err, docs){
             if(err){
                 console.error('ERROR GETTING FAN PAGE ', err);
                 var error = new Error('posts 를 가져올 수 없음.');

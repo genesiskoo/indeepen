@@ -167,25 +167,46 @@ postSchema.statics = {
      * @param lastSeen
      * @param callback
      */
-    findPostsAtFanPage : function(userBlogId, userArtists, lastSeen, callback){
-        if(lastSeen == null){
-            this.find({$or : [{$and : [{_writer : new ObjectId(userBlogId)}, {postType : 0}]},{_writer : {$in : userArtists}}]}).
-                sort({createAt : -1}).
-                select('-updateAt -hashTags -show.location.point').
-                limit(10).
-                populate('_writer', '-type -bgPhoto -intro -iMissYous -fans -location -createAt -updateAt -isActivated').
-                populate('show.tags._user', '-_user -type -bgPhoto -intro -iMissYous -fans -location -createAt -updateAt -isActivated').
-                exec(callback);
-        }else{
-            this.find({$or : [{$and : [{_writer : new ObjectId(userBlogId)}, {postType : 0}]},{_writer : {$in : userArtists}}],_id : {$lt : lastSeen}}).
-                sort({createAt : -1}).
-                select('-updateAt -hashTags -show.location.point').
-                limit(10).
-                populate('_writer', '-type -bgPhoto -intro -iMissYous -fans -location -createAt -updateAt -isActivated').
-                populate('show.tags._user', '-_user -type -bgPhoto -intro -iMissYous -fans -location -createAt -updateAt -isActivated').
-                exec(callback);
+    findPostsAtFanPage : function(userBlogId, userArtists, emotion, field, lastSeen, callback){
+        var options = {$or : [{$and : [{_writer : new ObjectId(userBlogId)}, {postType : 0}]},{_writer : {$in : userArtists}}]};
+        console.log('emotion ', emotion);
+        console.log('field',field);
+        if(emotion && field){
+            console.log('both');
+            if(field == 12) { // 음악
+                options['work.emotion'] = emotion;
+                options['work.type'] = {'$in' : [12,13,14]};
+            }else if(field == 16) {// 문화
+                options['work.emotion'] = emotion;
+                options['postType'] = 1;
+            }else {
+                options['work.emotion'] = emotion;
+                options['work.type'] = field;
+            }
+        }else if(emotion){
+            console.log('emotion');
+            options['work.emotion'] = emotion;
+        }else if(field){
+            console.log('field');
+            if(field == 12)  // 음악
+                options['work.type'] = {'$in' : [12,13,14]};
+            else if(field == 16) // 문화
+                options['postType'] = 1;
+            else
+                options['work.type'] = field;
         }
 
+        if(lastSeen != null)
+            options['_id'] = {$lt : lastSeen};
+
+        console.log('options ', options);
+        this.find(options).
+            sort({createAt : -1}).
+            select('-updateAt -hashTags -show.location.point').
+            limit(10).
+            populate('_writer', '-type -bgPhoto -intro -iMissYous -fans -location -createAt -updateAt -isActivated').
+            populate('show.tags._user', '-_user -type -bgPhoto -intro -iMissYous -fans -location -createAt -updateAt -isActivated').
+            exec(callback);
     },
     /**
      * Post정보 저장하기

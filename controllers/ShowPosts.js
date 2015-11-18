@@ -44,6 +44,13 @@ module.exports.getShowList = function (req, res, next) {
     var showPageSession = null;
     var isStart = req.query.isStart;
     var lastSeen = null;
+    var region = req.query.region;
+    var date = req.query.date;
+    var field = req.query.field;
+
+    //console.log("region : ",region);
+    //console.log("date : ",date);
+    //console.log("field : ",field);
 
     if (!isStart) {
         lastSeen = req.session[showPageSession];
@@ -53,7 +60,7 @@ module.exports.getShowList = function (req, res, next) {
     var showModel = new Post({postType: 1});
     //showModel.findByPostType으로 결과리스트 배열 shows를 가져온다
  
-    showModel.findByPostType({}, lastSeen, function (err, shows) {
+    showModel.findByPostType({}, lastSeen, field , function (err, shows) {
         if (err) {
             console.error(err);
             var error = new Error('Show List 를 가져올 수 없다');

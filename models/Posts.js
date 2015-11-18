@@ -80,9 +80,10 @@ postSchema.methods = {
      * @param callback
      * @returns {Promise}
      */
-    findByPostType : function(options,lastSeen,callback){
+    findByPostType : function(options,lastSeen, field, callback){
         if(!options) options = {};
         var select = '';
+        console.log(field);
         if(lastSeen == null){
             if(this.postType == 0)
                 //select = '_id createAt _writer content likes work resources';

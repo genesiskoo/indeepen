@@ -42,22 +42,25 @@ module.exports.getShowAddForm = function (req, res, next) {
 module.exports.getShowList = function (req, res, next) {
     var showPageSession = null;
     var isStart = req.query.isStart;
-    var region = req.query.reqion;
+    var region = req.query.region;
     var field = req.query.field;
     var startDate = req.query.startDate;
-    var Edate
+    var endDate = req.query.endDate;
+    //console.log('reqgion : ',region);
+    //console.log('field : ',field);
+    //console.log('startDate : ',startDate);
+    //console.log('endDate : ',endDate);
 
     var lastSeen = null;
 
+    //isStart가 null
     if (!isStart) {
         lastSeen = req.session[showPageSession];
     }
 
     var showList = [];
-    var showModel = new Post({postType: 1});
-    //showModel.findByPostType으로 결과리스트 배열 shows를 가져온다
- 
-    showModel.findByPostType({}, lastSeen, function (err, shows) {
+
+    Post.hell(region, startDate, endDate, field, lastSeen, function (err, shows) {
         if (err) {
             console.error(err);
             var error = new Error('Show List 를 가져올 수 없다');
@@ -99,7 +102,7 @@ module.exports.getShowList = function (req, res, next) {
             });
             //마지막 게시물의 id값
             //console.log(showList.slice(-1)[0].postInfo._id);
-            console.log(showList.length);
+            //console.log(showList.length);
             if(showList.length != 0) {
                 req.session[showPageSession] = showList.slice(-1)[0].postInfo._id;
                 var msg = {
@@ -109,7 +112,7 @@ module.exports.getShowList = function (req, res, next) {
                 };
                 res.status(msg.code).json(msg);
             }else{
-                var error = new Error('댓글이 없습니다.');
+                var error = new Error('게시물이 더 이상 없어요!');
                 error.code = 404;
                 return next(error);
             }

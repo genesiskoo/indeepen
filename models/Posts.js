@@ -44,8 +44,8 @@ var postSchema = new Schema({
                 y : Number
             }
         }],
-        startDate : Date,
-        endDate : Date,
+        startDate : String,
+        endDate : String,
         startTime : {type : String, trim : true},
         endTime : {type : String, trim : true},
         fee : Number,
@@ -241,40 +241,6 @@ postSchema.statics = {
         this.findOneAndRemove({_id : new ObjectId(postId)}, callback);
     },
 
-    /**
-     * Find article by id
-     *
-     * @param {ObjectId} id
-     * @param {Function} cb
-     * @api private
-     */
-
-    load: function (id, cb) {
-        this.findOne({ _id : id })
-            .populate('user', 'name email username')
-            .populate('comments.user')
-            .exec(cb);
-    },
-
-    /**
-     * List articles
-     *
-     * @param {Object} options
-     * @param {Function} cb
-     * @api private
-     */
-
-    list: function (options, cb) {
-        var criteria = options.criteria || {}
-
-        this.find({'postType' : 1})
-            .populate('_writer', '_id nick photoProfile')
-            .populate('show.tags._user', '_id nick photoProfile')
-            .sort({'createAt': -1}) // sort by date
-            .limit(options.perPage)
-            .skip(options.perPage * options.page)
-            .exec(cb);
-    },
     findWorkPostsAtBlog : function(writer, lastSeen, callback){
         if(lastSeen == null){
             this.find({_writer : new ObjectId(writer), postType : 0}).

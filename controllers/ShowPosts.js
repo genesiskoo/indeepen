@@ -25,7 +25,6 @@ var Blog = require('./../models/Blogs');
 
 //add_form
 module.exports.getShowAddForm = function (req, res, next) {
-    console.log('here');
     Blog.findAllBlogsNick(function(err,docs){
         if(err){
             console.error(err);
@@ -43,6 +42,11 @@ module.exports.getShowAddForm = function (req, res, next) {
 module.exports.getShowList = function (req, res, next) {
     var showPageSession = null;
     var isStart = req.query.isStart;
+    var region = req.query.reqion;
+    var field = req.query.field;
+    var startDate = req.query.startDate;
+    var Edate
+
     var lastSeen = null;
 
     if (!isStart) {

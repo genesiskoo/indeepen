@@ -27,7 +27,7 @@ module.exports.getPosts = function(req, res, next){
     var emotion = req.query.emotion;
     var field = req.query.field;
     //1. 회원의 myArtists를 가져온다.
-    User.findOneMyArtists(userKey, function(err, myArtists){
+    User.findMyArtistIds(userKey, function(err, myArtists){
         if(err){
             console.error('ERROR GETTING MY ARTISTS ', err);
             var error = new Error('myArtists 가져오기 실패');
@@ -109,12 +109,6 @@ module.exports.getPosts = function(req, res, next){
                     req.session['fanPage'] = docs.splice(-1)[0]._id;
                     posts.sort(function(a, b){
                         return a.seq - b.seq;
-                        /*if(a.postInfo.createAt < b.postInfo.createAt)
-                         return 1;
-                         else if(a.postInfo.createAt > b.postInfo.createAt)
-                         return -1;
-                         else
-                         return 0;*/
                     });
                     var msg = {
                         code : 200,

@@ -26,6 +26,8 @@ var defaultBgPhotoUrl = 'https://s3-ap-northeast-1.amazonaws.com/in-deepen/image
 var userKey = '563ef1ca401ae00c19a15828'; // session에 있을 정보
 var blogKey = '563ef1cb401ae00c19a15838'; // session에 있을 정보
 
+var perPage = 5;
+
 /**
  * 공간/개인 블로그 기본 정보 가져오기
  * @param req
@@ -161,7 +163,21 @@ module.exports.getFansOfBlog = function(req, res, next){
         error.code = 400;
         return next(error);
     }
-    Blog.findFansOfBlog(blogId, function(err, doc){
+    var isStart = req.query.isStart;
+    var nextPage = 1;
+    var tmp = 'fans_'+blogId;
+    if(!isStart){
+        console.log('defore ', req.session[tmp]);
+        nextPage = req.session[tmp];
+        if(!nextPage){
+            nextPage = 1;
+        }
+    }
+    var page = {
+        from : perPage * (nextPage-1),
+        to : perPage
+    };
+    Blog.findFansOfBlog(blogId, page, function(err, doc){
         if(err){
             console.error('ERROR GETTING FANS OF BLOG ', err);
             var error = new Error('Fans 을 가져올 수 없습니다.');
@@ -169,12 +185,20 @@ module.exports.getFansOfBlog = function(req, res, next){
             return next(error);
         }
         console.log('doc ', doc);
-        var msg = {
-            code : 200,
-            msg : 'Success',
-            result : doc.fans
-        };
-        res.status(msg.code).json(msg);
+        req.session[tmp] = (++nextPage);
+        console.log('after ',req.session[tmp]);
+        if(doc.length != 0){
+            var msg = {
+                code : 200,
+                msg : 'Success',
+                result : doc
+            };
+            res.status(msg.code).json(msg);
+        }else{
+            var error = new Error('더 이상 없음.');
+            error.code = 404;
+            return next(error);
+        }
     });
 };
 
@@ -192,7 +216,55 @@ module.exports.getArtistsOfBlog = function(req, res, next){
         error.code = 400;
         return next(error);
     }
-    Blog.findArtistsOfUser(blogId, function(err, docs){
+    var isStart = req.query.isStart;
+    var nextPage = 1;
+    var tmp = 'artists_'+blogId;
+    if(!isStart){
+        console.log('defore ', req.session[tmp]);
+        nextPage = req.session[tmp];
+        if(!nextPage){
+            nextPage = 1;
+        }
+    }
+    var page = {
+        from : perPage * (nextPage-1),
+        to : perPage
+    };
+    Blog.findUserIdOfBlog(blogId, function(err, id){
+        if(err){
+            console.error('ERROR FIND ARTIST BLOG ID OF USER ', err);
+            var error = new Error('artist blog id 가져오기 실패.. ㅠㅜ');
+            error.code = 400;
+            return next(error);
+        }
+        console.log('user id ', id);
+        User.findMyArtists(id._user, page, function(err, docs){
+            if(err){
+                console.error('ERROR FIND MY ARTISTS ', err);
+                var error = new Error('my artists 가져오기 실패');
+                error.code = 400;
+                return next(error);
+            }
+            console.log('my artist ', docs);
+
+            if(docs.length != 0){
+                req.session[tmp] = (++nextPage);
+                var msg = {
+                    code : 200,
+                    msg : 'Success',
+                    result : docs
+                };
+                res.status(msg.code).json(msg);
+            }else{
+                var error = new Error('더 이상 없음');
+                error.code = 404;
+                return next(error);
+            }
+        });
+    });
+
+
+    /*Blog.findArtistsOfUser(blogId, function(err, docs){
         if(err){
             var error = new Error('My artists 를 가져올 수 없습니다.');
             error.code = 400;
@@ -206,7 +278,7 @@ module.exports.getArtistsOfBlog = function(req, res, next){
             result : docs
         };
         res.status(msg.code).json(msg);
-    });
+    });*/
 };
 
 /**
@@ -219,6 +291,8 @@ module.exports.getArtistsOfBlog = function(req, res, next){
 module.exports.changeFanOfBlog = function(req, res, next){
     var blogId = req.params.blogId;
     var fanStatus = req.params.fanStatus;
+    var blogKey = req.body.blogKey;
+    var userKey = req.body.userKey;
     if(!blogId || !fanStatus){
         var error = new Error('URL 확인 부탁해요.');
         error.code = 400;
@@ -291,19 +365,40 @@ module.exports.getiMissYous = function(req, res, next){
         error.code = 400;
         return next(error);
     }
-    Blog.findIMissYousOfBlog(blogId, function(err, doc){
+    var isStart = req.query.isStart;
+    var nextPage = 0;
+    var tmp = 'imy_'+blogId;
+    if(!isStart){
+        console.log('before ', req.session[tmp]);
+        nextPage = req.session[tmp];
+        if(!nextPage){
+            nextPage = 0;
+        }
+    }
+    var page = {
+        from : perPage * nextPage,
+        to : perPage
+    };
+    Blog.findIMissYousOfBlog(blogId, page, function(err, docs){
         if(err){
-           var error = new Error('iMissYous를 가져올 수 없습니다.');
+           var error = new Error('iMissYous 를 가져올 수 없습니다.');
            error.code = 400;
            return next(error);
         }
-        console.log('doc ', doc);
-        var msg = {
-            code : 200,
-            msg : 'Success',
-            result : doc.iMissYous
+        console.log('doc ', docs);
+        if(docs.length != 0){
+            req.session[tmp] = (++nextPage);
+            var msg = {
+                code : 200,
+                msg : 'Success',
+                result : docs
+            }
+            res.status(msg.code).json(msg);
+        }else{
+            var error = new Error('더 이상 없음.');
+            error.code = 404;
+            return next(error);
         }
-        res.status(msg.code).json(msg);
     });
 };
 

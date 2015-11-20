@@ -26,7 +26,7 @@ var defaultBgPhotoUrl = 'https://s3-ap-northeast-1.amazonaws.com/in-deepen/image
 var userKey = '563ef1ca401ae00c19a15828'; // session에 있을 정보
 var blogKey = '563ef1cb401ae00c19a15838'; // session에 있을 정보
 
-var perPage = 5;
+var perPage = 30;
 
 /**
  * 공간/개인 블로그 기본 정보 가져오기
@@ -262,23 +262,6 @@ module.exports.getArtistsOfBlog = function(req, res, next){
             }
         });
     });
-
-
-    /*Blog.findArtistsOfUser(blogId, function(err, docs){
-        if(err){
-            var error = new Error('My artists 를 가져올 수 없습니다.');
-            error.code = 400;
-            return next(error);
-        }
-        console.log('my artist', docs);
-        console.log('cnt ', docs.length);
-        var msg = {
-            code : 200,
-            msg : 'Success',
-            result : docs
-        };
-        res.status(msg.code).json(msg);
-    });*/
 };
 
 /**

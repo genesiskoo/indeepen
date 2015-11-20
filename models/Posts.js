@@ -7,7 +7,7 @@ var Schema = mongoose.Schema;
 var ObjectId = mongoose.Types.ObjectId;
 
 var Blog = require('./Blogs');
-var Comment = require('./Comments');
+var HashTag = require('./HashTags');
 
 var postSchema = new Schema({
     postType : Number, // 0(일반 - work), 1(문화예술 - show),
@@ -26,7 +26,6 @@ var postSchema = new Schema({
     content : {type : String, trim : true},
     hashTags : [{type : String, trim : true}],
     likes : [{type : Schema.Types.ObjectId, ref : 'Blog'}],
-    //comments : [{type : Schema.Types.ObjectId, ref : 'Comment'}],
     work : {
         type : {type : Number}, // 0(그림), 1(사진), 2(음악), 3(영상예술)
         emotion : Number//0(감정없음), 1(기쁨), 2(사랑), 3(슬픔),4( 화남)
@@ -70,13 +69,51 @@ var postSchema = new Schema({
 }, {versionKey : false});
 
 
+/**
+ * Post 를 저장 한 후 hashTag 가 있으면
+ * hashTags Collection 에도 저장한다.
+ */
+postSchema.post('save', function(doc){
+    var hashTag = doc.hashTags;
+    console.log('hashTag', hashTag);
+    if(hashTag.length != 0){
+        hashTag.forEach(function(tag){
+            console.log('tag ', tag);
+            HashTag.updateIncCntById(tag, function(err, doc){
+                if(err){
+                    console.error('ERROR HASH TAG INC ', err);
+                    return;
+                }
+                console.log('hash tag doc', doc);
+            });
+        });
+    }
+});
+
+postSchema.post('remove', function(doc){
+    console.log('remove hook');
+    console.log('doc ', doc);
+    var hashTags = doc.hashTags;
+    if(hashTags.length != 0){
+        hashTags.forEach(function(hash){
+           console.log('hash');
+            HashTag.updateDecCntById(hash, function(err, doc){
+                if(err){
+                    console.error('ERROR HASH TAG DEC ', err);
+                    return;
+                }
+                console.log('hash tag doc', doc);
+            })
+        });
+    }
+});
 
 /*
     method
  */
 postSchema.methods = {
     /**
-     * 해당 postType의 Post만 가져오기
+     * 해당 postType 의 Post 만 가져오기
      * @param callback
      * @returns {Promise}
      */
@@ -139,12 +176,12 @@ postSchema.statics = {
             exec(callback);
 
     },
-    /**
+/*    /!**
      * 모든 type의 post들 가져오기
      * @param options filtering 조건들
      * @param callback
      * @returns {Promise}
-     */
+     *!/
     findPosts : function(options, lastSeen, callback){
         if(!options) options = {};
         if(lastSeen == null){
@@ -159,7 +196,7 @@ postSchema.statics = {
             populate('show.tags._user', '_id _user nick profilePhoto').
             sort({createAt : -1}).
             exec(callback);
-    },
+    },*/
     /**
      * 모든 type의 posts 가져오기 (fan page)
      * @param userBlogId
@@ -238,7 +275,15 @@ postSchema.statics = {
         return this.findOneAndUpdate({_id : new ObjectId(postId)}, {$pull : {likes : new ObjectId(blogId)}}, callback);
     },
     removePost : function(postId, callback){
-        this.findOneAndRemove({_id : new ObjectId(postId)}, callback);
+        //this.findOneAndRemove({_id : new ObjectId(postId)}, callback);
+        this.findOne({_id : new ObjectId(postId)}, function(err, doc){
+            if(err){
+                callback(err, null);
+            }else{
+                console.log('doc ',doc);
+                doc.remove(callback);
+            }
+        })
     },
 
     findWorkPostsAtBlog : function(writer, lastSeen, callback){

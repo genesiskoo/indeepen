@@ -77,10 +77,6 @@ blogSchema.statics = {
             exec(callback);
     },
     findFansOfBlog : function(blogId, page, callback){ // pagination 추가
-        /*this.findOne({_id : new ObjectId(blogId)}).
-            select('-_id -_user -type -bgPhoto -nick -profilePhoto -intro -iMissYous -location -createAt -updateAt -isActivated').
-            populate('fans', '-type -bgPhoto -intro -iMissYous -fans -location -createAt -updateAt -isActivated').
-            exec(callback);*/
         this.aggregate([{
             $match : {_id : new ObjectId(blogId)}
         },{
@@ -95,28 +91,7 @@ blogSchema.statics = {
                 mongoose.model('Blog', blogSchema).populate(docs, {path : '_id', select : '-type -bgPhoto -intro -iMissYous -fans -location -createAt -updateAt -isActivated'}, callback);
             });
     },
-    /*findArtistsOfUser : function(blogId, callback){
-        /!*this.find({fans : new ObjectId(blogId)}).
-            select('-type -bgPhoto -intro -fans -iMissYous -location -createAt -updateAt -isActivated').
-            exec(callback);*!/
-        this.aggregate([{
-            $match : {fans : new ObjectId(blogId)}
-        },{
-            $unwind : '$fans'
-        },{
-            $project : {_id : 1, _user : 1, nick : 1, profilePhoto : 1}
-        }]).
-            skip(0).
-            limit(10).
-            exec(function(err, docs){
-                mongoose.model('Blog', blogSchema).populate(docs, {path : 'fans', select : '-type -bgPhoto -intro -iMissYous -fans -location -createAt -updateAt -isActivated'}, callback);
-            });
-    },*/
     findIMissYousOfBlog : function(blogId, page, callback){  //pagination 추가
-        /*this.findOne({_id : new ObjectId(blogId)}).
-            select('-_id -_user -type -bgPhoto -nick -profilePhoto -intro -fans -location -createAt -updateAt -isActivated').
-            populate('iMissYous', '-type -bgPhoto -intro -iMissYous -fans -location -createAt -updateAt -isActivated').
-            exec(callback);*/
         this.aggregate([{
             $match : {_id : new ObjectId(blogId)}
         },{
@@ -154,7 +129,6 @@ blogSchema.statics = {
         this.findOneAndUpdate({_id : new ObjectId(blogId)}, {$set : {bgPhoto : newUrl}}, callback);
     },
     pushFanToBlog : function(blogId, userBlogId, callback){
-        //return this.findOneAndUpdate({_id : new ObjectId(blogId)}, {$unshift : {fans : new ObjectId(userBlogId)}}, callback);
         this.findOne({_id : new ObjectId(blogId)}, function(err, doc){
             if(err){
                 callback(err, null);
@@ -168,7 +142,6 @@ blogSchema.statics = {
         return this.findOneAndUpdate({_id : new ObjectId(blogId)}, {$pull : {fans : new ObjectId(userBlogId)}}, callback);
     },
     pushIMissYouToBlog : function(blogId, userBlogId, callback){
-        //return this.findOneAndUpdate({_id : new ObjectId(blogId)}, {$push : {iMissYous : new ObjectId(userBlogId)}}, callback);
         this.findOne({_id : new ObjectId(blogId)}, function(err, doc){
             if(err){
                 callback(err, null);
@@ -206,8 +179,13 @@ blogSchema.statics = {
             .select('-bgPhoto -profilePhoto -intro -phone -email -iMissYous -fans -location -createAt -updateAt')
             .populate({path: '_user' , select : '-provider -hashed_password -salt -authToken -facebook -profilePhoto -intro -phone -myArtists -createAt -updateAt'})
             .exec(callback);
+    },
+    // search
+    findBlogIds : function(key, type, callback){
+        this.find({nick : {$regex : key}, type : type})
+            .select('-_user -type -bgPhoto -intro -iMissYous -fans -location -createAt -updateAt -isActivated -phone -email')
+            .exec(callback);
     }
-
 };
 
 

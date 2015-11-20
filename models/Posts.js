@@ -90,6 +90,9 @@ postSchema.post('save', function(doc){
     }
 });
 
+/**
+ * Post 를 제거하면 hashTag 의 cnt 를 1 감소한다.
+ */
 postSchema.post('remove', function(doc){
     console.log('remove hook');
     console.log('doc ', doc);
@@ -203,9 +206,9 @@ postSchema.statics = {
     findPost : function(postId, postType, callback){
         var select = '';
         if(postType == 0){
-            select ='createAt _writer content likes work resources';
+            select ='createAt _writer content likes work resources postType';
         }else{
-            select = 'createAt _writer content likes show resources';
+            select = 'createAt _writer content likes show resources postType';
         }
         return this.findOne({_id : new ObjectId(postId)}).
             select(select).
@@ -215,27 +218,32 @@ postSchema.statics = {
             exec(callback);
 
     },
-/*    /!**
-     * 모든 type의 post들 가져오기
-     * @param options filtering 조건들
-     * @param callback
-     * @returns {Promise}
-     *!/
-    findPosts : function(options, lastSeen, callback){
-        if(!options) options = {};
-        if(lastSeen == null){
+    findPostsByHashTag : function(hashTag, type, lastSeen, callback){
+        var options={hashTags : hashTag, postType : 0};
+        var select='-postType -_writer -createAt -updateAt -hashTags -likes -work.emotion -show';
+        var perPage = 3;
 
-        }else{
-
+        if(type != 0){
+            if(type == 1)
+                perPage = null;
+            else
+                perPage = 2;
+            select = '-updateAt -hashTags -show.location.point';
         }
-
-        return this.find(options).
-            select('postType createAt _writer content likes work show resources').
-            populate('_writer', '_id _user nick profilePhoto').
-            populate('show.tags._user', '_id _user nick profilePhoto').
+        if(lastSeen){
+            if(type == 1)
+                options['_id'] = {$gte : lastSeen};
+            else
+                options['_id'] = {$lt : lastSeen};
+        }
+        this.find(options).
             sort({createAt : -1}).
+            select(select).
+            limit(perPage).
+            populate('_writer', '-type -bgPhoto -intro -iMissYous -fans -location -createAt -updateAt -isActivated').
+            populate('show.tags._user', '-_user -type -bgPhoto -intro -iMissYous -fans -location -createAt -updateAt -isActivated').
             exec(callback);
-    },*/
+    },
     /**
      * 모든 type의 posts 가져오기 (fan page)
      * @param userBlogId
@@ -284,6 +292,8 @@ postSchema.statics = {
             populate('show.tags._user', '-_user -type -bgPhoto -intro -iMissYous -fans -location -createAt -updateAt -isActivated').
             exec(callback);
     },
+
+
     /**
      * Post정보 저장하기
      * @param postInfo

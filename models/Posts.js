@@ -7,7 +7,7 @@ var Schema = mongoose.Schema;
 var ObjectId = mongoose.Types.ObjectId;
 
 var Blog = require('./Blogs');
-var Comment = require('./Comments');
+var HashTag = require('./HashTags');
 
 var postSchema = new Schema({
     postType : Number, // 0(일반 - work), 1(문화예술 - show),
@@ -26,7 +26,6 @@ var postSchema = new Schema({
     content : {type : String, trim : true},
     hashTags : [{type : String, trim : true}],
     likes : [{type : Schema.Types.ObjectId, ref : 'Blog'}],
-    //comments : [{type : Schema.Types.ObjectId, ref : 'Comment'}],
     work : {
         type : {type : Number}, // 0(그림), 1(사진), 2(음악), 3(영상예술)
         emotion : Number//0(감정없음), 1(기쁨), 2(사랑), 3(슬픔),4( 화남)
@@ -44,8 +43,8 @@ var postSchema = new Schema({
                 y : Number
             }
         }],
-        startDate : Date,
-        endDate : Date,
+        startDate : String,
+        endDate : String,
         startTime : {type : String, trim : true},
         endTime : {type : String, trim : true},
         fee : Number,
@@ -70,13 +69,51 @@ var postSchema = new Schema({
 }, {versionKey : false});
 
 
+/**
+ * Post 를 저장 한 후 hashTag 가 있으면
+ * hashTags Collection 에도 저장한다.
+ */
+postSchema.post('save', function(doc){
+    var hashTag = doc.hashTags;
+    console.log('hashTag', hashTag);
+    if(hashTag.length != 0){
+        hashTag.forEach(function(tag){
+            console.log('tag ', tag);
+            HashTag.updateIncCntById(tag, function(err, doc){
+                if(err){
+                    console.error('ERROR HASH TAG INC ', err);
+                    return;
+                }
+                console.log('hash tag doc', doc);
+            });
+        });
+    }
+});
+
+postSchema.post('remove', function(doc){
+    console.log('remove hook');
+    console.log('doc ', doc);
+    var hashTags = doc.hashTags;
+    if(hashTags.length != 0){
+        hashTags.forEach(function(hash){
+           console.log('hash');
+            HashTag.updateDecCntById(hash, function(err, doc){
+                if(err){
+                    console.error('ERROR HASH TAG DEC ', err);
+                    return;
+                }
+                console.log('hash tag doc', doc);
+            })
+        });
+    }
+});
 
 /*
     method
  */
 postSchema.methods = {
     /**
-     * 해당 postType의 Post만 가져오기
+     * 해당 postType 의 Post 만 가져오기
      * @param callback
      * @returns {Promise}
      */
@@ -112,6 +149,44 @@ postSchema.methods = {
             populate('show.tags._user', '_id _user nick profilePhoto').
             exec(callback);
         }
+    },
+    findShowPostWithFilter: function (options, region, startDate, endDate, field, lastSeen, callback) {
+        if (!options) options = {};
+        var select = '';
+        if (lastSeen == null) {
+            if (this.postType == 0)
+            //select = '_id createAt _writer content likes work resources';
+                select = '-updateAt -hashTags -show';
+            else
+                select = '-content -hashTags -work -show.location.point'; //-수정
+            this.model('Post').find(options).
+            where('postType').
+            equals(this.postType).
+            select(select).
+            sort({createAt: -1}).
+            limit(10).
+            populate({
+                path: '_writer',
+                select: '-type -bgPhoto -intro -iMissYous -fans -location -createAt -updateAt -isActivated'
+            }).
+            //populate({path : 'likes', select : '_id _user nick profilePhoto'}).
+            populate('show.tags._user', '_id _user nick profilePhoto').
+            exec(callback);
+        } else {
+            this.model('Post').find({_id: {$lt: lastSeen}}).
+            where('postType').
+            equals(this.postType).
+            select(select).
+            sort({createAt: -1}).
+            limit(10).
+            populate({
+                path: '_writer',
+                select: '-type -bgPhoto -intro -iMissYous -fans -location -createAt -updateAt -isActivated'
+            }).
+            //populate({path : 'likes', select : '_id _user nick profilePhoto'}).
+            populate('show.tags._user', '_id _user nick profilePhoto').
+            exec(callback);
+        }
     }
 };
 
@@ -140,12 +215,12 @@ postSchema.statics = {
             exec(callback);
 
     },
-    /**
+/*    /!**
      * 모든 type의 post들 가져오기
      * @param options filtering 조건들
      * @param callback
      * @returns {Promise}
-     */
+     *!/
     findPosts : function(options, lastSeen, callback){
         if(!options) options = {};
         if(lastSeen == null){
@@ -160,7 +235,7 @@ postSchema.statics = {
             populate('show.tags._user', '_id _user nick profilePhoto').
             sort({createAt : -1}).
             exec(callback);
-    },
+    },*/
     /**
      * 모든 type의 posts 가져오기 (fan page)
      * @param userBlogId
@@ -239,43 +314,17 @@ postSchema.statics = {
         return this.findOneAndUpdate({_id : new ObjectId(postId)}, {$pull : {likes : new ObjectId(blogId)}}, callback);
     },
     removePost : function(postId, callback){
-        this.findOneAndRemove({_id : new ObjectId(postId)}, callback);
+        //this.findOneAndRemove({_id : new ObjectId(postId)}, callback);
+        this.findOne({_id : new ObjectId(postId)}, function(err, doc){
+            if(err){
+                callback(err, null);
+            }else{
+                console.log('doc ',doc);
+                doc.remove(callback);
+            }
+        })
     },
 
-    /**
-     * Find article by id
-     *
-     * @param {ObjectId} id
-     * @param {Function} cb
-     * @api private
-     */
-
-    load: function (id, cb) {
-        this.findOne({ _id : id })
-            .populate('user', 'name email username')
-            .populate('comments.user')
-            .exec(cb);
-    },
-
-    /**
-     * List articles
-     *
-     * @param {Object} options
-     * @param {Function} cb
-     * @api private
-     */
-
-    list: function (options, cb) {
-        var criteria = options.criteria || {}
-
-        this.find({'postType' : 1})
-            .populate('_writer', '_id nick photoProfile')
-            .populate('show.tags._user', '_id nick photoProfile')
-            .sort({'createAt': -1}) // sort by date
-            .limit(options.perPage)
-            .skip(options.perPage * options.page)
-            .exec(cb);
-    },
     findWorkPostsAtBlog : function(writer, lastSeen, callback){
         if(lastSeen == null){
             this.find({_writer : new ObjectId(writer), postType : 0}).
@@ -305,7 +354,51 @@ postSchema.statics = {
                 limit(15).
                 exec(callback);
         }
-    }
+    },
+    hell: function (region, startDate, endDate, field, lastSeen, callback) {
+        // 조건이 없을 때 처리
+        // like 검색
+        var options = {$and: [{postType: 1}]};
+        if (field != null) {
+            options.$and.push({'show.type': parseInt(field)});
+        }
+        if (region != null) {
+            region = region.replace(/[\-\[\]{}()*+?.,\\\^$|#\s]/g, "\\$&");
+            options.$and.push({'show.location.address': {$regex: region}});
+        }
+        if (startDate != null && endDate != null) {
+            options.$and.push({
+                $or: [
+                    {
+                        "show.startDate": {
+                            "$gte": startDate,
+                        }
+                    }, {
+                        "show.endDate": {
+                            "$lte": endDate
+                        }
+                    }, {
+                        //검색범위가 공연시간에 완전히 포함될 경우
+                    }]
+            });
+        }//if
+        if (lastSeen != null){
+            options.$and.push({_id: {$lt: lastSeen}});
+        }
+        console.log('option : ', options);
+        var select = '-content -hashTags -work -show.location.point';
+            this.find(options).
+            select(select).
+            sort({createAt: -1}).
+            limit(10).
+            populate({
+                path: '_writer',
+                select: '-type -bgPhoto -intro -iMissYous -fans -location -createAt -updateAt -isActivated'
+            }).
+            //populate({path : 'likes', select : '_id _user nick profilePhoto'}).
+            populate('show.tags._user', '_id _user nick profilePhoto').
+            exec(callback);
+        }
 };
 
 module.exports = mongoose.model('Post', postSchema);

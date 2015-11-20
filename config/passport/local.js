@@ -30,6 +30,7 @@ function(email, password, done){
             console.log('local.js 에서의 blogIds ', blogIds);
             var artistBlog;
             var spaceBlog = [];
+            var activityBlog;
             async.each(blogIds, function(blogId, callback){
                 if(blogId.type == 0){  // artistBlog
                     artistBlog = blogId._id;
@@ -38,6 +39,8 @@ function(email, password, done){
                     spaceBlog.push(blogId._id);
                     console.log('spaceBlog ', spaceBlog);
                 }
+                if(blogId.isActivated == true)
+                    activityBlog = blogId._id;
                 callback();
             }, function(err){
                 if(err){
@@ -45,6 +48,7 @@ function(email, password, done){
                 }else{
                     var user = {
                         userKey : doc._id,
+                        activityBlogKey : activityBlog,
                         artistBlogKey : artistBlog,
                         spaceBlogKeys : spaceBlog
                     };

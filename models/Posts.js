@@ -148,6 +148,44 @@ postSchema.methods = {
             populate('show.tags._user', '_id _user nick profilePhoto').
             exec(callback);
         }
+    },
+    findShowPostWithFilter: function (options, region, startDate, endDate, field, lastSeen, callback) {
+        if (!options) options = {};
+        var select = '';
+        if (lastSeen == null) {
+            if (this.postType == 0)
+            //select = '_id createAt _writer content likes work resources';
+                select = '-updateAt -hashTags -show';
+            else
+                select = '-content -hashTags -work -show.location.point'; //-수정
+            this.model('Post').find(options).
+            where('postType').
+            equals(this.postType).
+            select(select).
+            sort({createAt: -1}).
+            limit(10).
+            populate({
+                path: '_writer',
+                select: '-type -bgPhoto -intro -iMissYous -fans -location -createAt -updateAt -isActivated'
+            }).
+            //populate({path : 'likes', select : '_id _user nick profilePhoto'}).
+            populate('show.tags._user', '_id _user nick profilePhoto').
+            exec(callback);
+        } else {
+            this.model('Post').find({_id: {$lt: lastSeen}}).
+            where('postType').
+            equals(this.postType).
+            select(select).
+            sort({createAt: -1}).
+            limit(10).
+            populate({
+                path: '_writer',
+                select: '-type -bgPhoto -intro -iMissYous -fans -location -createAt -updateAt -isActivated'
+            }).
+            //populate({path : 'likes', select : '_id _user nick profilePhoto'}).
+            populate('show.tags._user', '_id _user nick profilePhoto').
+            exec(callback);
+        }
     }
 };
 
@@ -315,7 +353,51 @@ postSchema.statics = {
                 limit(15).
                 exec(callback);
         }
-    }
+    },
+    hell: function (region, startDate, endDate, field, lastSeen, callback) {
+        // 조건이 없을 때 처리
+        // like 검색
+        var options = {$and: [{postType: 1}]};
+        if (field != null) {
+            options.$and.push({'show.type': parseInt(field)});
+        }
+        if (region != null) {
+            region = region.replace(/[\-\[\]{}()*+?.,\\\^$|#\s]/g, "\\$&");
+            options.$and.push({'show.location.address': {$regex: region}});
+        }
+        if (startDate != null && endDate != null) {
+            options.$and.push({
+                $or: [
+                    {
+                        "show.startDate": {
+                            "$gte": startDate,
+                        }
+                    }, {
+                        "show.endDate": {
+                            "$lte": endDate
+                        }
+                    }, {
+                        //검색범위가 공연시간에 완전히 포함될 경우
+                    }]
+            });
+        }//if
+        if (lastSeen != null){
+            options.$and.push({_id: {$lt: lastSeen}});
+        }
+        console.log('option : ', options);
+        var select = '-content -hashTags -work -show.location.point';
+            this.find(options).
+            select(select).
+            sort({createAt: -1}).
+            limit(10).
+            populate({
+                path: '_writer',
+                select: '-type -bgPhoto -intro -iMissYous -fans -location -createAt -updateAt -isActivated'
+            }).
+            //populate({path : 'likes', select : '_id _user nick profilePhoto'}).
+            populate('show.tags._user', '_id _user nick profilePhoto').
+            exec(callback);
+        }
 };
 
 module.exports = mongoose.model('Post', postSchema);

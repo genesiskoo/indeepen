@@ -12,6 +12,7 @@ var postAuth = [auth.requiresLogin, auth.post.hasAuthorization];
 
 router.get('/', Post.getPosts);
 
+
 router.delete('/:postId', postAuth, Post.deletePost);
 
 router.post('/:postId/reports', Post.reportPost);

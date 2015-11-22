@@ -274,16 +274,14 @@ module.exports.addComment = function (req, res, next) {
             return next(error);
         }
         // web....
-        res.redirect('/posts/' + postId + '/comments');
+        //res.redirect('/posts/' + postId + '/comments');
 
         // app ...
-        /*
          var msg = {
          code : 200,
          msg : 'Success'
          };
          res.status(msg.code).json(msg);
-         */
     });
 };
 /**

@@ -26,6 +26,7 @@ module.exports.showAddWorkPostPage = function(req, res){
 
 var Comment = require('./../models/Comments');
 var Post = require('./../models/Posts');
+var Helper = require('./Helper');
 
 /**
  * 예술 Post 저장하기
@@ -288,6 +289,53 @@ module.exports.getWorkPost = function(req, res, next){
             };
             res.status(msg.code).json(msg);
         });
+    });
+};
+
+/**
+ * hash tag로 검색해서 post 목록 가져오기
+ * type : 0 (그림 하나 리스트), 1(그림 하나 -> post 리스트로), 2( post 리스트 더 불러오기)
+ * @param req
+ * @param res
+ * @param next
+ * @returns {*}
+ */
+module.exports.getPostsByHashTag = function(req, res, next){
+    var key = req.query.key;
+    var type = req.query.type;
+    var isStart = req.query.isStart;
+    if(!key || !type){
+        var error = new Error('key 와 type 을 주세요.');
+        error.code = 400;
+        return next(error);
+    }
+    var lastSeen;
+    if(isStart)
+        lastSeen = null;
+    else
+        lastSeen = req.session['hashTag'];
+    Post.findPostsByHashTag(key, type, lastSeen, function(err, docs){
+        if(err){
+            console.error('ERROR GETTING POSTS BY HASH TAG ', err);
+            var error = new Error('Hash Tag 로 가져오기 실패');
+            error.code = 400;
+            return next(error);
+        }
+        console.log('docs ', docs);
+        if(docs.length != 0){
+            if(type == 0){
+                Helper.findWorkPostsVerOnePictureList(req, res, 'hashTag', docs);
+                //findPostsByHashTagVerOnePictureList(req, res, docs);
+            }else{
+                Helper.findPostsVerPostList(req, res, type, 'hashTag', docs);
+                //findPostsByHashTagVerPostList(req, res, type,docs);
+            }
+        }else{
+            var error =new Error('더 이상 없음');
+            error.code = 404;
+            return next(error);
+        }
+
     });
 };
 

@@ -13,6 +13,13 @@ router.get('/', function(req, res){
     fs.createReadStream(path+'/menu.html').pipe(res);
 });
 
+router.get('/login', function(req, res){
+    fs.createReadStream(path+'/login.html').pipe(res);
+});
+
+router.get('/join', function(req, res){
+    fs.createReadStream(path+'/join.html').pipe(res);
+});
 
 //
 //// reply

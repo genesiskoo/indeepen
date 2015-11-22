@@ -6,14 +6,15 @@ var express= require('express');
 var router = express.Router();
 
 var Post = require('../controllers/Posts.js');
+var auth = require('./../config/middlewares/authorization');
+
+var postAuth = [auth.requiresLogin, auth.post.hasAuthorization];
 
 router.get('/', Post.getPosts);
 
+router.get('/hashTag', Post.getPostsByHashTag);
 
-
-
-
-router.delete('/:postId', Post.deletePost);
+router.delete('/:postId', postAuth, Post.deletePost);
 
 router.post('/:postId/reports', Post.reportPost);
 

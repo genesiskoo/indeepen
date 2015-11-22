@@ -21,27 +21,46 @@ var uploadUrl = __dirname + './../upload';
 
 var Comment = require('./../models/Comments');
 var Post = require('./../models/Posts');
+var Blog = require('./../models/Blogs');
 
 //add_form
 module.exports.getShowAddForm = function (req, res, next) {
-    fs.createReadStream(__dirname + '/../views/showAddForm.html').pipe(res);
+    Blog.findAllBlogsNick(function(err,docs){
+        if(err){
+            console.error(err);
+            var err = new Error("err");
+            //error처리
+            return next(err);
+        }
+        console.log(docs);
+        res.render('showForm',{blogs : docs});
+
+    });
 };
 
 //List
 module.exports.getShowList = function (req, res, next) {
     var showPageSession = null;
     var isStart = req.query.isStart;
+    var region = req.query.region;
+    var field = req.query.field;
+    var startDate = req.query.startDate;
+    var endDate = req.query.endDate;
+    //console.log('reqgion : ',region);
+    //console.log('field : ',field);
+    //console.log('startDate : ',startDate);
+    //console.log('endDate : ',endDate);
+
     var lastSeen = null;
 
+    //isStart가 null
     if (!isStart) {
         lastSeen = req.session[showPageSession];
     }
 
     var showList = [];
-    var showModel = new Post({postType: 1});
-    //showModel.findByPostType으로 결과리스트 배열 shows를 가져온다
- 
-    showModel.findByPostType({}, lastSeen, function (err, shows) {
+
+    Post.hell(region, startDate, endDate, field, lastSeen, function (err, shows) {
         if (err) {
             console.error(err);
             var error = new Error('Show List 를 가져올 수 없다');
@@ -83,7 +102,7 @@ module.exports.getShowList = function (req, res, next) {
             });
             //마지막 게시물의 id값
             //console.log(showList.slice(-1)[0].postInfo._id);
-            console.log(showList.length);
+            //console.log(showList.length);
             if(showList.length != 0) {
                 req.session[showPageSession] = showList.slice(-1)[0].postInfo._id;
                 var msg = {
@@ -93,7 +112,7 @@ module.exports.getShowList = function (req, res, next) {
                 };
                 res.status(msg.code).json(msg);
             }else{
-                var error = new Error('댓글이 없습니다.');
+                var error = new Error('게시물이 더 이상 없어요!');
                 error.code = 404;
                 return next(error);
             }
@@ -320,44 +339,76 @@ module.exports.addShowPost = function (req, res, next) {
         });
 };
 
-//ex
-/**
- * Load
- */
 
-//exports.load = function (req, res, next, id) {
-//    var User = mongoose.model('User');
-//
-//    Article.load(id, function (err, article) {
-//        if (err) return next(err);
-//        if (!article) return next(new Error('not found'));
-//        req.article = article;
-//        next();
-//    });
-//};
-//
-///**
-// * List
-// */
-//
-//exports.index = function (req, res) {
-//    var page = (req.query.page > 0 ? req.query.page : 1) - 1;
-//    console.log(page);
-//    var perPage = 1;
-//    var options = {
-//        perPage: perPage,
-//        page: page
-//    };
-//    Post.list(options, function (err, articles) {
-//        if (err) return res.render('500');
-//        Post.count().exec(function (err, count) {
-//            res.json(articles);
-//            //res.render('articles/index', {
-//            //    title: 'Articles',
-//            //    articles: articles,
-//            //    page: page + 1,
-//            //    pages: Math.ceil(count / perPage)
-//            //});
-//        });
-//    });
-//};
+//webTest용
+module.exports.getWebShowList = function (req, res, next) {
+    var showPageSession = null;
+    var isStart = req.query.isStart;
+    var lastSeen = null;
+
+    if (!isStart) {
+        lastSeen = req.session[showPageSession];
+    }
+
+    var showList = [];
+    var showModel = new Post({postType: 1});
+    //showModel.findByPostType으로 결과리스트 배열 shows를 가져온다
+
+    showModel.findByPostType({}, lastSeen, function (err, shows) {
+        if (err) {
+            console.error(err);
+            var error = new Error('Show List 를 가져올 수 없다');
+            error.code = 400;
+            return next(error);
+        }//if-err
+        var order = 0;
+
+        async.each(shows, function (showModel, callback) {
+            var result = {
+                seq: (order++),
+                postInfo: showModel
+            };
+
+            //resource 한개만 가져오기
+            result.postInfo['resources'] = result.postInfo.resources[0];
+
+            Comment.countCommentsOfPost(showModel._id, function (err, count) {
+                if (err) {
+                    console.error('CANT COUNT DATGUL', err);
+                    var error = new Error('countComment Error');
+                    error.code = 400;
+                    return next(error);
+                }
+                result['commentCnt'] = count;
+                //console.log('result, :', result);
+                showList.push(result);
+                callback();
+            });//countCommentsOfPost
+
+        }, function (err) {
+            if (err) {
+                var error = new Error('글이 없습니다.');
+                error.code = 404;
+                return next(error);
+            }
+            showList.sort(function (a, b) {
+                return a.seq - b.seq;
+            });
+            //마지막 게시물의 id값
+            if(showList.length != 0) {
+                req.session[showPageSession] = showList.slice(-1)[0].postInfo._id;
+
+                console.log(showList);
+                res.render('shows',{shows :showList});
+
+            }else{
+                var error = new Error('댓글이 없습니다.');
+                error.code = 404;
+                return next(error);
+            }
+        });//async.each
+
+    });//findPostType
+//post결과와 comment수 결과를 담을 객체 생성
+};//getShowList
+

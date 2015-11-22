@@ -27,7 +27,7 @@ var userSchema = new mongoose.Schema({
     facebook : {},
     profilePhoto: {
         type : String,
-        default : 'https://s3-ap-northeast-1.amazonaws.com/in-deepen/images/profile/icon-person.png'
+        default : 'https://s3-ap-northeast-1.amazonaws.com/in-deepen/images/profile/icon-person.jpg'
     },
     intro: {type : String, trim : true},
     phone: {type : String, trim : true},
@@ -113,13 +113,35 @@ userSchema.statics = {
     updateProfilePhoto : function(userId, newUrl, callback){
         this.findOneAndUpdate({_id : new ObjectId(userId)}, {$set : {profilePhoto : newUrl}}, callback);
     },
-    findOneMyArtists : function(userId, callback){
+    findMyArtistIds : function(userId, callback){
         this.findOne({_id : new ObjectId(userId)}).
             select('-_id -email -password -name -nick -profilePhoto -intro -phone -createAt -updateAt -isPublic').
             exec(callback);
     },
-    pushMyArtists : function(userId, blogId, callback){
-        this.findOneAndUpdate({_id : new ObjectId(userId)}, {$push : {myArtists : new ObjectId(blogId)}}, callback);
+    findMyArtists : function(userId, page, callback){
+        this.aggregate([{
+            $match : {_id : new ObjectId(userId)}
+        },{
+            $unwind : '$myArtists'
+        },{
+            $project : {_id : '$myArtists'}
+        }]).
+            skip(page.from).
+            limit(page.to).
+            exec(function(err, docs){
+                Blog.populate(docs, {path : '_id', select : '-type -bgPhoto -intro -iMissYous -fans -location -createAt -updateAt -isActivated'}, callback);
+            });
+    },
+    pushMyArtists : function(userId, blogId, callback) {
+        //this.findOneAndUpdate({_id : new ObjectId(userId)}, {$unshift : {myArtists : new ObjectId(blogId)}}, callback);
+        this.findOne({_id: new ObjectId(userId)}, function (err, doc) {
+            if(err){
+                callback(err, null);
+            }else{
+                doc.myArtists.unshift(new ObjectId(blogId));
+                doc.save(callback);
+            }
+        });
     },
     pullMyArtists : function(userId, blogId, callback){
         this.findOneAndUpdate({_id : new ObjectId(userId)}, {$pull : {myArtists : new ObjectId(blogId)}}, callback);
@@ -138,8 +160,6 @@ userSchema.statics = {
     },
     findUser : function(options, callback){
         options.select = options.select || '_id';
-        console.log('select : ', options.select);
-        console.log('callback : ', callback);
         this.findOne(options.criteria)
             .select(options.select)
             .exec(callback);

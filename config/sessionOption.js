@@ -11,6 +11,7 @@ var sessionOptions = {
     secret : 'Secret Key',
     resave : false,
     saveUninitialized : false,
+    //cookie:{maxAge : 60000},   // expire
     store : new MongoStore(sessionStoreOptions)
 };
 

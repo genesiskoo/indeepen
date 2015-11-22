@@ -9,7 +9,36 @@ var userKey = '563ef1ca401ae00c19a15828'; // session에 있을 정보
 var blogKey = '563ef1cb401ae00c19a15838'; // session에 있을 정보
 
 module.exports.join = function(req, res, next){
-
+    var email = req.body.email;
+    var password = req.body.password;
+    var name = req.body.name;
+    var nick = req.body.nick;
+    if(!email || !password || !name || !nick){
+        console.log('body가 부족해...');
+        var error = new Error('데이터가 부족합니다.');
+        error.code = 400;
+        return next(error);
+    }
+    var userInfo = {
+        email: email,
+        password: password,
+        name: name,
+        nick: nick
+    };
+    User.saveUser(userInfo, function(err, doc){
+        if(err){
+            console.error('ERROR SAVING USER INFO ', err);
+            var error = new Error('회원 등록 실패.');
+            error.code = 400;
+            return next(error);
+        }
+        console.log('user join doc ', doc);
+        var msg = {
+            code : 200,
+            msg : 'Success'
+        };
+        res.status(msg.code).json(msg);
+    });
 };
 
 /**

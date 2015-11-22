@@ -11,25 +11,20 @@
     <ol>
         <%shows.forEach(function(show){ %>
         <div id="contents"><li>
-            <h2><a href="">제목 : <%=show.show.title%></a></h2>
-            createAt : <%=show.createAt%><br>
-            _writer : <%=show._writer%><br>
-            content : <%=show.content%><br>
-            likes : <%=show.likes%><br>
-                <% show.resources.forEach(function(resource){%>
-                    resources : <%=resource%><br>
-                    pic : <img src="<%=resource.originalPath%>" width="200" height="200"/><br>
-                <%})%><br>
-            show.type : <%=show.show.type%><br>
-            show.tags : <%=show.show.tags%><br>
-            show.startDate : <%=show.show.startDate%><br>
-            show.endDate : <%=show.show.endDate%><br>
-            show.startTime : <%=show.show.startTime%><br>
-            show.endTime : <%=show.show.endTime%><br>
-            show.fee : <%=show.show.fee%><br>
-            show.address : <%=show.show.location.address%><br>
-            show.latitude : <%=show.show.location.point.coordinates[0]%><br>
-            show.longitude : <%=show.show.location.point.coordinates[1]%><br>
+            <h2><a href="/showPosts/<%=show.postInfo._id%>">제목 : <%=show.postInfo.show.title%></a></h2>
+            createAt : <%=show.postInfo.createAt%><br>
+            _writer : <%=show.postInfo._writer%><br>
+            content : <%=show.postInfo.content%><br>
+            likes : <%=show.postInfo.likes%><br>
+            pic : <img src="<%=show.postInfo.resources[0].originalPath%>" width="200" height="200"/><br>
+            show.type : <%=show.postInfo.show.type%><br>
+            show.tags : <%=show.postInfo.show.tags%><br>
+            show.startDate : <%=show.postInfo.show.startDate%><br>
+            show.endDate : <%=show.postInfo.show.endDate%><br>
+            show.startTime : <%=show.postInfo.show.startTime%><br>
+            show.endTime : <%=show.postInfo.show.endTime%><br>
+            show.fee : <%=show.postInfo.show.fee%><br>
+            show.address : <%=show.postInfo.show.location.address%><br>
 
         </li></div>
         <% });  %>

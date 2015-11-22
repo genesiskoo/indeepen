@@ -13,11 +13,14 @@
     "aws-sdk": "^2.2.15",
     "body-parser": "^1.14.1",
     "connect-mongo": "^0.8.2",
+    "crypto": "0.0.3",
     "ejs": "^2.3.4",
     "express": "^4.13.3",
     "express-session": "^1.12.1",
     "formidable": "^1.0.17",
     "mongoose": "^4.2.3",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0",
     "path": "^0.12.7",
     "randomstring": "^1.1.3"
   }

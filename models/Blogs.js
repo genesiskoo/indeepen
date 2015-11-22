@@ -30,7 +30,7 @@ var blogSchema = new Schema({
 				type: String,
 				default: 'Point'
 			},
-			coordinates: [Number]
+			coordinates: [i]
 		},
 		address: String
 	},
@@ -55,6 +55,10 @@ blogSchema.statics = {
     },
     saveBlog: function (blogInfo, callback) {
         return this.create(blogInfo, callback);
+    },
+    saveBlog2: function (spaceInfo, callback){
+        console.log(spaceInfo);
+        return this.create(spaceInfo, callback);
     },
     findBlogsOfUser : function(userId, callback){
         this.find({ _user : new ObjectId(userId) }).

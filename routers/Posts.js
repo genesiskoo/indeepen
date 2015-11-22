@@ -12,7 +12,6 @@ var postAuth = [auth.requiresLogin, auth.post.hasAuthorization];
 
 router.get('/', Post.getPosts);
 
-router.get('/hashTag', Post.getPostsByHashTag);
 
 router.delete('/:postId', postAuth, Post.deletePost);
 

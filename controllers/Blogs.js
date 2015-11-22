@@ -530,6 +530,7 @@ module.exports.getMyShows = function (req, res, next) {
     if (!isStart) {
         lastSeen = req.session[tmpKey];
     }
+    console.log('type : ' ,type);
     switch (type) {
         case '0':
             Post.myShow(blogId, lastSeen, function (err, docs) {
@@ -553,6 +554,7 @@ module.exports.getMyShows = function (req, res, next) {
                             result: docs
                         };
                         console.log('게시물 수 : ', docs.length);
+                        console.log(msg);
                         res.status(msg.code).json(msg);
                     });
                 } else {

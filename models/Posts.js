@@ -331,9 +331,11 @@ postSchema.statics = {
                     {
                         "show.startDate": {
                             "$gte": startDate,
+                            "$lte": endDate
                         }
                     }, {
                         "show.endDate": {
+                            "$gte": startDate,
                             "$lte": endDate
                         }
                     }, {

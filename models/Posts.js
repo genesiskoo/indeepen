@@ -337,7 +337,7 @@ postSchema.statics = {
                 console.log('doc ',doc);
                 doc.remove(callback);
             }
-        })
+        });
     },
     /**
      * 해당 blogger 가 등록한 workPost 가져오기

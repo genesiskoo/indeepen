@@ -49,7 +49,7 @@ var blogSchema = new Schema({
 }, { versionKey: false });
 
 blogSchema.statics = {
-    // 댓글 달때 사용자 id 편하게 하기 위해 한 것. 나중에 지워....
+    // 댓글 달때 사용자 id 편하게 하기 위해 한 것. 나중에 지워....// 네....
     findBlogs: function (callback) {
         return this.find().exec(callback);
     },

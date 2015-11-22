@@ -227,7 +227,7 @@ postSchema.statics = {
                 perPage = null;
             else
                 perPage = 2;
-            select = '-updateAt -hashTags -show.location.point';
+            select = '-updateAt -hashTags -show';
         }
         if(lastSeen){
             if(type == 1)
@@ -239,8 +239,7 @@ postSchema.statics = {
             sort({createAt : -1}).
             select(select).
             limit(perPage).
-            populate('_writer', '-type -bgPhoto -intro -iMissYous -fans -location -createAt -updateAt -isActivated').
-            populate('show.tags._user', '-_user -type -bgPhoto -intro -iMissYous -fans -location -createAt -updateAt -isActivated').
+            populate('_writer', '-bgPhoto -intro -iMissYous -fans -location -createAt -updateAt -isActivated').
             exec(callback);
     },
     /**
@@ -334,8 +333,30 @@ postSchema.statics = {
         })
     },
 
-    findWorkPostsAtBlog : function(writer, lastSeen, callback){
-        if(lastSeen == null){
+    findWorkPostsAtBlog : function(writer, type,lastSeen, callback){
+        var options = {_writer : new ObjectId(writer), postType : 0};
+        var select = '-postType -_writer -createAt -updateAt -content -hashTags -likes -work.emotion -show';
+        var perPage = 3;
+        if(type != 0){
+            if(type ==1)
+                perPage = null;
+            else
+                perPage = 2;
+            select = '-updateAt -hashTags -show';
+        }
+        if(lastSeen){
+            if(type == 1)
+                options['_id'] = {$gte : lastSeen};
+            else
+                options['_id'] = {$lt : lastSeen};
+        }
+        this.find(options).
+            sort({createAt : -1}).
+            select(select).
+            limit(perPage).
+            populate('_writer', '-type -bgPhoto -intro -iMissYous -fans -location -createAt -updateAt -isActivated').
+            exec(callback);
+        /*if(lastSeen == null){
             this.find({_writer : new ObjectId(writer), postType : 0}).
                 select('-postType -_writer -createAt -updateAt -content -hashTags -likes -work.emotion -show').
                 sort({createAt : -1}).
@@ -347,7 +368,7 @@ postSchema.statics = {
                 sort({createAt : -1}).
                 limit(15).
                 exec(callback);
-        }
+        }*/
     },
     findLikePostsAtBlog : function(artistBlogId, lastSeen, callback){
         if(lastSeen == null){

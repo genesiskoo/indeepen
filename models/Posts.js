@@ -445,7 +445,49 @@ postSchema.statics = {
             //populate({path : 'likes', select : '_id _user nick profilePhoto'}).
             populate('show.tags._user', '_id _user nick profilePhoto').
             exec(callback);
+        },
+    myShow : function (blogId, lastSeen, callback){
+        var options = {$or : [{$and : [{'postType':1},{'show.tags._user' : blogId}]},{$and : [{'postType' : 1}, {'_writer' : blogId}]
+        }]};
+        var select = '-content -hashTags -work -show.location.point';
+        if (lastSeen != null){
+            options = {$or : [{$and : [{_id: {$lt: lastSeen}},{'postType':1},{'show.tags._user' : blogId}]},{$and : [{_id: {$lt: lastSeen}},{'postType' : 1}, {'_writer' : blogId}]
+            }]};
         }
+        console.log('lastSeen : ',lastSeen);
+        console.log('option : ', options);
+        this.find(options).
+        select(select).
+        sort({createAt: -1}).
+        limit(10).
+        populate({
+            path: '_writer',
+            select: '-type -bgPhoto -intro -iMissYous -fans -location -createAt -updateAt -isActivated'
+        }).
+        //populate({path : 'likes', select : '_id _user nick profilePhoto'}).
+        populate('show.tags._user', '_id _user nick profilePhoto').
+        exec(callback);
+    },
+    likedShow : function (blogId, lastSeen,callback){
+        var options = {$and : [{'likes' : blogId},{'postType':1}]};
+        var select = '-content -hashTags -work -show.location.point';
+        if (lastSeen != null){
+            options = {$and : [{_id: {$lt: lastSeen}},{'likes' : blogId},{'postType':1}]};
+        }
+        console.log('lastSeen : ',lastSeen);
+        console.log('option : ', options);
+        this.find(options).
+        select(select).
+        sort({createAt: -1}).
+        limit(10).
+        populate({
+            path: '_writer',
+            select: '-type -bgPhoto -intro -iMissYous -fans -location -createAt -updateAt -isActivated'
+        }).
+        //populate({path : 'likes', select : '_id _user nick profilePhoto'}).
+        populate('show.tags._user', '_id _user nick profilePhoto').
+        exec(callback);
+    }
 };
 
 module.exports = mongoose.model('Post', postSchema);

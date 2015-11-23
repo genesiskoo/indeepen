@@ -175,6 +175,7 @@ module.exports.changeActivityMode = function(req, res, next){
             return next(error);
         }
         console.log('doc ', doc);
+        // req.user.activityBlogKey = blogId;
         var msg = {
             code : 200,
             msg : 'Success'

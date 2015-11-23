@@ -366,7 +366,8 @@ module.exports.getRecommendWorkPosts = function(req, res, next){
             return next(error);
         }
         console.log('doc ', doc);
-        Post.findRecommendWorkPosts(doc.myArtists, type, lastSeen, function(err, docs){
+
+        Post.findRecommendWorkPosts(['564a926b29c7cf6416be1118'],doc.myArtists, type, lastSeen, function(err, docs){
             if(docs.length != 0){
                 if(type == 0)
                     Helper.findWorkPostsVerOnePictureList(req, res, sessionId, docs);

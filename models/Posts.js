@@ -399,10 +399,10 @@ postSchema.statics = {
             populate('_writer', '-bgPhoto -intro -iMissYous -fans -location -createAt -updateAt -isActivated').
             exec(callback);
     },
-    findRecommendWorkPosts : function(myArtists, type, lastSeen, callback){
-        var options = {likes : {$in : myArtists}, postType : 0};
+    findRecommendWorkPosts : function(blogId, myArtists, type, lastSeen, callback){
+        var options = {likes : {$in : myArtists}, postType : 0, _writer : {$nin : blogId}};
         if(myArtists.length == 0)
-            options = {postType : 0};
+            options = {postType : 0, _writer : {$nin : blogId}};
         var perPage = 3;
         var select = '-postType -createAt -updateAt -hashTags -likes -work.emotion -show';
         if(type != 0){

@@ -172,6 +172,7 @@ module.exports.changeLike = function (req, res, next) {
     var status = req.params.likeStatus;
     console.log('postId', id);
     console.log('likeStatus', status);
+    var blogKey = req.body.blogKey;
     if (status == 'like') { // 좋아요
         Post.pushLike(id, blogKey, function (err, doc) {
             if (err) {

@@ -11,7 +11,7 @@ var notiSchema = new mongoose.Schema({
 		type : Date,
 		default : Date.now
 	},
-	type : Number,
+	type : Number, //좋아요, 댓글, 내팬, imissyous, tag, 협력제안
 	receiver : {
 		user_id : Number,
 		post_id : Number,

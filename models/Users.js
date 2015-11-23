@@ -40,6 +40,7 @@ var userSchema = new mongoose.Schema({
         type : Date,
         default : Date.now
     },
+
     isPublic: {
         type: Boolean,
         default: true

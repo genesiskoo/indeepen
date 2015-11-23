@@ -415,19 +415,15 @@ postSchema.statics = {
         }
         if (startDate != null && endDate != null) {
             options.$and.push({
-                $or: [
+                $and: [
                     {
                         "show.startDate": {
-                            "$gte": startDate,
                             "$lte": endDate
                         }
                     }, {
                         "show.endDate": {
-                            "$gte": startDate,
-                            "$lte": endDate
+                            "$gte": startDate
                         }
-                    }, {
-                        //검색범위가 공연시간에 완전히 포함될 경우
                     }]
             });
         }//if

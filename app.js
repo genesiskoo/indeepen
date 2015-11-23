@@ -58,6 +58,24 @@ app.use(function (err, req, res, next) {
     res.status(err.code).json(msg);
 });
 
-app.listen(80, function () {
-    console.log('Server @ 80');
+var port1 = 80;
+var port2 = 443;
+
+// For HTTP
+app.listen(port1, function () {
+    console.log('Http Server @ '+port1);
+});
+
+// For HTTPS
+var https = require('https');
+var fs = require('fs');
+
+var options = {
+    key: fs.readFileSync('./config/encryption/key.pem'),
+    cert: fs.readFileSync('./config/encryption/cert.pem')
+};
+
+var secureServer = https.createServer(options, app);
+secureServer.listen(port2,function(){
+    console.log('Https Server @ '+port2);
 });

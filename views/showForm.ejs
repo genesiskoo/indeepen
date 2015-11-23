@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Add Show Form</title>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" type="text/javascript" language="javascript"></script>
+    <script src="./js/jQuery.MultiFile.min.js" type="text/javascript" language="javascript"></script>
 </head>
 <body>
 <h3>Add Show Form</h3>
@@ -12,9 +14,11 @@
             <option value ='<%=blog._id%>'> <%=blog.nick%></option>
         <% } ); %>
     </select><br><br>
-    파일1<input type='file' name="file" multiple="multiple"><br>
-    파일2<input type='file' name="file"><br>
-    파일3<input type='file' name="file"><br>
+    <input
+            class="multi"
+            maxlength="2"
+            name = "file"
+    />
     <p>게시 블로그
         <select name='blogType'>
             <option value="0">개인</option>

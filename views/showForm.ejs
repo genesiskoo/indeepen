@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Add Show Form</title>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" type="text/javascript" language="javascript"></script>
-    <script src="./js/jQuery.MultiFile.min.js" type="text/javascript" language="javascript"></script>
+    <script src="../js/jQuery.MultiFile.min.js" type="text/javascript" language="javascript"></script>
 </head>
 <body>
 <h3>Add Show Form</h3>
@@ -14,11 +14,7 @@
             <option value ='<%=blog._id%>'> <%=blog.nick%></option>
         <% } ); %>
     </select><br><br>
-    <input
-            class="multi"
-            maxlength="2"
-            name = "file"
-    />
+    <input type="file" name="file" class="multi"/>
     <p>게시 블로그
         <select name='blogType'>
             <option value="0">개인</option>
@@ -32,20 +28,24 @@
         <option value="3">예술 마켓</option>
         <option value="4">페스티발</option>
     </select></p>
-    </p> 시작일 <input type="date" name = 'startDate' min="2010-12-31" max="2020-12-31" value ='2015-11-6'/>
-    종료일<input type="date" name = 'endDate' min="2010-12-31" max="2020-12-31" value ='2015-11-6'/>
+    </p> 시작일 <input type="date" name = 'startDate' min="2010-12-31" max="2020-12-31" value ='2015.11.06'/>
+    종료일<input type="date" name = 'endDate' min="2010-12-31" max="2020-12-31" value ='2015.11.06'/>
     </p>
 
-    <p>시작 시간 :<input type ="text" name='startTime' placeholder="시작">
-        종료 시간 :<input type ="text" name='endTime' placeholder="끝"></p>
-    <p>입장료 :<input type ="text" name='fee' placeholder="입장료"></p>
+    <p>시작 시간 :<input type ="text" name='startTime' placeholder="시작" value="1800">
+        종료 시간 :<input type ="text" name='endTime' placeholder="끝" value="2030"></p>
+    <p>입장료 :<input type ="text" name='fee' placeholder="입장료" value="0"></p>
 
     <p>제목 :<input type ="text" name='title' placeholder="제목"></p>
     소개 :<textarea row ='4' cols ='30' name='content'></textarea><br><br>
     위치 : <br>
     latitude :<input type='text' name ='latitude'> longitude : <input type="text" name ='longitude'><br>
     address : <input type='text' name="address" size="140" placeholder="주소입력"><br>
-    참여아티스트 <br>
+    참여아티스트 : <select name ='tag'>
+        <%blogs.forEach(function(blog){%>
+        <option value ='<%=blog._id%>'> <%=blog.nick%></option>
+        <% } ); %>
+    </select><br><br>
 
     <p><button>입력</button></p>
 </form>

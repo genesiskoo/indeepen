@@ -2,6 +2,9 @@
  * Created by Moon Jung Hyun on 2015-11-07.
  */
 
+var userKey = '564a926a29c7cf6416be1117'; // session에 있을 정보
+//var blogKey = '564a926b29c7cf6416be1118'; // session에 있을 정보
+
 var formidable = require('formidable'),
     pathUtil = require('path');
 var fs = require('fs');
@@ -346,8 +349,8 @@ module.exports.getPostsByHashTag = function(req, res, next){
  */
 module.exports.getRecommendWorkPosts = function(req, res, next){
     // 1. myArtists 를 가져온다.
-    var key = req.user.userKey;
-    console.log('userKey ', key);
+    //var key = req.user.userKey;
+    //console.log('userKey ', key);
     var isStart = req.query.isStart;
     var type = req.query.type;
     var lastSeen = null;
@@ -355,7 +358,7 @@ module.exports.getRecommendWorkPosts = function(req, res, next){
     if(!isStart){
         lastSeen = req.session[sessionId];
     }
-    User.findMyArtistIds(key, function(err, doc){
+    User.findMyArtistIds(userKey, function(err, doc){
         if(err){
             console.error('ERROR GETTING MY ARTISTS ', err);
             var error = new Error('myArtists 를 가져올 수 없음');

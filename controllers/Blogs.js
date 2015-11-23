@@ -24,8 +24,8 @@ var User = require('./../models/Users');
 var Helper = require('./Helper');
 
 var defaultBgPhotoUrl = 'http://s3-ap-northeast-1.amazonaws.com/in-deepen/images/bg/default_bg.png';
-/*var userKey = '563ef1ca401ae00c19a15828'; // session에 있을 정보
-var blogKey = '563ef1cb401ae00c19a15838'; // session에 있을 정보*/
+var userKey = '564a926a29c7cf6416be1117'; // session에 있을 정보
+var blogKey = '564a926b29c7cf6416be1118'; // session에 있을 정보
 
 var perPage = 30;
 
@@ -275,8 +275,8 @@ module.exports.getArtistsOfBlog = function (req, res, next) {
 module.exports.changeFanOfBlog = function (req, res, next) {
     var blogId = req.params.blogId;
     var fanStatus = req.params.fanStatus;
-    var blogKey = req.user.activityBlogKey;
-    var userKey = req.user.userKey;
+    //var blogKey = req.user.activityBlogKey;
+    //var userKey = req.user.userKey;
     if (!blogId || !fanStatus) {
         var error = new Error('URL 확인 부탁해요.');
         error.code = 400;
@@ -400,7 +400,7 @@ module.exports.addiMissYou = function (req, res, next) {
         error.code = 400;
         return next(error);
     }
-    Blog.pushIMissYouToBlog(blogId, req.user.activityBlogKey, function (err, doc) {
+    Blog.pushIMissYouToBlog(blogId, blogKey, function (err, doc) {
         if (err) {
             console.error('ERROR PUSHING IMISSYOUS ', err);
             var error = new Error('iMissYou를 할 수 없습니다.');

@@ -1,8 +1,8 @@
 /**
  * Created by Moon Jung Hyun on 2015-11-06.
  */
-var userKey = '563ef1ca401ae00c19a15828'; // session에 있을 정보
-var blogKey = '563ef1cb401ae00c19a15838'; // session에 있을 정보
+var userKey = '564a926a29c7cf6416be1117'; // session에 있을 정보
+var blogKey = '564a926b29c7cf6416be1118'; // session에 있을 정보
 
 var async = require('async');
 

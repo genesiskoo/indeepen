@@ -152,44 +152,6 @@ postSchema.methods = {
             exec(callback);
         }
     }
-    /*findShowPostWithFilter: function (options, region, startDate, endDate, field, lastSeen, callback) {
-        if (!options) options = {};
-        var select = '';
-        if (lastSeen == null) {
-            if (this.postType == 0)
-            //select = '_id createAt _writer content likes work resources';
-                select = '-updateAt -hashTags -show';
-            else
-                select = '-content -hashTags -work -show.location.point'; //-수정
-            this.model('Post').find(options).
-            where('postType').
-            equals(this.postType).
-            select(select).
-            sort({createAt: -1}).
-            limit(10).
-            populate({
-                path: '_writer',
-                select: '-type -bgPhoto -intro -iMissYous -fans -location -createAt -updateAt -isActivated'
-            }).
-            //populate({path : 'likes', select : '_id _user nick profilePhoto'}).
-            populate('show.tags._user', '_id _user nick profilePhoto').
-            exec(callback);
-        } else {
-            this.model('Post').find({_id: {$lt: lastSeen}}).
-            where('postType').
-            equals(this.postType).
-            select(select).
-            sort({createAt: -1}).
-            limit(10).
-            populate({
-                path: '_writer',
-                select: '-type -bgPhoto -intro -iMissYous -fans -location -createAt -updateAt -isActivated'
-            }).
-            //populate({path : 'likes', select : '_id _user nick profilePhoto'}).
-            populate('show.tags._user', '_id _user nick profilePhoto').
-            exec(callback);
-        }
-    }*/
 };
 
 /*
@@ -226,7 +188,7 @@ postSchema.statics = {
      */
     findPostsByHashTag : function(hashTag, type, lastSeen, callback){
         var options={hashTags : hashTag, postType : 0};
-        var select='-postType -_writer -createAt -updateAt -hashTags -likes -work.emotion -show';
+        var select='-postType -content -_writer -createAt -updateAt -hashTags -likes -work.emotion -show';
         var perPage = 15;
 
         if(type != 0){
@@ -404,7 +366,7 @@ postSchema.statics = {
         if(myArtists.length == 0)
             options = {postType : 0, _writer : {$nin : blogId}};
         var perPage = 3;
-        var select = '-postType -createAt -updateAt -hashTags -likes -work.emotion -show';
+        var select = '-postType -content -_writer -createAt -updateAt -hashTags -likes -work.emotion -show';
         if(type != 0){
             if(type ==1)
                 perPage = null;

@@ -10,10 +10,14 @@ var session = require('express-session');
 var sessionOption = require('./config/sessionOption');
 //var path = __dirname + '/views';
 
+
 // passport serialize / deserialize 설정..
 require('./config/passport')(passport);
 
 var app = express();
+
+//statics
+app.use(express.static(__dirname + '/public'));
 
 // session
 app.use(session(sessionOption));

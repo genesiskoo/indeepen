@@ -39,8 +39,8 @@ var postSchema = new Schema({
                 ref : 'Blog'
             },
             point : {
-                x : Number,
-                y : Number
+                x : {type: Number ,default : '0'},
+                y : {type: Number ,default : '0'}
             }
         }],
         startDate : String,

@@ -13,5 +13,8 @@ router.get('/', WorkPost.getWorkPosts);
 
 router.get('/hashTag', WorkPost.getPostsByHashTag);
 
+router.get('/recommend', WorkPost.getRecommendWorkPosts);
+
 router.get('/:postId', WorkPost.getWorkPost);
+
 module.exports = router;

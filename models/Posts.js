@@ -151,8 +151,8 @@ postSchema.methods = {
             populate('show.tags._user', '_id _user nick profilePhoto type').
             exec(callback);
         }
-    },
-    findShowPostWithFilter: function (options, region, startDate, endDate, field, lastSeen, callback) {
+    }
+    /*findShowPostWithFilter: function (options, region, startDate, endDate, field, lastSeen, callback) {
         if (!options) options = {};
         var select = '';
         if (lastSeen == null) {
@@ -189,7 +189,7 @@ postSchema.methods = {
             populate('show.tags._user', '_id _user nick profilePhoto').
             exec(callback);
         }
-    }
+    }*/
 };
 
 /*
@@ -297,8 +297,6 @@ postSchema.statics = {
             populate('show.tags._user', '-_user -bgPhoto -intro -iMissYous -fans -location -createAt -updateAt -isActivated').
             exec(callback);
     },
-
-
     /**
      * Post정보 저장하기
      * @param postInfo
@@ -401,7 +399,32 @@ postSchema.statics = {
             populate('_writer', '-bgPhoto -intro -iMissYous -fans -location -createAt -updateAt -isActivated').
             exec(callback);
     },
-
+    findRecommendWorkPosts : function(myArtists, type, lastSeen, callback){
+        var options = {likes : {$in : myArtists}, postType : 0};
+        if(myArtists.length == 0)
+            options = {postType : 0};
+        var perPage = 3;
+        var select = '-postType -createAt -updateAt -hashTags -likes -work.emotion -show';
+        if(type != 0){
+            if(type ==1)
+                perPage = null;
+            else
+                perPage = 2;
+            select = '-updateAt -hashTags -show';
+        }
+        if(lastSeen){
+            if(type == 1)
+                options['_id'] = {$gte : lastSeen};
+            else
+                options['_id'] = {$lt : lastSeen};
+        }
+        this.find(options).
+            sort({createAt : -1}).
+            select(select).
+            limit(perPage).
+            populate('_writer', '-bgPhoto -intro -iMissYous -fans -location -createAt -updateAt -isActivated').
+            exec(callback);
+    },
     hell: function (region, startDate, endDate, field, lastSeen, callback) {
         // 조건이 없을 때 처리
         // like 검색

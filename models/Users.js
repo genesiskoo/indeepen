@@ -59,21 +59,6 @@ userSchema
     })
     .get(function(){return this._password});
 
-userSchema.post('save', function(doc){
-    console.log('Save User _id', doc._id);
-    var blogInfo = {
-        _user : doc._id,
-        nick : doc.nick,
-        profilePhoto : doc.profilePhoto
-    };
-    Blog.saveBlog(blogInfo, function(err, doc){
-        if(err){
-            console.error('Save Blog Error in User post event ', err);
-            return;
-        }
-        console.log(doc);
-    });
-});
 
 userSchema.methods = {
     /**
@@ -116,7 +101,7 @@ userSchema.statics = {
     },
     findMyArtistIds : function(userId, callback){
         this.findOne({_id : new ObjectId(userId)}).
-            select('-_id -email -password -name -nick -profilePhoto -intro -phone -createAt -updateAt -isPublic').
+            select('-_id -email -hashed_password -salt -name -nick -profilePhoto -intro -phone -createAt -updateAt -isPublic').
             exec(callback);
     },
     findMyArtists : function(userId, page, callback){
@@ -134,7 +119,6 @@ userSchema.statics = {
             });
     },
     pushMyArtists : function(userId, blogId, callback) {
-        //this.findOneAndUpdate({_id : new ObjectId(userId)}, {$unshift : {myArtists : new ObjectId(blogId)}}, callback);
         this.findOne({_id: new ObjectId(userId)}, function (err, doc) {
             if(err){
                 callback(err, null);

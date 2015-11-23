@@ -24,6 +24,7 @@ module.exports.showAddWorkPostPage = function(req, res){
     fs.createReadStream(__dirname + '/../views/workPost.html').pipe(res);
 };
 
+var User = require('./../models/Users');
 var Comment = require('./../models/Comments');
 var Post = require('./../models/Posts');
 var Helper = require('./Helper');
@@ -325,10 +326,8 @@ module.exports.getPostsByHashTag = function(req, res, next){
         if(docs.length != 0){
             if(type == 0){
                 Helper.findWorkPostsVerOnePictureList(req, res, 'hashTag', docs);
-                //findPostsByHashTagVerOnePictureList(req, res, docs);
             }else{
                 Helper.findPostsVerPostList(req, res, type, 'hashTag', docs);
-                //findPostsByHashTagVerPostList(req, res, type,docs);
             }
         }else{
             var error =new Error('더 이상 없음');
@@ -339,3 +338,42 @@ module.exports.getPostsByHashTag = function(req, res, next){
     });
 };
 
+/**
+ * 추천 work posts 가져오기
+ * @param req
+ * @param res
+ * @param next
+ */
+module.exports.getRecommendWorkPosts = function(req, res, next){
+    // 1. myArtists 를 가져온다.
+    var key = req.user.userKey;
+    console.log('userKey ', key);
+    var isStart = req.query.isStart;
+    var type = req.query.type;
+    var lastSeen = null;
+    var sessionId = 'recommend';
+    if(!isStart){
+        lastSeen = req.session[sessionId];
+    }
+    User.findMyArtistIds(key, function(err, doc){
+        if(err){
+            console.error('ERROR GETTING MY ARTISTS ', err);
+            var error = new Error('myArtists 를 가져올 수 없음');
+            error.code = 400;
+            return next(error);
+        }
+        console.log('doc ', doc);
+        Post.findRecommendWorkPosts(doc.myArtists, type, lastSeen, function(err, docs){
+            if(docs.length != 0){
+                if(type == 0)
+                    Helper.findWorkPostsVerOnePictureList(req, res, sessionId, docs);
+                else
+                    Helper.findPostsVerPostList(req, res, type, sessionId, docs);
+            }else{
+                var error = new Error('더 이상 없음');
+                error.code = 404;
+                return next(error);
+            }
+        });
+    });
+};

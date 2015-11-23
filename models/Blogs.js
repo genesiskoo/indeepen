@@ -134,6 +134,7 @@ blogSchema.statics = {
                 callback(err, null);
             }else{
                 doc.fans.unshift(new ObjectId(userBlogId));
+                console.log('pushFanToBlog ', doc);
                 doc.save(callback);
             }
         });
@@ -183,7 +184,7 @@ blogSchema.statics = {
     // search
     findBlogIds : function(key, type, callback){
         this.find({nick : {$regex : key}, type : type})
-            .select('-_user -type -bgPhoto -intro -iMissYous -fans -location -createAt -updateAt -isActivated -phone -email')
+            .select('-_user -bgPhoto -intro -iMissYous -fans -location -createAt -updateAt -isActivated -phone -email')
             .exec(callback);
     }
 };

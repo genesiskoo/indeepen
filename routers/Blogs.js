@@ -18,6 +18,7 @@ router.post('/:blogId/iMissYous', Blog.addiMissYou);
 
 router.get('/:blogId/myWorks', Blog.getWorkPostsOfBlogger);
 router.get('/:blogId/myLikes', Blog.getLikePostsOfBlogger);
+router.get('/:blogId/myShows', Blog.getMyShows);
 
 // 이 router 는 무조건 마지막에 있어야 함....
 router.put('/:blogId/:fanStatus', Blog.changeFanOfBlog);

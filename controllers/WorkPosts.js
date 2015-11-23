@@ -2,6 +2,9 @@
  * Created by Moon Jung Hyun on 2015-11-07.
  */
 
+var userKey = '564a926a29c7cf6416be1117'; // session에 있을 정보
+//var blogKey = '564a926b29c7cf6416be1118'; // session에 있을 정보
+
 var formidable = require('formidable'),
     pathUtil = require('path');
 var fs = require('fs');
@@ -24,8 +27,10 @@ module.exports.showAddWorkPostPage = function(req, res){
     fs.createReadStream(__dirname + '/../views/workPost.html').pipe(res);
 };
 
+var User = require('./../models/Users');
 var Comment = require('./../models/Comments');
 var Post = require('./../models/Posts');
+var Helper = require('./Helper');
 
 /**
  * 예술 Post 저장하기
@@ -291,3 +296,88 @@ module.exports.getWorkPost = function(req, res, next){
     });
 };
 
+/**
+ * hash tag로 검색해서 post 목록 가져오기
+ * type : 0 (그림 하나 리스트), 1(그림 하나 -> post 리스트로), 2( post 리스트 더 불러오기)
+ * @param req
+ * @param res
+ * @param next
+ * @returns {*}
+ */
+module.exports.getPostsByHashTag = function(req, res, next){
+    var key = req.query.key;
+    var type = req.query.type;
+    var isStart = req.query.isStart;
+    if(!key || !type){
+        var error = new Error('key 와 type 을 주세요.');
+        error.code = 400;
+        return next(error);
+    }
+    var lastSeen;
+    if(isStart)
+        lastSeen = null;
+    else
+        lastSeen = req.session['hashTag'];
+    Post.findPostsByHashTag(key, type, lastSeen, function(err, docs){
+        if(err){
+            console.error('ERROR GETTING POSTS BY HASH TAG ', err);
+            var error = new Error('Hash Tag 로 가져오기 실패');
+            error.code = 400;
+            return next(error);
+        }
+        console.log('docs ', docs);
+        if(docs.length != 0){
+            if(type == 0){
+                Helper.findWorkPostsVerOnePictureList(req, res, 'hashTag', docs);
+            }else{
+                Helper.findPostsVerPostList(req, res, type, 'hashTag', docs);
+            }
+        }else{
+            var error =new Error('더 이상 없음');
+            error.code = 404;
+            return next(error);
+        }
+
+    });
+};
+
+/**
+ * 추천 work posts 가져오기
+ * @param req
+ * @param res
+ * @param next
+ */
+module.exports.getRecommendWorkPosts = function(req, res, next){
+    // 1. myArtists 를 가져온다.
+    //var key = req.user.userKey;
+    //console.log('userKey ', key);
+    var isStart = req.query.isStart;
+    var type = req.query.type;
+    var lastSeen = null;
+    var sessionId = 'recommend';
+    if(!isStart){
+        lastSeen = req.session[sessionId];
+    }
+    User.findMyArtistIds(userKey, function(err, doc){
+        if(err){
+            console.error('ERROR GETTING MY ARTISTS ', err);
+            var error = new Error('myArtists 를 가져올 수 없음');
+            error.code = 400;
+            return next(error);
+        }
+        console.log('doc ', doc);
+
+        Post.findRecommendWorkPosts(['564a926b29c7cf6416be1118'],doc.myArtists, type, lastSeen, function(err, docs){
+            if(docs.length != 0){
+                if(type == 0)
+                    Helper.findWorkPostsVerOnePictureList(req, res, sessionId, docs);
+                else
+                    Helper.findPostsVerPostList(req, res, type, sessionId, docs);
+            }else{
+                var error = new Error('더 이상 없음');
+                error.code = 404;
+                return next(error);
+            }
+        });
+    });
+};

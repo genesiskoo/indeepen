@@ -11,5 +11,10 @@ router.get('/page', WorkPost.showAddWorkPostPage);
 router.post('/', WorkPost.addWorkPost);
 router.get('/', WorkPost.getWorkPosts);
 
+router.get('/hashTag', WorkPost.getPostsByHashTag);
+
+router.get('/recommend', WorkPost.getRecommendWorkPosts);
+
 router.get('/:postId', WorkPost.getWorkPost);
+
 module.exports = router;

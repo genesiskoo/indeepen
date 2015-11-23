@@ -23,6 +23,9 @@ var defaultArtistProfileUrl = 'https://s3-ap-northeast-1.amazonaws.com/in-deepen
 var Blog = require('./../models/Blogs');
 var User = require('./../models/Users');
 
+var userKey = '563ef1ca401ae00c19a15828'; // session에 있을 정보
+var blogKey = '563ef1cb401ae00c19a15838'; // session에 있을 정보
+
 /**
  * 공간 Blog 등록
  * @param req
@@ -31,8 +34,11 @@ var User = require('./../models/Users');
  * @returns {*}
  */
 exports.addSpaceBlog = function (req, res, next) {
+    //임시 로그인
 
+    //var userKey = req.session['userKey']
     var spaceInfo = {
+        _user : userKey,
         type: 1,
         nick: req.body.nick,
         location: {
@@ -45,10 +51,10 @@ exports.addSpaceBlog = function (req, res, next) {
         email: req.body.email,
         intro: req.body.intro
     };
-
     //res.json(spaceInfo);
-    Blog.saveBlog(spaceInfo, function (err, docs) {
+    Blog.saveBlog2(spaceInfo, function (err, docs) {
         if (err) {
+            console.error('err ', err);
             var err = new Error('공간 블로그 등록실패');
             err.code = 400;
             return next(err);
@@ -125,15 +131,6 @@ exports.modifyProfilePhoto = function (req, res, next) {
                 if (file == null) {
                     console.log('not file');
                     callback(null, defaultArtistProfileUrl);
-                    //fs.unlink(file.path, function(err){
-                    //    if(err){
-                    //        var error = new Error('파일 삭제를 실패했습니다.');
-                    //        error.code = 400;
-                    //        return next(error);
-                    //    }else{
-                    //        callback(null, defaultArtistProfileUrl);
-                    //    }
-                    //});
                 } else {
                     var randomStr = randomstring.generate(10);
                     var newFileName = 'profile_' + randomStr;

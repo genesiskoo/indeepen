@@ -1,8 +1,8 @@
 /**
  * Created by Moon Jung Hyun on 2015-11-06.
  */
-var userKey = '563ef1ca401ae00c19a15828'; // session에 있을 정보
-var blogKey = '563ef1cb401ae00c19a15838'; // session에 있을 정보
+var userKey = '564a926a29c7cf6416be1117'; // session에 있을 정보
+var blogKey = '564a926b29c7cf6416be1118'; // session에 있을 정보
 
 var async = require('async');
 
@@ -172,6 +172,7 @@ module.exports.changeLike = function (req, res, next) {
     var status = req.params.likeStatus;
     console.log('postId', id);
     console.log('likeStatus', status);
+    var blogKey = req.body.blogKey;
     if (status == 'like') { // 좋아요
         Post.pushLike(id, blogKey, function (err, doc) {
             if (err) {
@@ -255,150 +256,6 @@ module.exports.reportPost = function (req, res, next) {
     });
 };
 
-/**
- * hash tag로 검색해서 post 목록 가져오기
- * type : 0 (그림 하나 리스트), 1(그림 하나 -> post 리스트로), 2( post 리스트 더 불러오기)
- * @param req
- * @param res
- * @param next
- * @returns {*}
- */
-module.exports.getPostsByHashTag = function(req, res, next){
-    var key = req.query.key;
-    var type = req.query.type;
-    var isStart = req.query.isStart;
-    if(!key || !type){
-        var error = new Error('key 와 type 을 주세요.');
-        error.code = 400;
-        return next(error);
-    }
-    var lastSeen;
-    if(isStart)
-        lastSeen = null;
-    else
-        lastSeen = req.session['hashTag'];
-    Post.findPostsByHashTag(key, type, lastSeen, function(err, docs){
-        if(err){
-            console.error('ERROR GETTING POSTS BY HASH TAG ', err);
-            var error = new Error('Hash Tag 로 가져오기 실패');
-            error.code = 400;
-            return next(error);
-        }
-        console.log('docs ', docs);
-        if(docs.length != 0){
-            if(type == 0){
-                findPostsByHashTagVerOnePictureList(req, res, docs);
-            }else{
-                findPostsByHashTagVerPostList(req, res, type,docs);
-            }
-        }else{
-            var error =new Error('더 이상 없음');
-            error.code = 404;
-            return next(error);
-        }
-
-    });
-};
-
-/**
- * 태그 검색시 사직 한개 리스트로 응답하기
- * @param req
- * @param res
- * @param docs
- * @returns {*}
- */
-function findPostsByHashTagVerOnePictureList(req, res, docs){
-    async.each(docs, function(doc, callback){
-        doc.resources = doc.resources[0];
-        callback();
-    }, function(err){
-        if(err){
-            console.error('ERROR AFTER GETTING POSTS BY HASH TAG', err);
-            var error = new Error('post by hash tag each 하는데 실패...');
-            error.code = 400;
-            return next(error);
-        }
-        req.session['hashTag'] = docs.slice(-1)[0]._id;
-        var msg = {
-            code : 200,
-            msg : 'Success',
-            result : docs
-        };
-        res.status(msg.code).json(msg);
-    });
-}
-
-/**
- * post 리스트로 응답하기
- * @param req
- * @param res
- * @param docs
- */
-function findPostsByHashTagVerPostList(req, res, type,docs){
-    var order = 0;
-    var posts = [];
-    async.each(docs, function(doc, callback){
-        var tmp ={
-            seq : (order++),
-            postInfo : doc
-        };
-        if(doc.postType == 0){
-            // workPost
-            Comment.countCommentsOfPost(doc._id, function(err, count){
-                if(err){
-                    console.error('ERROR COUNT COMMENTS ', err);
-                    var error = new Error('댓글 개수를 셀 수 없습니다.');
-                    error.code = 400;
-                    return next(error);
-                }
-                tmp['commentCnt'] = count;
-                Comment.findLast2Comments(doc._id, function(err, docs){
-                    if(err){
-                        console.error('ERROR FIND LAST 2 COMMENTS ', err);
-                        var error = new Error('최신 댓글 2개를 가져오는데 실패했습니다.');
-                        error.code = 400;
-                        return next(error);
-                    }
-                    tmp['comments'] = docs.reverse();
-                    //console.log('final workPost ', tmp);
-                    posts.push(tmp);
-                    callback();
-                });
-            });
-        }else{
-            // showPost
-            Comment.countCommentsOfPost(doc._id, function (err, count) {
-                if (err) {
-                    console.error('CANT COUNT DATGUL', err);
-                    var error = new Error('countComment Error');
-                    error.code = 400;
-                    return next(error);
-                }
-                tmp['commentCnt'] = count;
-                //console.log('result, :', result);
-                posts.push(tmp);
-                callback();
-            })
-        }
-    }, function(err){
-        if(err){
-            var error = new Error('error at async each');
-            error.code = 400;
-            return next(error);
-        }
-        if(type == 2)
-            req.session['hashTag'] = docs.splice(-1)[0]._id;
-        posts.sort(function(a, b){
-            return a.seq - b.seq;
-        });
-        var msg = {
-            code : 200,
-            msg : 'Success',
-            result : posts
-        };
-        res.status(msg.code).json(msg);
-    });
-}
 
 ////////////////////////////////////////////////////////////////////////////////
 /**
@@ -418,16 +275,14 @@ module.exports.addComment = function (req, res, next) {
             return next(error);
         }
         // web....
-        res.redirect('/posts/' + postId + '/comments');
+        //res.redirect('/posts/' + postId + '/comments');
 
         // app ...
-        /*
          var msg = {
          code : 200,
          msg : 'Success'
          };
          res.status(msg.code).json(msg);
-         */
     });
 };
 /**

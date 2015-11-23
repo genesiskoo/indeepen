@@ -39,8 +39,8 @@ var postSchema = new Schema({
                 ref : 'Blog'
             },
             point : {
-                x : Number,
-                y : Number
+                x : {type: Number ,default : '0'},
+                y : {type: Number ,default : '0'}
             }
         }],
         startDate : String,
@@ -136,9 +136,9 @@ postSchema.methods = {
             select(select).
             sort({createAt : -1}).
             limit(10).
-            populate({path : '_writer', select : '-type -bgPhoto -intro -iMissYous -fans -location -createAt -updateAt -isActivated'}).
+            populate({path : '_writer', select : '-bgPhoto -intro -iMissYous -fans -location -createAt -updateAt -isActivated'}).
             //populate({path : 'likes', select : '_id _user nick profilePhoto'}).
-            populate('show.tags._user', '_id _user nick profilePhoto').
+            populate('show.tags._user', '_id _user nick profilePhoto type').
             exec(callback);
         }else{
             this.model('Post').find({_id : {$lt : lastSeen}}).
@@ -147,47 +147,9 @@ postSchema.methods = {
             select(select).
             sort({createAt : -1}).
             limit(10).
-            populate({path : '_writer', select : '-type -bgPhoto -intro -iMissYous -fans -location -createAt -updateAt -isActivated'}).
+            populate({path : '_writer', select : '-bgPhoto -intro -iMissYous -fans -location -createAt -updateAt -isActivated'}).
             //populate({path : 'likes', select : '_id _user nick profilePhoto'}).
-            populate('show.tags._user', '_id _user nick profilePhoto').
-            exec(callback);
-        }
-    },
-    findShowPostWithFilter: function (options, region, startDate, endDate, field, lastSeen, callback) {
-        if (!options) options = {};
-        var select = '';
-        if (lastSeen == null) {
-            if (this.postType == 0)
-            //select = '_id createAt _writer content likes work resources';
-                select = '-updateAt -hashTags -show';
-            else
-                select = '-content -hashTags -work -show.location.point'; //-수정
-            this.model('Post').find(options).
-            where('postType').
-            equals(this.postType).
-            select(select).
-            sort({createAt: -1}).
-            limit(10).
-            populate({
-                path: '_writer',
-                select: '-type -bgPhoto -intro -iMissYous -fans -location -createAt -updateAt -isActivated'
-            }).
-            //populate({path : 'likes', select : '_id _user nick profilePhoto'}).
-            populate('show.tags._user', '_id _user nick profilePhoto').
-            exec(callback);
-        } else {
-            this.model('Post').find({_id: {$lt: lastSeen}}).
-            where('postType').
-            equals(this.postType).
-            select(select).
-            sort({createAt: -1}).
-            limit(10).
-            populate({
-                path: '_writer',
-                select: '-type -bgPhoto -intro -iMissYous -fans -location -createAt -updateAt -isActivated'
-            }).
-            //populate({path : 'likes', select : '_id _user nick profilePhoto'}).
-            populate('show.tags._user', '_id _user nick profilePhoto').
+            populate('show.tags._user', '_id _user nick profilePhoto type').
             exec(callback);
         }
     }
@@ -212,23 +174,30 @@ postSchema.statics = {
         }
         return this.findOne({_id : new ObjectId(postId)}).
             select(select).
-            populate('_writer', '_id _user nick profilePhoto').
-            populate('show.tags._user', '_id _user nick profilePhoto').
+            populate('_writer', '_id _user nick profilePhoto type').
+            populate('show.tags._user', '_id _user nick profilePhoto type').
             sort({createAt : -1}).
             exec(callback);
 
     },
+    /**
+     * hashTag 가 일치하는 post 들 가져오기
+     * @param hashTag
+     * @param type
+     * @param lastSeen
+     * @param callback
+     */
     findPostsByHashTag : function(hashTag, type, lastSeen, callback){
         var options={hashTags : hashTag, postType : 0};
-        var select='-postType -_writer -createAt -updateAt -hashTags -likes -work.emotion -show';
-        var perPage = 3;
+        var select='-postType -content -_writer -createAt -updateAt -hashTags -likes -work.emotion -show';
+        var perPage = 15;
 
         if(type != 0){
             if(type == 1)
                 perPage = null;
             else
-                perPage = 2;
-            select = '-updateAt -hashTags -show.location.point';
+                perPage = 10;
+            select = '-updateAt -hashTags -show';
         }
         if(lastSeen){
             if(type == 1)
@@ -240,8 +209,7 @@ postSchema.statics = {
             sort({createAt : -1}).
             select(select).
             limit(perPage).
-            populate('_writer', '-type -bgPhoto -intro -iMissYous -fans -location -createAt -updateAt -isActivated').
-            populate('show.tags._user', '-_user -type -bgPhoto -intro -iMissYous -fans -location -createAt -updateAt -isActivated').
+            populate('_writer', '-bgPhoto -intro -iMissYous -fans -location -createAt -updateAt -isActivated').
             exec(callback);
     },
     /**
@@ -288,12 +256,10 @@ postSchema.statics = {
             sort({createAt : -1}).
             select('-updateAt -hashTags -show.location.point').
             limit(10).
-            populate('_writer', '-type -bgPhoto -intro -iMissYous -fans -location -createAt -updateAt -isActivated').
-            populate('show.tags._user', '-_user -type -bgPhoto -intro -iMissYous -fans -location -createAt -updateAt -isActivated').
+            populate('_writer', '-bgPhoto -intro -iMissYous -fans -location -createAt -updateAt -isActivated').
+            populate('show.tags._user', '-_user -bgPhoto -intro -iMissYous -fans -location -createAt -updateAt -isActivated').
             exec(callback);
     },
-
-
     /**
      * Post정보 저장하기
      * @param postInfo
@@ -332,38 +298,95 @@ postSchema.statics = {
                 console.log('doc ',doc);
                 doc.remove(callback);
             }
-        })
+        });
     },
-
-    findWorkPostsAtBlog : function(writer, lastSeen, callback){
-        if(lastSeen == null){
-            this.find({_writer : new ObjectId(writer), postType : 0}).
-                select('-postType -_writer -createAt -updateAt -content -hashTags -likes -work.emotion -show').
-                sort({createAt : -1}).
-                limit(15).
-                exec(callback);
-        }else{
-            this.find({_writer : new ObjectId(writer), postType : 0, _id : {$lt : lastSeen}}).
-                select('-postType -_writer -createAt -updateAt -content -hashTags -likes -work.emotion -show').
-                sort({createAt : -1}).
-                limit(15).
-                exec(callback);
+    /**
+     * 해당 blogger 가 등록한 workPost 가져오기
+     * @param writer
+     * @param type
+     * @param lastSeen
+     * @param callback
+     */
+    findWorkPostsAtBlog : function(writer, type,lastSeen, callback){
+        var options = {_writer : new ObjectId(writer), postType : 0};
+        var select = '-postType -content -_writer -createAt -updateAt -hashTags -likes -work.emotion -show';
+        var perPage = 15;
+        if(type != 0){
+            if(type ==1)
+                perPage = null;
+            else
+                perPage = 10;
+            select = '-updateAt -hashTags -show';
         }
+        if(lastSeen){
+            if(type == 1)
+                options['_id'] = {$gte : lastSeen};
+            else
+                options['_id'] = {$lt : lastSeen};
+        }
+        this.find(options).
+            sort({createAt : -1}).
+            select(select).
+            limit(perPage).
+            populate('_writer', '-bgPhoto -intro -iMissYous -fans -location -createAt -updateAt -isActivated').
+            exec(callback);
     },
-    findLikePostsAtBlog : function(artistBlogId, lastSeen, callback){
-        if(lastSeen == null){
-            this.find({likes : new ObjectId(artistBlogId), postType : 0}).
-                select('-postType -_writer -likes -createAt -updateAt -content -hashTags -work.emotion -show').
-                sort({createAt : -1}).
-                limit(15).
-                exec(callback);
-        }else{
-            this.find({likes : new ObjectId(artistBlogId), postType : 0, _id : {$lt : lastSeen}}).
-                select('-postType -_writer -likes -createAt -updateAt -content -hashTags -work.emotion -show').
-                sort({createAt : -1}).
-                limit(15).
-                exec(callback);
+    /**
+     * 해당 blogger 가 좋아요 한 workPosts 가져오기
+     * @param artistBlogId
+     * @param type
+     * @param lastSeen
+     * @param callback
+     */
+    findLikePostsAtBlog : function(artistBlogId, type, lastSeen, callback){
+        var options = {likes : new ObjectId(artistBlogId), postType : 0};
+        var select = '-postType -content -_writer -createAt -updateAt -hashTags -likes -work.emotion -show';
+        var perPage = 15;
+        if(type != 0){
+            if(type ==1)
+                perPage = null;
+            else
+                perPage = 10;
+            select = '-updateAt -hashTags -show';
         }
+        if(lastSeen){
+            if(type == 1)
+                options['_id'] = {$gte : lastSeen};
+            else
+                options['_id'] = {$lt : lastSeen};
+        }
+        this.find(options).
+            sort({createAt : -1}).
+            select(select).
+            limit(perPage).
+            populate('_writer', '-bgPhoto -intro -iMissYous -fans -location -createAt -updateAt -isActivated').
+            exec(callback);
+    },
+    findRecommendWorkPosts : function(blogId, myArtists, type, lastSeen, callback){
+        var options = {likes : {$in : myArtists}, postType : 0, _writer : {$nin : blogId}};
+        if(myArtists.length == 0)
+            options = {postType : 0, _writer : {$nin : blogId}};
+        var perPage = 3;
+        var select = '-postType -content -_writer -createAt -updateAt -hashTags -likes -work.emotion -show';
+        if(type != 0){
+            if(type ==1)
+                perPage = null;
+            else
+                perPage = 2;
+            select = '-updateAt -hashTags -show';
+        }
+        if(lastSeen){
+            if(type == 1)
+                options['_id'] = {$gte : lastSeen};
+            else
+                options['_id'] = {$lt : lastSeen};
+        }
+        this.find(options).
+            sort({createAt : -1}).
+            select(select).
+            limit(perPage).
+            populate('_writer', '-bgPhoto -intro -iMissYous -fans -location -createAt -updateAt -isActivated').
+            exec(callback);
     },
     hell: function (region, startDate, endDate, field, lastSeen, callback) {
         // 조건이 없을 때 처리
@@ -378,17 +401,15 @@ postSchema.statics = {
         }
         if (startDate != null && endDate != null) {
             options.$and.push({
-                $or: [
+                $and: [
                     {
                         "show.startDate": {
-                            "$gte": startDate,
-                        }
-                    }, {
-                        "show.endDate": {
                             "$lte": endDate
                         }
                     }, {
-                        //검색범위가 공연시간에 완전히 포함될 경우
+                        "show.endDate": {
+                            "$gte": startDate
+                        }
                     }]
             });
         }//if
@@ -408,7 +429,49 @@ postSchema.statics = {
             //populate({path : 'likes', select : '_id _user nick profilePhoto'}).
             populate('show.tags._user', '_id _user nick profilePhoto').
             exec(callback);
+        },
+    myShow : function (blogId, lastSeen, callback){
+        var options = {$or : [{$and : [{'postType':1},{'show.tags._user' : blogId}]},{$and : [{'postType' : 1}, {'_writer' : blogId}]
+        }]};
+        var select = '-content -hashTags -work -show.location.point';
+        if (lastSeen != null){
+            options = {$or : [{$and : [{_id: {$lt: lastSeen}},{'postType':1},{'show.tags._user' : blogId}]},{$and : [{_id: {$lt: lastSeen}},{'postType' : 1}, {'_writer' : blogId}]
+            }]};
         }
+        console.log('lastSeen : ',lastSeen);
+        console.log('option : ', options);
+        this.find(options).
+        select(select).
+        sort({createAt: -1}).
+        limit(10).
+        populate({
+            path: '_writer',
+            select: '-type -bgPhoto -intro -iMissYous -fans -location -createAt -updateAt -isActivated'
+        }).
+        //populate({path : 'likes', select : '_id _user nick profilePhoto'}).
+        populate('show.tags._user', '_id _user nick profilePhoto').
+        exec(callback);
+    },
+    likedShow : function (blogId, lastSeen,callback){
+        var options = {$and : [{'likes' : blogId},{'postType':1}]};
+        var select = '-content -hashTags -work -show.location.point';
+        if (lastSeen != null){
+            options = {$and : [{_id: {$lt: lastSeen}},{'likes' : blogId},{'postType':1}]};
+        }
+        console.log('lastSeen : ',lastSeen);
+        console.log('option : ', options);
+        this.find(options).
+        select(select).
+        sort({createAt: -1}).
+        limit(10).
+        populate({
+            path: '_writer',
+            select: '-type -bgPhoto -intro -iMissYous -fans -location -createAt -updateAt -isActivated'
+        }).
+        //populate({path : 'likes', select : '_id _user nick profilePhoto'}).
+        populate('show.tags._user', '_id _user nick profilePhoto').
+        exec(callback);
+    }
 };
 
 module.exports = mongoose.model('Post', postSchema);

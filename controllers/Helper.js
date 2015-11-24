@@ -91,30 +91,43 @@ module.exports.findWorkPostsVerOnePictureList = function(req, res, sessionId, do
     });
 };
 
-/*
 
+var async = require('async');
+var AWS = require('aws-sdk');
 
-function uploadImageAndThumbnail(file, uploadInfo, callback) {
+var awsS3 = require('./../config/s3');
+AWS.config.region = awsS3.region;
+AWS.config.accessKeyId = awsS3.accessKeyId;
+AWS.config.secretAccessKey = awsS3.secretAccessKey;
+
+var fs = require('fs');
+var S3 = new AWS.S3();
+var bucketName = awsS3.bucketName;
+var uploadUrl = __dirname + '/../upload';
+var easyimage = require('easyimage');
+//console.log('s3...', S3.endpoint);
+
+module.exports.uploadImageAndThumbnail = function(file, newFileName, ext, dir, callback) {
 
     var fileUrl = {};
 
-    var order = 0;
+   /* var order = 0;
     var timestamp = new Date().getTime();
     var extname = pathUtil.extname(file.name); //확장자
 
-    var fileName = uploadInfo.qemail + '_' + timestamp + '_' + (order++) + extname; //파일명
+    var fileName = uploadInfo.qemail + '_' + timestamp + '_' + (order++) + extname; *///파일명
     var contentType = file.type;
     var filePath = file.path;
     console.log('filePath',filePath);
     console.log('contentType',contentType);
     var readStream = fs.createReadStream(file.path);
-
+    var itemKey = dir +'/'+ newFileName+ext;
     async.waterfall([
         // step1. 원본이미지 올리기, 이미지 경로 call보내기
-        function(waterfall_callback){
+        function(callback){
             console.log('뭐지');
             //contentType -image, audio 여부 확인 후 s3경로 설정
-            var  itemKey = 'Data/' + 'image/' + fileName;
+           // var  itemKey = 'Data/' + 'image/' + fileName;
 
             var params = {
                 Bucket: bucketName,
@@ -122,39 +135,57 @@ function uploadImageAndThumbnail(file, uploadInfo, callback) {
                 ACL: 'public-read',
                 Body: readStream,
                 ContentType: contentType
-            }
+            };
 
             S3.putObject(params, function (err, data) {
                 if (err) {
                     console.error('S3 Putobject Error', err);
-                    waterfall_callback(err);
+                    callback(err);
                 } else {
-                    var Q_fileUrl = S3.endpoint.href + bucketName + '/' + itemKey;
+                    /*var Q_fileUrl = S3.endpoint.href + bucketName + '/' + itemKey;
                     console.log('Q_fileUrl ', Q_fileUrl);
                     fileUrl.url = Q_fileUrl;
                     console.log('fileUrl',fileUrl);
-                    waterfall_callback(null, fileUrl);
+                    callback(null, fileUrl);*/
+                    //var imageUrl = S3.endpoint.href + bucketName + '/' + itemKey;
+                    var imageUrl = 'http://'+S3.endpoint.hostname+ '/'+ bucketName + '/' + itemKey;
+                    console.log('imageUrl ', imageUrl);
+                    // aws의 upload에 생긴 파일 명시적으로 지워줘야 함
+                    console.log('filePath',file.path);
+                    fileUrl['type'] = contentType;
+                    fileUrl['originalPath'] = imageUrl;
+                    callback(null, fileUrl);
+                   /* fs.unlink(file.path, function(err){
+                        if(err){
+                            callback(err);
+                        }else{
+                            //imageUrls.push({contentType : contentType, url :imageUrl});
+                            /!*fileUrl['type'] = contentType;
+                            fileUrl['originalPath'] = imageUrl;
+                            callback(null, fileUrl);*!/
+                        }
+                    });*/
                 }
-            })
+            });
 
         },
         // step2. 썸네일 만들기, 올리기/ 경로
         function(fileUrl, callback){
 
             console.log('썸네일로 넘어오시나요 ?');
-            var th_fileName = 'th_' + fileName; // 썸네일 파일명
-            var th_filePath = uploadDir + '/' + th_fileName;
+            var th_fileName = 'th_' + newFileName+ext; // 썸네일 파일명
+            var th_filePath = uploadUrl + '/' + th_fileName;
             console.log('filePaht',filePath);
             console.log('th_filePath',th_filePath);
 
-            easyimage.thumbnail({
+            easyimage.resize({
                 src: filePath,
                 dst: th_filePath,
-                width : 215.5,
-                height : 304
+                width : 300,
+                height : 300
             }).then(function(image){
                 console.log('요기오세요?');
-                var th_itemKey = 'Data/' + 'image/' + 'thumbnail/' + th_fileName;
+                var th_itemKey = dir+'Thumbnail/'+ th_fileName;
                 var th_readStream = fs.createReadStream(th_filePath);
 
                 var params = {
@@ -163,49 +194,83 @@ function uploadImageAndThumbnail(file, uploadInfo, callback) {
                     ACL: 'public-read',
                     Body: th_readStream,
                     ContentType: contentType
-                }
+                };
 
                 S3.putObject(params, function (err, data) {
                     if (err) {
                         console.error('S3 Putobject Error', err);
                         callback(err);
                     } else {
-                        var Q_th_fileUrl = S3.endpoint.href + bucketName + '/' + th_itemKey;
-                        console.log('th_fileUrl ', Q_th_fileUrl);
-                        fileUrl.thurl = Q_th_fileUrl;
-                        console.log('fileUrl?', fileUrl);
-                        callback();
+                        //var Q_th_fileUrl = S3.endpoint.href + bucketName + '/' + th_itemKey;
+                        var thImageUrl = 'http://'+S3.endpoint.hostname+ '/'+ bucketName + '/' + th_itemKey;
+                        console.log('thImageUrl ', thImageUrl);
+                        fs.unlink(filePath, function(err){
+                            if(err){
+                                var error = new Error('파일 삭제 실패');
+                                error.code = 400;
+                                return next(error);
+                            } else{
+                                fs.unlink(th_filePath, function(err){
+                                    if(err){
+                                        var error = new Error('썸네일 파일 삭제 실패');
+                                        error.code = 400;
+                                        return next(error);
+                                    } else{
+                                        fileUrl['thumbnailPath'] = thImageUrl;
+                                        console.log('fileUrl? ', fileUrl);
+                                        callback(null);
+                                    }
+                                });
+                            }
+                        });
                     }
                 });
-            },function(err){
-                console.log('err',err);
+            },function(err){   // 썸네일 쪽 에러인듯???
+               if(err){
+                   console.log('err',err);
+                   callback(err);
+               }else{
+                   callback(null);
+               }
             });
-        }, function(err){
-            console.log('err',err);
+        }/*, function(err){
             if(err){
                 console.error('uploadImageAndThumbnail err',err);
+                callback(err, null);
+            }else{
+                console.log('uploadImageAndThumbnail success?');
+                callback(null, fileUrl);
             }
+
+        }*/
+    ], function(err){
+        if(err){
+            console.error('uploadImageAndThumbnail err',err);
+            callback(err, null);
+        }else{
             console.log('uploadImageAndThumbnail success?');
             callback(null, fileUrl);
         }
-    ]);
-}
+
+    });
+};
 
 //Audio
-function uploadAudio(file, uploadInfo, callback) {
+module.exports.uploadFile = function(file, newFileName, ext, dir, callback) {
 
     var fileUrl = {};
 
-    var order = 0;
+   /* var order = 0;
     var timestamp = new Date().getTime();
     var extname = pathUtil.extname(file.name); //확장자
 
-    var fileName = uploadInfo.qemail + '_' + timestamp + '_' + (order++) + extname; //파일명
+    var fileName = uploadInfo.qemail + '_' + timestamp + '_' + (order++) + extname; //파일명*/
+
     var contentType = file.type;
     var readStream = fs.createReadStream(file.path);
 
-    console.log('뭐지');
-    var itemKey = 'Data/' + 'audio/' + fileName;
+    var itemKey = dir+'/' + newFileName+ext;
+    console.log('audio item Key ', itemKey);
 
     var params = {
         Bucket: bucketName,
@@ -213,19 +278,26 @@ function uploadAudio(file, uploadInfo, callback) {
         ACL: 'public-read',
         Body: readStream,
         ContentType: contentType
-    }
+    };
 
     S3.putObject(params, function (err, data) {
         if (err) {
             console.error('S3 Putobject Error', err);
-            waterfall_callback(err);
+            callback(err, null);
         } else {
-            var Q_fileUrl = S3.endpoint.href + bucketName + '/' + itemKey;
-            console.log('Q_fileUrl ', Q_fileUrl);
-            fileUrl.url = Q_fileUrl;
-            console.log('fileUrl',fileUrl);
-            callback(null, fileUrl);
+            //var audioUrl = S3.endpoint.href + bucketName + '/' + itemKey;
+            var audioUrl = 'http://'+S3.endpoint.hostname+ '/'+ bucketName + '/' + itemKey;
+            console.log('audioUrl ', audioUrl);
+            fs.unlink(file.path, function(err){
+                if(err)
+                    callback(err, null);
+                else{
+                    fileUrl['type'] = contentType;
+                    fileUrl['originalPath'] = audioUrl;
+                    console.log('fileUrl @ audio upload',fileUrl);
+                    callback(null, fileUrl);
+                }
+            });
         }
     });
-}
-*/
+};

@@ -108,8 +108,8 @@ blogSchema.statics = {
     },
     findProfileOfArtistBlog : function(blogId, callback){
         this.findOne({_id : new ObjectId(blogId)}).
-            select('-type -bgPhoto -nick -profilePhoto -iMissYous -fans -location -createAt -updateAt -isActivated').
-            populate('_user', '-password -profilePhoto -intro -createAt -updateAt').
+            select('-bgPhoto -nick -profilePhoto -iMissYous -fans -location -createAt -updateAt -isActivated').
+            populate('_user', '-hashed_password -salt -phone -myArtists -profilePhoto -intro -createAt -updateAt').
             exec(callback);
     },
 

@@ -1,5 +1,5 @@
 /**
- * Created by heuneul on 2015-11-12.
+ * Created by Moon Jung Hyun on 2015-11-12.
  */
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);

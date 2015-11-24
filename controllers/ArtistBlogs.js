@@ -86,10 +86,21 @@ module.exports.getArtistBlogProfile = function(req, res, next){
            return next(error);
         }
         console.log('profile ', doc);
+        var info = {
+            _id : doc._id,
+            _user : doc._user._id,
+            email : doc._user.email,
+            name : doc._user.name,
+            nick : doc._user.nick,
+            phone : doc.phone,
+            intro : doc.intro,
+            type : doc.type,
+            isPublic : doc._user.isPublic
+        };
         var msg = {
             code : 200,
             msg : 'Success',
-            result : doc
+            result : info
         };
         res.status(msg.code).json(msg);
     });

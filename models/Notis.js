@@ -32,12 +32,10 @@ notiSchema.statics = {
 			 .sort({createAt : -1})
 			 .exec(callback);
 	},
-	makeNoti : function (sender,receiver,callback){
+	saveNoti : function (sender,receiver,callback){
 		notiInfo = {
 			_sender : new ObjectId(sender),
 			_receiver : new ObjectId(receiver),
-			where : where,
-
 		};
 		this.create(notiInfo,callback);
 	}

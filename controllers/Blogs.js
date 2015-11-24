@@ -507,14 +507,15 @@ module.exports.getMyShows = function (req, res, next) {
         error.code = 400;
         return next(error);
     }
-    var tmpKey = 'ms' + blogId;
-    var lastSeen = null;
-    if (!isStart) {
-        lastSeen = req.session[tmpKey];
-    }
     var showList = [];
+    // type Switch
     switch (type) {
         case '0':
+            var tmpKey = 'ms' + blogId;
+            var lastSeen = null;
+            if (!isStart) {
+                lastSeen = req.session[tmpKey];
+            }
             Post.myShow(blogId, lastSeen, function (err, docs) {
                 if (err) {
                     console.error('ERROR GETTING MY SHOWS ', err);
@@ -539,13 +540,22 @@ module.exports.getMyShows = function (req, res, next) {
                             return next(error);
                         }
                         result['commentCnt'] = count;
-                        console.log('result : ', result);
+                        //console.log('result : ', result);
                         showList.push(result);
                         callback();
                     });//CommentCnt
                 }, function (err) {
+                    if (err) {
+                        var error = new Error('error 발생!');
+                        error.code = 400;
+                        return next(error);
+                    }
+                    showList.sort(function (a, b) {
+                        return a.seq > b.seq;
+                    });
                     if (showList.length != 0) {
-                        req.session[tmpKey] = showList.slice(-1)[0]._id;
+                        req.session[tmpKey] = showList.slice(-1)[0].postInfo._id;
+                        //console.log('sliced : ',showList.slice(-1)[0].postInfo._id);
                         var msg = {
                             code: 200,
                             msg: 'Success',
@@ -562,51 +572,65 @@ module.exports.getMyShows = function (req, res, next) {
             });//myShow
             break;
         case '1':
+            var tmpKey = 'ls' + blogId;
+            var lastSeen = null;
+            if (!isStart) {
+                lastSeen = req.session[tmpKey];
+            }
             Post.likedShow(blogId, lastSeen, function (err, docs) {
-                if (err) {
-                    console.error('ERROR GETTING MY LIKED ', err);
-                    var error = new Error('나의 좋아요 문화를 가져올 수 없어요!');
-                    error.code = 400;
-                    return next();
-                }
-                ;
-                //seq 및 CommentCnt
-                var order = 0;
-                async.each(docs, function (doc, callback) {
-                    doc.resources = doc.resources[0];
-                    var result = {
-                        seq: (order++),
-                        postInfo: doc
-                    };
-                    Comment.countCommentsOfPost(doc._id, function (err, count) {
+                    if (err) {
+                        console.error('ERROR GETTING MY LIKED ', err);
+                        var error = new Error('나의 좋아요 문화를 가져올 수 없어요!');
+                        error.code = 400;
+                        return next();
+                    }
+                    ;
+                    //seq 및 CommentCnt
+                    var order = 0;
+                    async.each(docs, function (doc, callback) {
+                        doc.resources = doc.resources[0];
+                        var result = {
+                            seq: (order++),
+                            postInfo: doc
+                        };
+                        Comment.countCommentsOfPost(doc._id, function (err, count) {
+                            if (err) {
+                                console.error('CANT COUNT COMMENTS', err);
+                                var error = new Error('countComments Error');
+                                error.code = 400;
+                                return next(error);
+                            }
+                            result['commentCnt'] = count;
+                            console.log('result : ', result);
+                            showList.push(result);
+                            callback();
+                        });//CommentCnt
+                    }, function (err) {
                         if (err) {
-                            console.error('CANT COUNT COMMENTS', err);
-                            var error = new Error('countComments Error');
+                            var error = new Error('error 발생!');
                             error.code = 400;
                             return next(error);
                         }
-                        result['commentCnt'] = count;
-                        console.log('result : ', result);
-                        showList.push(result);
-                        callback();
-                    });//CommentCnt
-                }, function (err) {
-                    if (showList.length != 0) {
-                        req.session[tmpKey] = showList.slice(-1)[0]._id;
-                        var msg = {
-                            code: 200,
-                            msg: 'Success',
-                            result: showList
-                        };
-                        console.log('게시물 수 : ', docs.length);
-                        res.status(msg.code).json(msg);
-                    } else {
-                        var error = new Error('더 이상 없음');
-                        error.code = 404;
-                        return next(error);
-                    }
-                });//async
-            });//myLiked
+                        showList.sort(function (a, b) {
+                            return a.seq > b.seq;
+                        });
+                        if (showList.length != 0) {
+                            req.session[tmpKey] = showList.slice(-1)[0].postInfo._id;
+                            var msg = {
+                                code: 200,
+                                msg: 'Success',
+                                result: showList
+                            };
+                            console.log('게시물 수 : ', docs.length);
+                            res.status(msg.code).json(msg);
+                        } else {
+                            var error = new Error('더 이상 없음');
+                            error.code = 404;
+                            return next(error);
+                        }
+                    });//async
+                }
+            );//myLiked
             break;
         default:
             var error = new Error('type 확인 부탁해요.');
@@ -614,4 +638,5 @@ module.exports.getMyShows = function (req, res, next) {
             return next(error);
     }
 
-};
+}
+;

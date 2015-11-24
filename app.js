@@ -45,6 +45,7 @@ app.use('/spaceBlogs', require('./routers/SpaceBlogs'));
 app.use('/blogs', require('./routers/Blogs'));
 app.use('/users', require('./routers/Users'));
 app.use('/search', require('./routers/Search'));
+app.use('/notis', require('./routers/Notis'));
 
 
 /**

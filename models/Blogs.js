@@ -123,7 +123,7 @@ blogSchema.statics = {
             exec(callback);
     },
     updateProfilePhotoOfBlog : function(blogId, newUrl, callback){
-        cosnole.log('blogId ', blogId);
+        console.log('blogId ', blogId);
         this.findOneAndUpdate({_id : new ObjectId(blogId)}, {$set : {profilePhoto : newUrl}}, callback);
     },
     updateBgPhotoOfBlog : function(blogId, newUrl, callback){

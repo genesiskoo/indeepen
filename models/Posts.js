@@ -68,7 +68,6 @@ var postSchema = new Schema({
     }]
 }, {versionKey : false});
 
-
 /**
  * Post 를 저장 한 후 hashTag 가 있으면
  * hashTags Collection 에도 저장한다.

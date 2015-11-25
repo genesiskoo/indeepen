@@ -16,4 +16,24 @@ module.exports = function(app, passport){
     app.get('/loginFail', TheRest.logFail);
 
     app.get('/logout', TheRest.logout);
+
+    app.post('/auth/facebook/token', function(req, res, next){
+        passport.authenticate('facebook-token', function(err, user, msg, status){
+            console.log('user : ', user, ' msg : ', msg, ' status : ', status );
+            req.logIn(user, function(err){
+                if(err){
+                    console.error('ERROR @ req.logIn ', err);
+                    var error = new Error('로스인 실패');
+                    error.code = 401;
+                    return next(error);
+                }
+                var msg = {
+                    code : 200,
+                    msg : '로그인 성공',
+                    result : user
+                };
+                res.status(msg.code).json(msg);
+            });
+        });
+    });
 };

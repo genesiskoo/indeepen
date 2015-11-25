@@ -42,3 +42,7 @@ module.exports.logout = function(req, res){
     };
     res.status(msg.code).json(msg);
 };
+
+module.exports.loginByFB = function(req, res, next){
+
+};

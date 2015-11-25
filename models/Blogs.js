@@ -199,7 +199,8 @@ blogSchema.statics = {
     //temperory
     findAllBlogs: function (callback) {
         this.find()
-            .select(' -bgPhoto -intro -iMissYous -fans -location -createAt -updateAt -isActivated')
+            .select(' -bgPhoto -intro -iMissYous -fans -location -createAt -updateAt -isActivated -profilePhoto')
+            .populate('_user', 'email')
             .exec(callback);
     }
 };

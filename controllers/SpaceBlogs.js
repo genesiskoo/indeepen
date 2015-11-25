@@ -311,7 +311,7 @@ exports.deleteSpaceBlog = function (req, res, next) {
         var error = new Error('URL 확인 부탁합니다.');
         error.code = 400;
         return next(error);
-    };
+    }
     Blog.removeBlog(blogId, function(err,doc){
         if (err) {
             console.error('ERROR DELETING THE BLOG', err);

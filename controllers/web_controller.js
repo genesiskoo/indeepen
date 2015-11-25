@@ -168,6 +168,7 @@ module.exports.showAllUsers = function (req,res,next){
             error.code = 404;
             return next(error);
         }
+        console.log('users ', docs);
         res.render('allUsers', {users : docs});
     });
 };

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Add Show Form</title>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" type="text/javascript" language="javascript"></script>
+    <script src="../../js/jQuery.MultiFile.min.js" type="text/javascript" language="javascript"></script>
+</head>
+<body>
+    <h2>Add Work Form</h2>
+    <h3><a href="/">Go To Menu......</a></h3>
+    <br><br>
+    <form method="post" action="/web/workPost" enctype="multipart/form-data">
+        작성자 : <select name ='blogId'>
+            <%blogs.forEach(function(blog){%>
+            <option value ='<%=blog._id%>'> <%=blog.nick%></option>
+            <% } ); %>
+        </select><br><br>
+        <input type="file" name="file" class="multi"/><br>
+        분야 선택
+        <select name="workType">
+            <option selected value="10">그림</option>
+            <option value="11">사진</option>
+            <option value="12">음악-사진</option>
+            <option value="13">음악-영상</option>
+            <option value="14">음악</option>
+            <option value="15">유튜브</option>
+        </select><br>
+        감정 선택
+        <select name="emotion">
+            <option selected value="0">감정없음</option>
+            <option value="1">기쁨</option>
+            <option value="2">사랑</option>
+            <option value="3">슬픔</option>
+            <option value="4">화남</option>
+        </select><br>
+        내용
+        <textarea name="content">
+
+        </textarea><br>
+        <button type="submit">등록</button>
+    </form>
+</body>
+</html>

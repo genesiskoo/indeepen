@@ -7,25 +7,9 @@ var userKey = '564a926a29c7cf6416be1117'; // session에 있을 정보
 
 var formidable = require('formidable'),
     pathUtil = require('path');
-var fs = require('fs');
 var async = require('async');
 var randomstring = require('randomstring');
-var AWS = require('aws-sdk');
-
-var awsS3 = require('./../config/s3');
-AWS.config.region = awsS3.region;
-AWS.config.accessKeyId = awsS3.accessKeyId;
-AWS.config.secretAccessKey = awsS3.secretAccessKey;
-
-// Listup All Files
-var s3 = new AWS.S3();
-var bucketName = awsS3.bucketName;
 var uploadUrl = __dirname + '/../upload';
-
-//////////////////////// web 용
-module.exports.showAddWorkPostPage = function(req, res){
-    fs.createReadStream(__dirname + '/../views/workPost.html').pipe(res);
-};
 
 var User = require('./../models/Users');
 var Comment = require('./../models/Comments');

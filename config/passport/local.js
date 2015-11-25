@@ -14,7 +14,7 @@ module.exports = new LocalStrategy({
     passwordField : 'password'
 },
 function(email, password, done){
-    var email = 'koosha@naver.com';
+    var email = 'moonJ@naver.com';
     var password = '1234';
     var options = {
         criteria : {email : email},

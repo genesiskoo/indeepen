@@ -7,7 +7,7 @@ var mongoose = require('mongoose');
 var User = require('./../models/Users');
 
 var local = require('./passport/local');
-//var facebook = require('./passport/facebook');
+var facebook = require('./passport/facebook');
 
 module.exports = function(passport){
     // session 저장
@@ -25,4 +25,5 @@ module.exports = function(passport){
 
     // 사용하는 strategy...
     passport.use(local);
+    passport.use('facebook-token', facebook);
 };

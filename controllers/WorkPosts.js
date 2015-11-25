@@ -91,7 +91,7 @@ module.exports.addWorkPost = function(req, res, next){
                             }
                         });
                     }else{
-                        Helper.uploadFile(file, newFileName, extName, 'contents/songs/', function(err, fileUrl){
+                        Helper.uploadFile(file, newFileName, extName, 'contents/music/', function(err, fileUrl){
                             if(err){
                                 console.error('uploadAudio error', err);
                                 callback(err);

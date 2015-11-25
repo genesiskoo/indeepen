@@ -1,7 +1,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var ObjectId = mongoose.Types.ObjectId;
-
 var User = require('./Users');
 
 var blogSchema = new Schema({
@@ -41,7 +40,7 @@ var blogSchema = new Schema({
     updateAt : {
         type : Date,
         default : Date.now
-    },  // blog 에 isActivated가 있는 것보다는 User에 활동 중인 blog의 _id가 있는 게  더 좋을 수도...
+    },
 	isActivated: {
 		type: Boolean,
 		default: true
@@ -108,7 +107,7 @@ blogSchema.statics = {
     },
     findProfileOfArtistBlog : function(blogId, callback){
         this.findOne({_id : new ObjectId(blogId)}).
-            select('-bgPhoto -nick -profilePhoto -iMissYous -fans -location -createAt -updateAt -isActivated').
+            select('-type -bgPhoto -nick -profilePhoto -iMissYous -fans -location -createAt -updateAt -isActivated').
             populate('_user', '-hashed_password -salt -phone -myArtists -profilePhoto -intro -createAt -updateAt').
             exec(callback);
     },

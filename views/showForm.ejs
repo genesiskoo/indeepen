@@ -41,11 +41,15 @@
     위치 : <br>
     latitude :<input type='text' name ='latitude'> longitude : <input type="text" name ='longitude'><br>
     address : <input type='text' name="address" size="140" placeholder="주소입력"><br>
-    참여아티스트 : <select name ='tag'>
-        <%blogs.forEach(function(blog){%>
-        <option value ='<%=blog._id%>'> <%=blog.nick%></option>
-        <% } ); %>
+
+    참여아티스트 수 :
+    <select name="artist">
+    <%blogs.forEach(function(blog){%>
+    <option value ='<%= blog._id %>'> <%= blog.nick %></option>
+        <% }) %>
     </select><br><br>
+
+
 
     <p><button>입력</button></p>
 </form>

@@ -22,18 +22,19 @@ var uploadUrl = __dirname + './../upload';
 var Comment = require('./../models/Comments');
 var Post = require('./../models/Posts');
 var Blog = require('./../models/Blogs');
+var Helper = require('./Helper.js');
 
 //add_form
 module.exports.getShowAddForm = function (req, res, next) {
-    Blog.findAllBlogsNick(function(err,docs){
-        if(err){
+    Blog.findAllBlogsNick(function (err, docs) {
+        if (err) {
             console.error(err);
             var err = new Error("err");
             //error처리
             return next(err);
         }
         console.log(docs);
-        res.render('showForm',{blogs : docs});
+        res.render('showForm', {blogs: docs});
 
     });
 };
@@ -103,7 +104,7 @@ module.exports.getShowList = function (req, res, next) {
             //마지막 게시물의 id값
             //console.log(showList.slice(-1)[0].postInfo._id);
             //console.log(showList.length);
-            if(showList.length != 0) {
+            if (showList.length != 0) {
                 req.session[showPageSession] = showList.slice(-1)[0].postInfo._id;
                 var msg = {
                     code: 200,
@@ -111,14 +112,14 @@ module.exports.getShowList = function (req, res, next) {
                     result: showList
                 };
                 res.status(msg.code).json(msg);
-            }else{
+            } else {
                 var error = new Error('게시물이 더 이상 없어요!');
                 error.code = 404;
                 return next(error);
             }
-    });//async.each
+        });//async.each
 
-});//findPostType
+    });//findPostType
 //post결과와 comment수 결과를 담을 객체 생성
 };//getShowList
 
@@ -163,16 +164,22 @@ module.exports.addShowPost = function (req, res, next) {
             function (callback) {
                 var uploadInfo = {
                     files: [],
-                    artist: []
+                    tagArtists: []
                 };
                 var form = new formidable.IncomingForm();
                 // aws 에 저장되는 경로....
                 form.uploadDir = uploadUrl;
-
+                form.encoding = 'utf-8';
+                form.keepExtensions = true;
                 form
                     .on('field', function (field, value) {
-                        if (field == 'tag') {
-                            uploadInfo.artist.push(JSON.parse(value));
+                        if (field == 'artist') {
+                            var artist = {
+                                _user : value
+                            };
+                            uploadInfo.tagArtists.push(artist);
+                        }else if(field == 'tag'){
+                            uploadInfo.tagArtists.push(JSON.parse(value));
                         } else {
                             console.log('file 아님 ', field);
                             uploadInfo[field] = value;
@@ -194,54 +201,31 @@ module.exports.addShowPost = function (req, res, next) {
             },
             function (uploadInfo, callback) {
                 console.log('uploadInfo', uploadInfo);
-                var files = uploadInfo.files;
-                var imageUrls = [];
+                var fileUrls = [];
                 var order = 0;
                 var randomStr = randomstring.generate(10); // 10자리 랜덤
                 async.each(uploadInfo.files, function (file, callback) {
                     var newFileName = 'content_' + randomStr + '_' + (order++);
-                    var extname = pathUtil.extname(file.name);
-                    var contentType = file.type;
+                    var extName = pathUtil.extname(file.name);
 
-                    var readStream = fs.createReadStream(file.path);
-                    // s3에 저장될 파일 이름 지정
-                    var itemKey = 'contents/images/' + newFileName + extname;
-
-                    var params = {
-                        Bucket: bucketName,     // 필수
-                        Key: itemKey,				// 필수
-                        ACL: 'public-read',
-                        Body: readStream,
-                        ContentType: contentType
-                    };
-                    s3.putObject(params, function (err, data) {
+                    Helper.uploadImageAndThumbnail(file, newFileName, extName, 'contents/images/', function (err, fileUrl) {
                         if (err) {
-                            console.error('S3 PubObject Error', err);
+                            console.error('Helper.uploadImageAndThumbnail error', err);
                             callback(err);
                         } else {
-                            var imageUrl = s3.endpoint.href + bucketName + '/' + itemKey;
-                            console.log('imageUrl ', imageUrl);
-                            // aws의 upload에 생긴 파일 명시적으로 지워줘야 함
-                            console.log('filePath', file.path);
-                            fs.unlink(file.path, function (err) {
-                                if (err) {
-                                    var error = new Error('파일 삭제를 실패했습니다.');
-                                    error.code = 400;
-                                    return next(error);
-                                } else {
-                                    imageUrls.push({contentType: contentType, url: imageUrl});
-                                    callback();
-                                }
-                            });
+                            console.log('Helper.uploadImageAndThumbnail fileUrl' + order, fileUrl);
+                            fileUrls.push(fileUrl);
+                            callback();
                         }
                     });
+                    //
 
                 }, function (err) {
                     if (err) {
                         callback(err);
                     } else {
                         //console.log('before',imageUrls);
-                        imageUrls.sort(function (a, b) {
+                        fileUrls.sort(function (a, b) {
                             if (a.url < b.url)
                                 return -1;
                             else if (a.url > b.url)
@@ -249,17 +233,17 @@ module.exports.addShowPost = function (req, res, next) {
                             else
                                 return 0;
                         });
-                        //console.log('after',imageUrls);
+                        console.log('after fileUrls ', fileUrls);
                         callback(null, uploadInfo.showType, uploadInfo.title, uploadInfo.startDate, uploadInfo.endDate,
                             uploadInfo.startTime, uploadInfo.endTime, uploadInfo.fee, uploadInfo.blogId,
                             uploadInfo.content, uploadInfo.latitude, uploadInfo.longitude, uploadInfo.address,
-                            uploadInfo.artist, imageUrls);
+                            uploadInfo.tagArtists, fileUrls);
                     }
                 });//asyncEach
 
             },
             function (showType, title, startDate, endDate, startTime, endTime, fee,
-                      blogId, content, latitude, longitude, address, artist, urls, callback) {
+                      blogId, content, latitude, longitude, address, tagArtists, urls, callback) {
 
                 // hash_tag 추출
                 var tmpStr = content.split('#');
@@ -280,7 +264,7 @@ module.exports.addShowPost = function (req, res, next) {
                     show: {
                         title: title,
                         type: showType,
-                        tags: artist,
+                        tags: tagArtists,
                         startDate: startDate,
                         endDate: endDate,
                         startTime: startTime,
@@ -293,35 +277,19 @@ module.exports.addShowPost = function (req, res, next) {
                             address: address
                         }//loc
                     },
-                    resources: []
+                    resources: urls
                 };
-                async.each(urls, function (url, callback) {
-                    console.log('url', url);
-                    // s3 경로 저장
-                    postInfo.resources.push({type: url.contentType, originalPath: url.url});
-                    callback();
-                }, function (err) {
+                Post.savePost(postInfo, function (err, doc) {
                     if (err) {
-                        console.error('save workPosts async error ', err);
-                        var error = new Error('file url 관리에서 실패.....');
-                        console.error(err);
+                        console.error('Error', err);
+                        var error = new Error('포스팅 실패');
                         error.code = 400;
-                        return next(error);
+                        next(error);
                     } else {
-                        console.log("postInfo", postInfo);
-                        Post.savePost(postInfo, function (err, doc) {
-                            if (err) {
-                                console.error('Error', err);
-                                var error = new Error('포스팅 실패');
-                                error.code = 400;
-                                next(error);
-                            } else {
-                                console.log('Done');
-                                callback();
-                            }
-                        });
+                        console.log('Done' ,doc);
+                        callback();
                     }
-                });
+                });//Post.savePost
             }
         ],
         function (err) {
@@ -395,13 +363,13 @@ module.exports.getWebShowList = function (req, res, next) {
                 return a.seq - b.seq;
             });
             //마지막 게시물의 id값
-            if(showList.length != 0) {
+            if (showList.length != 0) {
                 req.session[showPageSession] = showList.slice(-1)[0].postInfo._id;
 
                 console.log(showList);
-                res.render('shows',{shows :showList});
+                res.render('shows', {shows: showList});
 
-            }else{
+            } else {
                 var error = new Error('댓글이 없습니다.');
                 error.code = 404;
                 return next(error);

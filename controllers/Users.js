@@ -183,3 +183,23 @@ module.exports.changeActivityMode = function(req, res, next){
         res.status(msg.code).json(msg);
     });
 };
+
+/**
+ * 회원 보기
+ * @param req
+ * @param res
+ * @param next
+ * @returns {*}
+ */
+
+module.exports.showAllUsers = function (req,res,next){
+    Blog.findAllBlogs(function(err,docs){
+        if(err){
+            console.error(err);
+            var error = new Error('모든 유저를 가져올 수 없다!');
+            error.code = 404;
+            return next(error);
+        }
+        res.json(docs);
+    });
+};

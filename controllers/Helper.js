@@ -260,6 +260,7 @@ module.exports.uploadFile = function(file, newFileName, ext, dir, callback) {
                 else{
                     fileUrl['type'] = contentType;
                     fileUrl['originalPath'] = uploadedUrl;
+                    fileUrl['thumbnailPath'] = uploadedUrl;
                     console.log('fileUrl @ only file upload',fileUrl);
                     callback(null, fileUrl);
                 }

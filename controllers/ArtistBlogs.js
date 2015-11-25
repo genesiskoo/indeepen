@@ -4,36 +4,16 @@
 
 var formidable = require('formidable'),
     pathUtil = require('path');
-var fs = require('fs');
+
 var async = require('async');
 var randomstring = require('randomstring');
-var AWS = require('aws-sdk');
 
-var awsS3 = require('./../config/s3');
-AWS.config.region = awsS3.region;
-AWS.config.accessKeyId = awsS3.accessKeyId;
-AWS.config.secretAccessKey = awsS3.secretAccessKey;
-
-// Listup All Files
-var s3 = new AWS.S3();
-var bucketName = awsS3.bucketName;
 var uploadUrl = __dirname + '/../upload';
-var defaultArtistProfileUrl = 'https://s3-ap-northeast-1.amazonaws.com/in-deepen/images/profile/icon-person.jpg';
+var defaultArtistProfileUrl = 'http://s3-ap-northeast-1.amazonaws.com/in-deepen/images/profile/icon-person.jpg';
 
 var Blog = require('./../models/Blogs');
 var User = require('./../models/Users');
-
-
-/**
- * 개인 Blog 기본 정보 가져오기
- * @param req
- * @param res
- * @param next
- * @returns {*}
- */
-module.exports.getArtistBlog = function(req, res, next){
-
-};
+var Helper = require('./Helper');
 
 /**
  * 개인 블로그 프로필 사진 가져오기
@@ -94,7 +74,6 @@ module.exports.getArtistBlogProfile = function(req, res, next){
             nick : doc._user.nick,
             phone : doc.phone,
             intro : doc.intro,
-            type : doc.type,
             isPublic : doc._user.isPublic
         };
         var msg = {
@@ -120,12 +99,15 @@ module.exports.modifyArtistBlogProfile = function(req, res, next){
         error.code = 400;
         return next(error);
     }
+   // var today = ;
+   // console.log('today ', today);
     var newInfo = {
         nick : req.body.nick,
         intro : req.body.intro,
         name : req.body.name,
         phone : req.body.phone,
-        isPublic : req.body.isPublic
+        isPublic : req.body.isPublic,
+        updateAt : new Date()
     };
     console.log('newInfo ', newInfo);
 
@@ -187,33 +169,15 @@ module.exports.modifyArtistBlogProfilePhoto = function(req, res, next){
                 }else {
                     var randomStr = randomstring.generate(10);
                     var newFileName = 'profile_' + randomStr;
-                    var extname = pathUtil.extname(file.name);
-                    var contentType = file.type;
-                    var fileStream = fs.createReadStream(file.path);
-                    var itemKey = 'images/profile/' + newFileName + extname;
-                    var params = {
-                        Bucket: bucketName,
-                        Key: itemKey,
-                        ACL: 'public-read',
-                        Body: fileStream,
-                        ContentType: contentType
-                    };
-                    s3.putObject(params, function (err, data) {
-                        if (err) {
-                            console.error('S3 PutObject Error', err);
+                    var extName = pathUtil.extname(file.name);
+                    Helper.uploadFile(file, newFileName,extName, 'images/profiles/', function(err, fileUrl){
+                        if(err){
+                            console.error('ERROR @ FILE UPLOAD ', err);
                             callback(err);
                         }
-                        else {
-                            var imageUrl = s3.endpoint.href + bucketName + '/' + itemKey;
-                            fs.unlink(file.path, function (err) {
-                                if (err) {
-                                    var error = new Error('파일 삭제를 실패했습니다.');
-                                    error.code = 500;
-                                    return next(error);
-                                } else {
-                                    callback(null, imageUrl);
-                                }
-                            });
+                        else{
+                            console.log('fileUrl ', fileUrl);
+                            callback(null, fileUrl.originalPath);
                         }
                     });
                 }

@@ -3,19 +3,9 @@
  */
 var formidable = require('formidable'),
     pathUtil = require('path');
-var fs = require('fs');
+
 var async = require('async');
 var randomstring = require('randomstring');
-var AWS = require('aws-sdk');
-
-var awsS3 = require('./../config/s3');
-AWS.config.region = awsS3.region;
-AWS.config.accessKeyId = awsS3.accessKeyId;
-AWS.config.secretAccessKey = awsS3.secretAccessKey;
-
-// Listup All Files
-var s3 = new AWS.S3();
-var bucketName = awsS3.bucketName;
 var uploadUrl = __dirname + '/../upload';
 
 var Blog = require('./../models/Blogs');
@@ -96,32 +86,13 @@ module.exports.modifyBgOfBlog = function (req, res, next) {
                 } else {
                     var randomStr = randomstring.generate(10);
                     var newFileName = 'bg_' + randomStr;
-                    var extname = pathUtil.extname(file.name);
-                    var contentType = file.type;
-                    var fileStream = fs.createReadStream(file.path);
-                    var itemKey = 'images/bg/' + newFileName + extname;
-                    var params = {
-                        Bucket: bucketName,
-                        Key: itemKey,
-                        ACL: 'public-read',
-                        Body: fileStream,
-                        ContentType: contentType
-                    };
-                    s3.putObject(params, function (err, data) {
-                        if (err) {
-                            console.error('S3 PutObject Error ', err);
+                    var extName = pathUtil.extname(file.name);
+                    Helper.uploadFile(file, newFileName, extName, 'images/bgs/', function(err, fileUrl){
+                        if(err){
                             callback(err);
-                        }
-                        else {
-                            var imageUrl = s3.endpoint.href + bucketName + '/' + itemKey;
-                            fs.unlink(file.path, function (err) {
-                                if (err) {
-                                    console.log('ERROR UNLINK FILE AT BLOG BG ', err);
-                                    callback(err);
-                                } else {
-                                    callback(null, imageUrl);
-                                }
-                            });
+                        }else{
+                            console.log('fileUrl ', fileUrl);
+                            callback(null, fileUrl.originalPath);
                         }
                     });
                 }

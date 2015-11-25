@@ -22,6 +22,8 @@ router.get('/join', function(req, res){
     fs.createReadStream(path+'/join.html').pipe(res);
 });
 
+router.get('/web/showAll', webC.showAllUsers);
+
 router.get('/web/page/addWorkPost', webC.showAddWorkPostPage);
 router.post('/web/WorkPost', webC.addWorkPost);
 //

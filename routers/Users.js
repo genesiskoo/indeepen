@@ -16,6 +16,6 @@ router.get('/info', User.getUserInfo);
 
 router.put('/activityMode', User.changeActivityMode);
 
-router.get('/showAll', User.showAllUsers);
+
 
 module.exports = router;

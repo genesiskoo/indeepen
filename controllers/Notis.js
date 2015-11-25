@@ -12,32 +12,16 @@ module.exports.getNotis = function (req, res, next) {
     });
 };
 
-module.exports.makeNoti = function (req, res, next) {
-    var type = req.body.type;
-
+module.exports.makeNoti = function (req, res, next, type, id, receiver,sender, how) {
+    //보내는 사람
     var notiInfo = {
-        _sender: sender,
-        _receiver: req.body.receiver,
-        where : {
-            type : type
-        },
-        how: req.body.how
+        who: sender,
+        _receiver: receiver,
+        where : id,
+        how : how,
+        what: what
     };
-    switch (type) {
-        case '1':
-        case '2':
-            notiInfo.where['_postId'] = '5644187a4ead9a2416e77470'; //슈퍼스타post
-            break;
-        case '3':
-        case '4':
-            notiInfo.where['_blogId'] = '564aa1d94287c23c068b95dc'; //문개인블로그
-            break;
-        case '5':
-            //협력제안 준비중
-            break;
-        default:
-        //type에러처리
-    }
+
     Noti.saveNoti(notiInfo, function (err) {
         if (err) {
             console.error('err :',err);

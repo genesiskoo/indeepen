@@ -8,7 +8,7 @@ var User = require('./Users');
 
 var notiSchema = new Schema({
 
-    _sender: {
+    _who: {
         type: Schema.Types.ObjectId,
         ref: 'Blog'
     },
@@ -16,17 +16,8 @@ var notiSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'User'
     },
-    where: {
-        type: {type :Number}, //// 0 : 위치없음 1 : 문화, 2 : 예술, 3 : 개인 블로그 , 4 : 공간 블로그,  5: 협력제안
-        _postId: {
-            type: Schema.Types.ObjectId,
-            ref: 'Post'
-        },
-        _blogId: {
-            type: Schema.Types.ObjectId,
-            ref: 'Blog'
-        }
-    },
+    where:  String,
+    what: Number, //// 0 : 위치없음 1 : 문화, 2 : 예술, 3 : 개인 블로그 , 4 : 공간 블로그,  5: 협력제안,
     how: Number, // 0 : 좋아요, 1: 댓글, 2: 내 팬, 3: imissyou, 4: tag
     isChecked: {
         type: Boolean,

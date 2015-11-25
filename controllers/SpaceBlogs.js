@@ -38,7 +38,7 @@ exports.addSpaceBlog = function (req, res, next) {
 
     //var userKey = req.session['userKey']
     var spaceInfo = {
-        _user : userKey,
+        _user : req.body.userId,
         type: 1,
         nick: req.body.nick,
         location: {

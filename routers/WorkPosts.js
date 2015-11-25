@@ -6,7 +6,7 @@ var router = express.Router();
 
 var WorkPost = require('./../controllers/WorkPosts');
 
-router.get('/page', WorkPost.showAddWorkPostPage);
+//router.get('/page', WorkPost.showAddWorkPostPage);
 
 router.post('/', WorkPost.addWorkPost);
 router.get('/', WorkPost.getWorkPosts);

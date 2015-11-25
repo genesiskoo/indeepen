@@ -10,10 +10,12 @@ var Blog = require('./../../models/Blogs');
 var async = require('async');
 
 module.exports = new LocalStrategy({
-    usernameField : 'email',
+   usernameField : 'email',
     passwordField : 'password'
 },
 function(email, password, done){
+    var email = 'koosha@naver.com';
+    var password = '1234';
     var options = {
         criteria : {email : email},
         select : '-email -name -provider -authToken -facebook -intro -phone -myArtists -createAt -updateAt -isPublic'

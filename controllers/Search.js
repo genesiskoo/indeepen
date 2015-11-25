@@ -146,7 +146,7 @@ module.exports.searchAtArtist = function(req, res, next){
             var msg = {
                 code : 200,
                 msg : 'Success',
-                result : docs
+                artists : docs
             };
             res.status(msg.code).json(msg);
         }else{
@@ -184,7 +184,7 @@ module.exports.searchAtSpace = function(req, res, next){
             var msg = {
                 code : 200,
                 msg : 'Success',
-                result : docs
+                spaces : docs
             };
             res.status(msg.code).json(msg);
         }else{

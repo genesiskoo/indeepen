@@ -70,8 +70,6 @@ module.exports.addWorkPost = function(req, res, next){
             },
             function (uploadInfo, callback) {
                 console.log('uploadInfo', uploadInfo);
-                //var files = uploadInfo.files;
-                var imageUrls = [];
                 var fileUrls = [];
                 var order = 0;
                 var randomStr = randomstring.generate(10); // 10자리 랜덤
@@ -82,10 +80,10 @@ module.exports.addWorkPost = function(req, res, next){
                     var isImageExist = contentType.indexOf('image');
 
                     if(isImageExist != -1){
-                        Helper.uploadImageAndThumbnail(file, newFileName, extName, 'contents/images', function(err, fileUrl){
+                        Helper.uploadImageAndThumbnail(file, newFileName, extName, 'contents/images/', function(err, fileUrl){
                             if(err){
-                                console.error('uploadImgaeAndThumbname error ', err);
-                                return;
+                                console.error('uploadImageAndThumbnail error ', err);
+                                callback(err);
                             }else{
                                 console.log('uploadImageAndThumbnail fileUrl '+order, fileUrl);
                                 fileUrls.push(fileUrl);
@@ -93,10 +91,10 @@ module.exports.addWorkPost = function(req, res, next){
                             }
                         });
                     }else{
-                        Helper.uploadFile(file, newFileName, extName, 'contents/songs', function(err, fileUrl){
+                        Helper.uploadFile(file, newFileName, extName, 'contents/songs/', function(err, fileUrl){
                             if(err){
                                 console.error('uploadAudio error', err);
-                                return;
+                                callback(err);
                             }else{
                                 console.log('uploadAudio '+order, fileUrl);
                                 fileUrls.push(fileUrl);
@@ -104,40 +102,6 @@ module.exports.addWorkPost = function(req, res, next){
                             }
                         });
                     }
-/*
-                    var readStream = fs.createReadStream(file.path);
-                    // s3에 저장될 파일 이름 지정
-                    var itemKey = 'contents/images/' + newFileName + extname;
-
-                    var params = {
-                        Bucket: bucketName,     // 필수
-                        Key: itemKey,				// 필수
-                        ACL: 'public-read',
-                        Body: readStream,
-                        ContentType: contentType
-                    };
-                    s3.putObject(params, function (err, data) {
-                        if (err) {
-                            console.error('S3 PubObject Error', err);
-                            callback(err);
-                        } else {
-                            var imageUrl = s3.endpoint.href + bucketName + '/' + itemKey;
-                            console.log('imageUrl ', imageUrl);
-                            // aws의 upload에 생긴 파일 명시적으로 지워줘야 함
-                            console.log('filePath',file.path);
-                            fs.unlink(file.path, function(err){
-                                if(err){
-                                    var error = new Error('파일 삭제를 실패했습니다.');
-                                    error.code = 400;
-                                    return next(error);
-                                }else{
-                                    imageUrls.push({contentType : contentType, url :imageUrl});
-                                    callback();
-                                }
-                            });
-                        }
-                    });*/
-
                 }, function(err){
                     if(err){
                         var error = new Error('파일에서 실패...');
@@ -166,46 +130,6 @@ module.exports.addWorkPost = function(req, res, next){
                     if(tmp != '')
                         hashTag.push(tmp);
                 }
-
-                /*// db 저장
-                var postInfo = {
-                    postType : 0,
-                    _writer : blogId,
-                    content : content,
-                    hashTags : hashTag,
-                    likes : [],
-                    work : {
-                        type : workType,
-                        emotion : emotion
-                    },
-                    resources : []
-                };
-                async.each(urls, function(url, callback){
-                    //console.log('url', url);
-                    // s3 경로 저장
-                    postInfo.resources.push({type : url.contentType, originalPath : url.url});
-                    callback();
-                }, function(err){
-                    if(err){
-                        console.error('save workPosts async error ', err);
-                        var error = new Error('file url 관리에서 실패.....');
-                        error.code = 400;
-                        return next(error);
-                    }else{
-                        console.log("postInfo", postInfo);
-                        Post.savePost(postInfo, function(err, doc){
-                            if(err){
-                                console.error('Error', err);
-                                var error = new Error('포스팅 실패');
-                                error.code = 400;
-                                next(error);
-                            }else{
-                                console.log('Done');
-                                callback();
-                            }
-                        });
-                    }
-                });*/
                 // db 저장
                 var postInfo = {
                     postType : 0,
@@ -230,22 +154,6 @@ module.exports.addWorkPost = function(req, res, next){
                         callback();
                     }
                 });
-                /*async.each(urls, function(url, callback){
-                    //console.log('url', url);
-                    // s3 경로 저장
-                    postInfo.resources.push({type : url.contentType, originalPath : url.url});
-                    callback();
-                }, function(err){
-                    if(err){
-                        console.error('save workPosts async error ', err);
-                        var error = new Error('file url 관리에서 실패.....');
-                        error.code = 400;
-                        return next(error);
-                    }else{
-                        console.log("postInfo", postInfo);
-
-                    }
-                });*/
             }
         ],
         function (err) {

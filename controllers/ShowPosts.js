@@ -178,7 +178,8 @@ module.exports.addShowPost = function (req, res, next) {
                                 _user : value
                             };
                             uploadInfo.tagArtists.push(artist);
-                            //uploadInfo.tags.push(JSON.parse(value));
+                        }else if(field == 'tag'){
+                            uploadInfo.tagArtists.push(JSON.parse(value));
                         } else {
                             console.log('file 아님 ', field);
                             uploadInfo[field] = value;

@@ -148,6 +148,11 @@ userSchema.statics = {
         this.findOne(options.criteria)
             .select(options.select)
             .exec(callback);
+    },
+    findAllUser : function(callback){
+        this.find()
+            .select('id email name nick')
+            .exec(callback);
     }
 };
 

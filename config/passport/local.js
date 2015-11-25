@@ -14,8 +14,6 @@ module.exports = new LocalStrategy({
     passwordField : 'password'
 },
 function(email, password, done){
-    var email = 'moonJ@naver.com';
-    var password = '1234';
     var options = {
         criteria : {email : email},
         select : '-email -name -provider -authToken -facebook -intro -phone -myArtists -createAt -updateAt -isPublic'

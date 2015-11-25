@@ -33,6 +33,7 @@ module.exports = function(app, passport){
                         msg : 'Success',
                         result : user
                     };
+                    console.log('msg ', msg);
                     res.status(msg.code).json(msg);
                 });
             })(req);}

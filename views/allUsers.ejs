@@ -9,8 +9,11 @@
         <ul>
         <% users.forEach(function(user) { %>
             <li>
-                id : <%= user._id %><br>
-                nick : <%= user.nick%>
+                BlogKey : <%= user._id %><br>
+                userKey : <%= user._user._id%><br>
+                email : <%= user._user.email%><br>
+                nick : <%= user.nick%><br>
+                blogType : <%= user.type%>
             </li>
             <br>
         <% })%>

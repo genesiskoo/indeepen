@@ -5,9 +5,6 @@
 var User = require('./../models/Users');
 var Blog = require('./../models/Blogs');
 
-var userKey = '564a926a29c7cf6416be1117'; // session에 있을 정보
-//var blogKey = '564a926b29c7cf6416be1118'; // session에 있을 정보
-
 module.exports.join = function(req, res, next){
     var email = req.body.email;
     var password = req.body.password;
@@ -41,7 +38,9 @@ module.exports.join = function(req, res, next){
         Blog.saveBlog(blogInfo, function(err, doc){
             if(err){
                 console.error('Save Blog Error in User post event ', err);
-                return;
+                var error = new Error('artistBlog 생성 실패');
+                error.code= 400;
+                return next(error);
             }
             console.log('artistBlog ', doc);
             var msg = {
@@ -103,14 +102,11 @@ module.exports.changePw = function(req, res, next){
         error.code = 400;
         return next(error);
     }
-    console.log('old pw ', oldPw);
-    console.log('new pw ', newPw);
     var pw = {
         oldPw : oldPw,
         newPw : newPw
     };
-    console.log('pw ', pw);
-    User.updatePassword(userKey, pw, function(err, doc){
+    User.updatePassword(req.user.userKey, pw, function(err, doc){
         if(err){
             console.error('ERROR UPDATE PASSWORD ', err);
             var error = new Error('비밀번호 변경 실패');
@@ -138,13 +134,12 @@ module.exports.changePw = function(req, res, next){
  * @param next
  */
 module.exports.getUserInfo = function(req, res, next){
-    Blog.findBlogsOfUser(userKey, function(err, docs){
+    Blog.findBlogsOfUser(req.user.userKey, function(err, docs){
         if(err){
             var error = new Error('블로그 정보들을 가져오는데 실패함요');
             error.code = 400;
             return next(error);
         }
-        console.log('docs ', docs );
         var msg = {
             code : 200,
             msg : 'Success',
@@ -168,14 +163,15 @@ module.exports.changeActivityMode = function(req, res, next){
         error.code = 400;
         return next(error);
     }
-    Blog.updateIsActivated(userKey, blogId, function(err, doc){
+    Blog.updateIsActivated(req.user.userKey, blogId, function(err, doc){
         if(err){
             var error = new Error('update 중 error...');
             error.code = 400;
             return next(error);
         }
-        console.log('doc ', doc);
-        // req.user.activityBlogKey = blogId;
+        console.log('before' , req.user.activityBlogKey);
+        req.user.activityBlogKey = blogId;
+        console.log('after' , req.user.activityBlogKey);
         var msg = {
             code : 200,
             msg : 'Success'

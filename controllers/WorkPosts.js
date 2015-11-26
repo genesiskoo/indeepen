@@ -316,7 +316,7 @@ module.exports.getRecommendWorkPosts = function(req, res, next){
     if(!isStart){
         lastSeen = req.session[sessionId];
     }
-    User.findMyArtistIds(userKey, function(err, doc){
+    User.findMyArtistIds(req.user.userKey, function(err, doc){
         if(err){
             console.error('ERROR GETTING MY ARTISTS ', err);
             var error = new Error('myArtists 를 가져올 수 없음');
@@ -324,8 +324,13 @@ module.exports.getRecommendWorkPosts = function(req, res, next){
             return next(error);
         }
         console.log('doc ', doc);
-
-        Post.findRecommendWorkPosts(['564a926b29c7cf6416be1118'],doc.myArtists, type, lastSeen, function(err, docs){
+        var blogIds = [];
+        blogIds.push(req.user.artistBlogKey);
+        req.user.spaceBlogKeys.forEach(function(space){
+            blogIds.push(space);
+        });
+        console.log('blogIds', blogIds);
+        Post.findRecommendWorkPosts(blogIds,doc.myArtists, type, lastSeen, function(err, docs){
             if(docs.length != 0){
                 if(type == 0)
                     Helper.findWorkPostsVerOnePictureList(req, res, sessionId, docs);

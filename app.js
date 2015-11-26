@@ -34,10 +34,12 @@ app.set('view engine', 'ejs');
 
 app.use(require('./routers/web_router.js'));
 
+var auth = require('./config/middlewares/authorization');
+var commonAuth = [auth.requiresLogin];
 require('./routers/TheRest.js')(app, passport);
 
 app.use('/posts', require('./routers/Posts.js'));
-app.use('/workPosts', require('./routers/WorkPosts'));
+app.use('/workPosts',  commonAuth, require('./routers/WorkPosts'));
 app.use('/showPosts', require('./routers/ShowPosts'));
 app.use('/postComments', require('./routers/PostComments'));
 app.use('/artistBlogs', require('./routers/ArtistBlogs'));

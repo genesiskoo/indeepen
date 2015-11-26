@@ -11,12 +11,12 @@ var blogSchema = new Schema({
     },
     bgPhoto: {
         type: String,
-        default: 'https://s3-ap-northeast-1.amazonaws.com/in-deepen/images/bg/default_bg.png'
+        default: 'https://s3-ap-northeast-1.amazonaws.com/in-deepen/images/bgs/default_bg.png'
     },
     nick: String,
     profilePhoto: {
         type: String,
-        default: 'https://s3-ap-northeast-1.amazonaws.com/in-deepen/images/profile/icon-cafe.png'
+        default: 'https://s3-ap-northeast-1.amazonaws.com/in-deepen/images/profiles/icon-cafe.png'
     },
     intro: String,
     phone: String,

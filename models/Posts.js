@@ -188,7 +188,7 @@ postSchema.statics = {
      */
     findPostsByHashTag : function(hashTag, type, lastSeen, callback){
         var options={hashTags : hashTag, postType : 0};
-        var select='-postType -content -_writer -createAt -updateAt -hashTags -likes -work.emotion -show';
+        var select='-postType -content -_writer -createAt -updateAt -hashTags -likes -work.emotion -show -resources.originalPath';
         var perPage = 15;
 
         if(type != 0){
@@ -196,7 +196,7 @@ postSchema.statics = {
                 perPage = null;
             else
                 perPage = 10;
-            select = '-updateAt -hashTags -show';
+            select = '-updateAt -hashTags -show -resources.originalPath';
         }
         if(lastSeen){
             if(type == 1)

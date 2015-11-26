@@ -167,9 +167,11 @@ postSchema.statics = {
     findPost : function(postId, postType, callback){
         var select = '';
         if(postType == 0){
-            select ='createAt _writer content likes work resources postType';
+            //select ='createAt _writer content likes work resources postType';
+            select = '-resources.thumbnailPath -show -hashTags -updateAt'
         }else{
-            select = 'createAt _writer content likes show resources postType';
+            //select = 'createAt _writer content likes show resources postType';
+            select = '-resources.thumbnailPath -work -hashTags -updateAt';
         }
         return this.findOne({_id : new ObjectId(postId)}).
             select(select).
@@ -220,8 +222,6 @@ postSchema.statics = {
      */
     findPostsAtFanPage : function(userBlogId, userArtists, emotion, field, lastSeen, callback){
         var options = {$or : [{$and : [{_writer : new ObjectId(userBlogId)}, {postType : 0}]},{_writer : {$in : userArtists}}]};
-        console.log('emotion ', emotion);
-        console.log('field',field);
         if(emotion && field){
             console.log('both');
             if(field == 12) { // 음악
@@ -250,10 +250,9 @@ postSchema.statics = {
         if(lastSeen != null)
             options['_id'] = {$lt : lastSeen};
 
-        console.log('options ', options);
         this.find(options).
             sort({createAt : -1}).
-            select('-updateAt -hashTags -show.location.point').
+            select('-updateAt -hashTags -show.location.point -resources.originalPath').
             limit(10).
             populate('_writer', '-bgPhoto -intro -iMissYous -fans -location -createAt -updateAt -isActivated').
             populate('show.tags._user', '-_user -bgPhoto -intro -iMissYous -fans -location -createAt -updateAt -isActivated').
@@ -308,14 +307,14 @@ postSchema.statics = {
      */
     findWorkPostsAtBlog : function(writer, type,lastSeen, callback){
         var options = {_writer : new ObjectId(writer), postType : 0};
-        var select = '-postType -content -_writer -createAt -updateAt -hashTags -likes -work.emotion -show';
+        var select = '-postType -content -_writer -createAt -updateAt -hashTags -likes -work.emotion -show -resources.originalPath';
         var perPage = 15;
         if(type != 0){
             if(type ==1)
                 perPage = null;
             else
                 perPage = 10;
-            select = '-updateAt -hashTags -show';
+            select = '-updateAt -hashTags -show -resources.originalPath';
         }
         if(lastSeen){
             if(type == 1)
@@ -339,14 +338,14 @@ postSchema.statics = {
      */
     findLikePostsAtBlog : function(artistBlogId, type, lastSeen, callback){
         var options = {likes : new ObjectId(artistBlogId), postType : 0};
-        var select = '-postType -content -_writer -createAt -updateAt -hashTags -likes -work.emotion -show';
+        var select = '-postType -content -_writer -createAt -updateAt -hashTags -likes -work.emotion -show -resources.originalPath';
         var perPage = 15;
         if(type != 0){
             if(type ==1)
                 perPage = null;
             else
                 perPage = 10;
-            select = '-updateAt -hashTags -show';
+            select = '-updateAt -hashTags -show -resources.originalPath';
         }
         if(lastSeen){
             if(type == 1)
@@ -366,13 +365,13 @@ postSchema.statics = {
         if(myArtists.length == 0)
             options = {postType : 0, _writer : {$nin : blogId}};
         var perPage = 3;
-        var select = '-postType -content -_writer -createAt -updateAt -hashTags -likes -work.emotion -show';
+        var select = '-postType -content -_writer -createAt -updateAt -hashTags -likes -work.emotion -show -resources.originalPath';
         if(type != 0){
             if(type ==1)
                 perPage = null;
             else
                 perPage = 2;
-            select = '-updateAt -hashTags -show';
+            select = '-updateAt -hashTags -show -resources.originalPath';
         }
         if(lastSeen){
             if(type == 1)

@@ -99,8 +99,6 @@ module.exports.modifyArtistBlogProfile = function(req, res, next){
         error.code = 400;
         return next(error);
     }
-   // var today = ;
-   // console.log('today ', today);
     var newInfo = {
         nick : req.body.nick,
         intro : req.body.intro,

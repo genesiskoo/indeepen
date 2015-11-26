@@ -8,7 +8,7 @@ var router = express.Router();
 var Post = require('../controllers/Posts.js');
 var auth = require('./../config/middlewares/authorization');
 
-var postAuth = [auth.requiresLogin, auth.post.hasAuthorization];
+var postAuth = [auth.post.hasAuthorization];
 
 router.get('/', Post.getPosts);
 

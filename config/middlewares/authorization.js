@@ -40,6 +40,39 @@ module.exports.post = {
             });
     }
 };
+var Blog = require('./../../models/Blogs');
+module.exports.blog = {
+    hasAuthorization : function(req, res, next){
+        var blogId = req.params.blogId;
+        console.log('req.blogId', blogId);
+        Blog.findOne({_id : blogId}).
+            select('_user').
+            exec(function(err, doc){
+                if(err){
+                    console.error('ERROR @ BLOG AUTH ', err);
+                    var error = new Error('blog user 정보 가져오기 실패');
+                    error.code = 400;
+                    return next(error);
+                }
+                if(!doc){
+                    var error = new Error('blog id 다시 확인하셈요');
+                    error.code = 404;
+                    return next(error);
+                }
+                console.log('doc ', doc);
+                if(doc._user == req.user.userKey){
+                    console.log('ok');
+                    next();
+                }else{
+                    var error = new Error('권한 없음요.');
+                    error.code = 401;
+                    return next(error);
+                }
+            })
+
+    }
+};
+
 
 module.exports.user = {
     hasAuthorization : function(req, res, next){
@@ -56,8 +89,4 @@ module.exports.user = {
 
 
 
-module.exports.artistBlog = {
-    hasAuthorization : function(req, res, next){
-        console.log('req.blogId')
-    }
-};
+

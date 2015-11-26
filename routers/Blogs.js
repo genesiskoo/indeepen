@@ -6,9 +6,12 @@ var express = require('express');
 var router = express.Router();
 var Blog = require('./../controllers/Blogs');
 
+var auth = require('./../config/middlewares/authorization');
+var blogAuth = [auth.blog.hasAuthorization];
+
 router.get('/:blogId', Blog.getBlogInfo);
 
-router.put('/:blogId/bg', Blog.modifyBgOfBlog);
+router.put('/:blogId/bg', blogAuth, Blog.modifyBgOfBlog);
 
 router.get('/:blogId/myFans', Blog.getFansOfBlog);
 router.get('/:blogId/myArtists', Blog.getArtistsOfBlog);

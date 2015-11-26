@@ -8,7 +8,7 @@ var ArtistBlog = require('./../controllers/ArtistBlogs');
 
 var auth = require('./../config/middlewares/authorization');
 var blogAuth = [auth.blog.hasAuthorization];
-//router.get('/:blogId', ArtistBlog.getArtistBlog);
+
 
 router.get('/:blogId/profilePhoto', ArtistBlog.getArtistBlogProfilePhoto);
 router.put('/:blogId/profilePhoto', blogAuth, ArtistBlog.modifyArtistBlogProfilePhoto);

@@ -159,8 +159,8 @@ module.exports.uploadImageAndThumbnail = function(file, newFileName, ext, dir, c
             easyimage.resize({
                 src: filePath,
                 dst: th_filePath,
-                width : 300,
-                height : 300
+                width : 500,
+                height : 500
             }).then(function(image){
                 console.log('thumbnail result image ', image);
                 var th_itemKey = dir+'Thumbnails/'+ th_fileName;

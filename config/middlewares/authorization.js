@@ -68,7 +68,12 @@ module.exports.blog = {
                     error.code = 401;
                     return next(error);
                 }
-            })
+            });
+    },
+    hasFanAlready : function(req, res, next){
+
+    },
+    hasIMissYouAlready : function(req, res, next){
 
     }
 };

@@ -158,6 +158,17 @@ blogSchema.statics = {
             }
         });
     },
+    isAlreadyDone : function(blogId, userBlogId, at, callback){
+        var options;
+        if(at === 'fan'){
+            // fan
+            options = {_id : ObjectId(blogId), fans : ObjectId(userBlogId)};
+        }else{
+            // iMissYou
+            options = {_id : ObjectId(blogId), iMissYous : ObjectId(userBlogId)};
+        }
+        this.count(options, callback);
+    },
     removeBlog: function (blogId, callback) {
         return this.findOneAndRemove({_id: new ObjectId(blogId)}, callback);
     },

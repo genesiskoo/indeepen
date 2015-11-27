@@ -95,17 +95,16 @@ module.exports.checkEmail = function(req, res, next){
  * @returns {*}
  */
 module.exports.changePw = function(req, res, next){
-    var oldPw = req.body.oldPw;
     var newPw = req.body.newPw;
-    if(!oldPw || !newPw){
+    if(!newPw){
         var error = new Error('데이터 확인 요망.');
         error.code = 400;
         return next(error);
     }
     var pw = {
-        oldPw : oldPw,
         newPw : newPw
     };
+    console.log('pw ', pw);
     User.updatePassword(req.user.userKey, pw, function(err, doc){
         if(err){
             console.error('ERROR UPDATE PASSWORD ', err);
@@ -113,6 +112,7 @@ module.exports.changePw = function(req, res, next){
             error.code = 400;
             return next(error);
         }
+        console.log('doc ', doc);
         if(doc){
             var msg = {
                 code : 200,

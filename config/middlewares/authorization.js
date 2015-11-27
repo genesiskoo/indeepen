@@ -156,17 +156,32 @@ module.exports.blog = {
     }
 };
 
-
+var User = require('./../../models/Users');
 module.exports.user = {
     hasAuthorization: function (req, res, next) {
-        if (req.profile.id != req.user.id) {
-            //req.flash('info', 'You are not authorized');
-            console.log('authorization의 user hasAuthorization.');
-            var error = new Error('You are not authorized');
-            error.code = 401;
-            return next(error);
-        }
-        next();
+        var options = {
+            criteria : {_id : req.user.userKey},
+            select : '-email -name -provider -authToken -facebook -intro -phone -myArtists -createAt -updateAt -isPublic'
+        };
+        User.findUser(options, function(err, doc){
+            if(err){
+                console.error('ERROR @ USER AUTH ', err);
+                var error = new Error('user 정보 가져오기 실패');
+                error.code = 400;
+                return next(error);
+            }
+            if(!doc) {
+                var error = new Error('불허');
+                error.code = 400;
+                return next(error);
+            }
+            if(!doc.authenticate(req.body.password)){
+                var error = new Error('불허');
+                error.code = 400;
+                return next(error);
+            }
+            next();
+        });
     }
 };
 

@@ -94,19 +94,19 @@ userSchema.statics = {
         return this.create(userInfo, callback);
     },
     updateProfileAtArtistBlog : function(userId, newInfo, callback){
-        this.findOneAndUpdate({_id : new ObjectId(userId)}, {$set : newInfo}, callback);
+        this.findOneAndUpdate({_id : ObjectId(userId)}, {$set : newInfo}, callback);
     },
     updateProfilePhoto : function(userId, newUrl, callback){
-        this.findOneAndUpdate({_id : new ObjectId(userId)}, {$set : {profilePhoto : newUrl}}, callback);
+        this.findOneAndUpdate({_id : ObjectId(userId)}, {$set : {profilePhoto : newUrl}}, callback);
     },
     findMyArtistIds : function(userId, callback){
-        this.findOne({_id : new ObjectId(userId)}).
+        this.findOne({_id : ObjectId(userId)}).
             select('-_id -email -hashed_password -salt -name -nick -profilePhoto -intro -phone -createAt -updateAt -isPublic').
             exec(callback);
     },
     findMyArtists : function(userId, page, callback){
         this.aggregate([{
-            $match : {_id : new ObjectId(userId)}
+            $match : {_id : ObjectId(userId)}
         },{
             $unwind : '$myArtists'
         },{
@@ -119,17 +119,17 @@ userSchema.statics = {
             });
     },
     pushMyArtists : function(userId, blogId, callback) {
-        this.findOne({_id: new ObjectId(userId)}, function (err, doc) {
+        this.findOne({_id: ObjectId(userId)}, function (err, doc) {
             if(err){
                 callback(err, null);
             }else{
-                doc.myArtists.unshift(new ObjectId(blogId));
+                doc.myArtists.unshift(ObjectId(blogId));
                 doc.save(callback);
             }
         });
     },
     pullMyArtists : function(userId, blogId, callback){
-        this.findOneAndUpdate({_id : new ObjectId(userId)}, {$pull : {myArtists : new ObjectId(blogId)}}, callback);
+        this.findOneAndUpdate({_id : ObjectId(userId)}, {$pull : {myArtists : ObjectId(blogId)}}, callback);
     },
     isExistEmail : function(email, callback){
         this.findOne({email : email}, function(err, doc){
@@ -141,7 +141,17 @@ userSchema.statics = {
         });
     },
     updatePassword : function(userId, pw, callback){
-        this.findOneAndUpdate({_id : new ObjectId(userId), password : pw.oldPw}, {$set : {password : pw.newPw}}, callback);
+        //this.update({_id : ObjectId(userId)}, {$set : {password : pw.newPw}}, callback);
+        this.findOne({_id : ObjectId(userId)}, function(err, doc){
+            if(err){
+                callback(err, null);
+            }else{
+                doc._password = pw.newPw;
+                doc.salt = doc.makeSalt();
+                doc.hashed_password = doc.encryptPassword(pw.newPw);
+                doc.save(callback);
+            }
+        });
     },
     findUser : function(options, callback){
         options.select = options.select || '_id';

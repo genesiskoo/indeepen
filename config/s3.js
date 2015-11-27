@@ -3,9 +3,9 @@
  */
 var s3 = {
     region : 'ap-northeast-1',
-    accessKeyId : 'AKIAIHCG3CRFQDPHGX2A',
-    secretAccessKey : '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',
-    bucketName : 'in-deepen'
-}
+    accessKeyId : 'AKIAIYZZQEJDLKT6MKCQ',
+    secretAccessKey : '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',
+    bucketName : 'indeepen-s3'
+};
 
 module.exports = s3;

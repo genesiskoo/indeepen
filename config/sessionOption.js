@@ -4,7 +4,7 @@
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 var sessionStoreOptions = {
-    url : 'mongodb://54.199.219.43:3000/session'
+    url : 'mongodb://52.192.126.247:3000/session'
 };
 
 var sessionOptions = {

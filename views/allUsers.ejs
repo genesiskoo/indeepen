@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+    <h2>All Blogger</h2>
+    <h3><a href="/">Go To Menu......</a></h3>
+        <ul>
+        <% users.forEach(function(user) { %>
+            <li>
+                BlogKey : <%= user._id %><br>
+                userKey : <%= user._user._id%><br>
+                email : <%= user._user.email%><br>
+                nick : <%= user.nick%><br>
+                blogType : <%= user.type%>
+            </li>
+            <br>
+        <% })%>
+        </ul>
+    </body>
+</html>

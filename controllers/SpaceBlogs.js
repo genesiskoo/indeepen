@@ -38,7 +38,8 @@ exports.addSpaceBlog = function (req, res, next) {
 
     //var userKey = req.session['userKey']
     var spaceInfo = {
-        _user : userKey,
+        //_user : req.body.userId,
+        _user : req.user.userKey,
         type: 1,
         nick: req.body.nick,
         location: {
@@ -311,7 +312,7 @@ exports.deleteSpaceBlog = function (req, res, next) {
         var error = new Error('URL 확인 부탁합니다.');
         error.code = 400;
         return next(error);
-    };
+    }
     Blog.removeBlog(blogId, function(err,doc){
         if (err) {
             console.error('ERROR DELETING THE BLOG', err);

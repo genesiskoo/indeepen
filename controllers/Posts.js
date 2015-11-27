@@ -27,21 +27,20 @@ module.exports.getPosts = function(req, res, next){
     var emotion = req.query.emotion;
     var field = req.query.field;
     //1. 회원의 myArtists를 가져온다.
-    User.findMyArtistIds(userKey, function(err, myArtists){
+    User.findMyArtistIds(req.user.userKey, function(err, myArtists){
         if(err){
             console.error('ERROR GETTING MY ARTISTS ', err);
             var error = new Error('myArtists 가져오기 실패');
             error.code = 400;
             return next(error);
         }
-        //console.log('myArtist ', myArtists.myArtists);
+        console.log('myArtist ', myArtists.myArtists);
         var lastSeen = null;
         if(!isStart){
             lastSeen = req.session['fanPage'];
         }
-        console.log('session id ', req.sessionID);
         // 2. 회원이 등록한 work post와 회원의 artist가 등록한 work/show post를 가져온다.
-        Post.findPostsAtFanPage(blogKey, myArtists.myArtists, emotion, field, lastSeen, function(err, docs){
+        Post.findPostsAtFanPage(req.user.activityBlogKey, myArtists.myArtists, emotion, field, lastSeen, function(err, docs){
             if(err){
                 console.error('ERROR GETTING FAN PAGE ', err);
                 var error = new Error('posts 를 가져올 수 없음.');
@@ -172,7 +171,7 @@ module.exports.changeLike = function (req, res, next) {
     var status = req.params.likeStatus;
     console.log('postId', id);
     console.log('likeStatus', status);
-    var blogKey = req.body.blogKey;
+    var blogKey = req.user.artistBlogKey;
     if (status == 'like') { // 좋아요
         Post.pushLike(id, blogKey, function (err, doc) {
             if (err) {
@@ -225,6 +224,8 @@ module.exports.reportPost = function (req, res, next) {
         error.code = 400;
         return next(error);
     }
+    var blogKey = req.user.artistBlogKey;
+    console.log('req.user.artistBlogKey ', blogKey);
     Report.isReported(postId, blogKey, function (err, isReported) {
         if (err) {
             console.error('ERROR CHECK REPORTER ', err);
@@ -240,7 +241,6 @@ module.exports.reportPost = function (req, res, next) {
                     error.code = 400;
                     return next(error);
                 }
-                console.log('RESULT SAVE REPORT ', doc);
                 var msg = {
                     code: 200,
                     msg: 'Success'
@@ -267,16 +267,13 @@ module.exports.reportPost = function (req, res, next) {
 module.exports.addComment = function (req, res, next) {
     console.log('addComment');
     var postId = req.params.postId;
-    Comment.saveComment(postId, req.body.writer, req.body.content, function (err, doc) {
+    Comment.saveComment(postId, req.user.activityBlogKey, req.body.content, function (err, doc) {
         if (err) {
             console.error('ERROR AT ADD REPLY - ', err);
             var error = new Error('댓글을 입력할 수 없습니다.');
             error.code = 400;
             return next(error);
         }
-        // web....
-        //res.redirect('/posts/' + postId + '/comments');
-
         // app ...
          var msg = {
          code : 200,
@@ -310,15 +307,7 @@ module.exports.getComments = function (req, res, next) {
             error.code = 400;
             return next(error);
         }
-        // web에서 입력할때 글쓴이를 편하게 하기 위해....;;;
-        /* Blog.findBlogs(function(err, blogs){
-         res.render('add_reply', {postId : id, replies : docs, users : blogs});
-         });*/
-
-        // app...
-        //lastSeenOfComments = docs.slice(-1)[0].createAt;
         if(docs.length != 0){
-            //console.log(docs.slice(-1)[0]._id);
             req.session[id] = docs.slice(-1)[0]._id;
 
             var msg = {

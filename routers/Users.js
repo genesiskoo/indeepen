@@ -6,14 +6,20 @@ var express = require('express');
 var router = express.Router();
 var User = require('./../controllers/Users');
 
+var auth = require('./../config/middlewares/authorization');
+var userAuth = [auth.requiresLogin];
+var pwAuth = [auth.requiresLogin, auth.user.hasAuthorization];
+
 router.post('/', User.join);
 
 router.post('/emailCheck', User.checkEmail);
 
-router.put('/pw', User.changePw);
+router.put('/pw', pwAuth, User.changePw);
 
-router.get('/info', User.getUserInfo);
+router.get('/info', userAuth, User.getUserInfo);
 
-router.put('/activityMode', User.changeActivityMode);
+router.put('/activityMode', userAuth, User.changeActivityMode);
+
+
 
 module.exports = router;

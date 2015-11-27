@@ -10,7 +10,7 @@ var Blog = require('./../../models/Blogs');
 var async = require('async');
 
 module.exports = new LocalStrategy({
-    usernameField : 'email',
+   usernameField : 'email',
     passwordField : 'password'
 },
 function(email, password, done){

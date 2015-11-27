@@ -6,21 +6,24 @@ var express = require('express');
 var router = express.Router();
 var Blog = require('./../controllers/Blogs');
 
+var auth = require('./../config/middlewares/authorization').blog;
+
+
 router.get('/:blogId', Blog.getBlogInfo);
 
-router.put('/:blogId/bg', Blog.modifyBgOfBlog);
+router.put('/:blogId/bg', auth.hasAuthorization, Blog.modifyBgOfBlog);
 
 router.get('/:blogId/myFans', Blog.getFansOfBlog);
 router.get('/:blogId/myArtists', Blog.getArtistsOfBlog);
 
 router.get('/:blogId/iMissYous', Blog.getiMissYous);
-router.post('/:blogId/iMissYous', Blog.addiMissYou);
+router.post('/:blogId/iMissYous', auth.hasAlreadyDone, Blog.addiMissYou);
 
 router.get('/:blogId/myWorks', Blog.getWorkPostsOfBlogger);
 router.get('/:blogId/myLikes', Blog.getLikePostsOfBlogger);
 router.get('/:blogId/myShows', Blog.getMyShows);
 
 // 이 router 는 무조건 마지막에 있어야 함....
-router.put('/:blogId/:fanStatus', Blog.changeFanOfBlog);
+router.put('/:blogId/:fanStatus', auth.hasAlreadyDone, Blog.changeFanOfBlog);
 
 module.exports = router;

@@ -3,19 +3,9 @@
  */
 var formidable = require('formidable'),
     pathUtil = require('path');
-var fs = require('fs');
+
 var async = require('async');
 var randomstring = require('randomstring');
-var AWS = require('aws-sdk');
-
-var awsS3 = require('./../config/s3');
-AWS.config.region = awsS3.region;
-AWS.config.accessKeyId = awsS3.accessKeyId;
-AWS.config.secretAccessKey = awsS3.secretAccessKey;
-
-// Listup All Files
-var s3 = new AWS.S3();
-var bucketName = awsS3.bucketName;
 var uploadUrl = __dirname + '/../upload';
 
 var Blog = require('./../models/Blogs');
@@ -96,32 +86,13 @@ module.exports.modifyBgOfBlog = function (req, res, next) {
                 } else {
                     var randomStr = randomstring.generate(10);
                     var newFileName = 'bg_' + randomStr;
-                    var extname = pathUtil.extname(file.name);
-                    var contentType = file.type;
-                    var fileStream = fs.createReadStream(file.path);
-                    var itemKey = 'images/bg/' + newFileName + extname;
-                    var params = {
-                        Bucket: bucketName,
-                        Key: itemKey,
-                        ACL: 'public-read',
-                        Body: fileStream,
-                        ContentType: contentType
-                    };
-                    s3.putObject(params, function (err, data) {
-                        if (err) {
-                            console.error('S3 PutObject Error ', err);
+                    var extName = pathUtil.extname(file.name);
+                    Helper.uploadFile(file, newFileName, extName, 'images/bgs/', function(err, fileUrl){
+                        if(err){
                             callback(err);
-                        }
-                        else {
-                            var imageUrl = s3.endpoint.href + bucketName + '/' + itemKey;
-                            fs.unlink(file.path, function (err) {
-                                if (err) {
-                                    console.log('ERROR UNLINK FILE AT BLOG BG ', err);
-                                    callback(err);
-                                } else {
-                                    callback(null, imageUrl);
-                                }
-                            });
+                        }else{
+                            console.log('fileUrl ', fileUrl);
+                            callback(null, fileUrl.originalPath);
                         }
                     });
                 }
@@ -276,29 +247,26 @@ module.exports.getArtistsOfBlog = function (req, res, next) {
 module.exports.changeFanOfBlog = function (req, res, next) {
     var blogId = req.params.blogId;
     var fanStatus = req.params.fanStatus;
-    //var blogKey = req.user.activityBlogKey;
-    //var userKey = req.user.userKey;
     if (!blogId || !fanStatus) {
         var error = new Error('URL 확인 부탁해요.');
         error.code = 400;
         return next(error);
     }
     if (fanStatus == 'fan') {
-        Blog.pushFanToBlog(blogId, blogKey, function (err, doc) {
+        Blog.pushFanToBlog(blogId, req.user.artistBlogKey, function (err, doc) {
             if (err) {
                 console.error('ERROR PUSHING FAN TO BLOG', err);
                 var error = new Error('fan을 할 수가 없습니다.');
                 error.code = 400;
                 return next(error);
             }
-            User.pushMyArtists(userKey, blogId, function (err, doc) {
+            User.pushMyArtists(req.user.userKey, blogId, function (err, doc) {
                 if (err) {
                     console.error('ERROR PUSHING MY ARTISTS TO USER', err);
                     var error = new Error('My Artist 추가 오류... ㅠㅡㅠ');
                     error.code = 400;
                     return next(error);
                 }
-                console.log('user doc ', doc);
                 var msg = {
                     code: 200,
                     msg: 'Success'
@@ -307,21 +275,20 @@ module.exports.changeFanOfBlog = function (req, res, next) {
             });
         });
     } else if (fanStatus == 'unfan') {
-        Blog.pullFanFromBlog(blogId, blogKey, function (err, doc) {
+        Blog.pullFanFromBlog(blogId, req.user.artistBlogKey, function (err, doc) {
             if (err) {
                 console.error('ERROR PULLING FAN TO BLOG ', err);
                 var error = new Error('fan 취소를 할 수가 없습니다.');
                 error.code = 400;
                 return next(error);
             }
-            User.pullMyArtists(userKey, blogId, function (err, doc) {
+            User.pullMyArtists(req.user.userKey, blogId, function (err, doc) {
                 if (err) {
                     console.error('ERROR PULLING MY ARTISTS FROM USER ', err);
                     var error = new Error('My Artist 제거 오류... ㅠㅜㅠ');
                     error.code = 400;
                     return next(error);
                 }
-                console.log('user doc ', doc);
                 var msg = {
                     code: 200,
                     msg: 'Success'
@@ -401,7 +368,7 @@ module.exports.addiMissYou = function (req, res, next) {
         error.code = 400;
         return next(error);
     }
-    Blog.pushIMissYouToBlog(blogId, blogKey, function (err, doc) {
+    Blog.pushIMissYouToBlog(blogId, req.user.artistBlogKey, function (err, doc) {
         if (err) {
             console.error('ERROR PUSHING IMISSYOUS ', err);
             var error = new Error('iMissYou를 할 수 없습니다.');

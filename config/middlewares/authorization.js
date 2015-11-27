@@ -39,30 +39,64 @@ module.exports.post = {
                 }
             });
     },
-    hashAlreadyDone: function (req, res, next) {
-        var url = req.url.split('/');
-        var at = url[2];
-        console.log('3 ', at);
-        if (at != 'reports' && at != 'like') {
-            // 권한 체크 필요 없음
-            next();
-        } else {
-            Blog.isAlreadyDone(req.params.blogId, req.user.artistBlogKey, at, function (err, count) {
-                if (err) {
-                    console.error('ERROR @ BLOG AUTHORIZATION ', err);
-                    var error = new Error('@ fan & iMissYou');
+    hasAlreadyLiked: function (req, res, next) {
+        var url = req.url.split('/')[2];
+        console.log('post auth hasAlreadyLiked ', url);
+        var postId = req.params.postId;
+        Post.isLiked(postId, req.user.artistBlogKey, function(err, count){
+            if(err){
+                console.error('ERROR @ POST AUTHORIZATION ', err);
+                var error = new Error('@ Like Count');
+                error.code = 400;
+                return next(error);
+            }else{
+                console.log('like count', count);
+                if(url == 'like'){
+                    if(count == 0){
+                        next();
+                    }else{
+                        var error = new Error('이미 함');
+                        error.code = 400;
+                        return next(error);
+                    }
+                }else if(url == 'unlike') {
+                    if (count != 0) {
+                        next();
+                    } else {
+                        var error = new Error('한적 없음');
+                        error.code = 400;
+                        return next(error);
+                    }
+                }else{
+                    var error = new Error('url 확인하셈요.');
                     error.code = 400;
                     return next(error);
                 }
-                console.log('count ', count);
-                if(count == 0) next();
-                else{
-                    var error = new Error('이미 함');
+            }
+        });
+    },
+    whoIsWriter : function(req, res, next){
+        var postId = req.params.postId;
+        Post.findOne({_id : postId}).
+            select('-postType -createAt -updateAt -content -hashTags -likes -work -show -resources -youTube').
+            populate('_writer', '_user').
+            exec(function(err, doc){
+                if(err){
+                    console.error('ERROR @ POST AUTHORIZATION ', err);
+                    var error = new Error('@ who is Writer ?');
                     error.code = 400;
                     return next(error);
+                }else{
+                    console.log('doc', doc);
+                    if(doc._writer._user != req.user.userKey) {
+                        next();
+                    }else{
+                        var error = new Error('본인 개시글에는 할 수 없음');
+                        error.code = 400;
+                        return next(error);
+                    }
                 }
             });
-        }
     }
 };
 var Blog = require('./../../models/Blogs');
@@ -95,7 +129,7 @@ module.exports.blog = {
                 }
             });
     },
-    hashAlreadyDone: function (req, res, next) {
+    hasAlreadyDone: function (req, res, next) {
         var url = req.url.split('/');
         var at = url[2];
         console.log('3 ', at);

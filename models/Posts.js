@@ -159,7 +159,7 @@ postSchema.methods = {
  */
 postSchema.statics = {
     /**
-     * 특정 post의 상세정보 가져오기 - pagination 추가
+     * 특정 post의 상세정보 가져오기
      * @param postId
      * @param callback
      * @returns {Promise}
@@ -286,6 +286,9 @@ postSchema.statics = {
      */
     pullLike : function(postId, blogId, callback){
         return this.findOneAndUpdate({_id : new ObjectId(postId)}, {$pull : {likes : new ObjectId(blogId)}}, callback);
+    },
+    isLiked : function(postId, blogId, callback){
+        this.count({_id : ObjectId(postId), likes : ObjectId(blogId)}, callback);
     },
     removePost : function(postId, callback){
         //this.findOneAndRemove({_id : new ObjectId(postId)}, callback);

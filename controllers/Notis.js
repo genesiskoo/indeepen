@@ -12,14 +12,14 @@ module.exports.getNotis = function (req, res, next) {
     });
 };
 
-module.exports.makeNoti = function (req, res, next, type, id, receiver,sender, how) {
+module.exports.makeNotiForTaggedArtists = function (type, id, receiver, sender, how) {
     //보내는 사람
     var notiInfo = {
         who: sender,
         _receiver: receiver,
         where : id,
-        how : how,
-        what: what
+        how : how, // 0 : 좋아요, 1: 댓글, 2: 내 팬, 3: imissyou, 4: tag
+        what: what // 0 : 위치없음 1 : 문화, 2 : 예술, 3 : 개인 블로그 , 4 : 공간 블로그,  5: 협력제안,
     };
 
     Noti.saveNoti(notiInfo, function (err) {
@@ -38,3 +38,4 @@ module.exports.makeNoti = function (req, res, next, type, id, receiver,sender, h
 module.exports.checkNoti = function (req, res, next) {
     res.end('checkNotis');
 };
+

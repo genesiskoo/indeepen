@@ -23,6 +23,7 @@ var Comment = require('./../models/Comments');
 var Post = require('./../models/Posts');
 var Blog = require('./../models/Blogs');
 var Helper = require('./Helper.js');
+var Noti = require('./Notis');
 
 //add_form
 module.exports.getShowAddForm = function (req, res, next) {
@@ -175,10 +176,10 @@ module.exports.addShowPost = function (req, res, next) {
                     .on('field', function (field, value) {
                         if (field == 'artist') {
                             var artist = {
-                                _user : value
+                                _user: value
                             };
                             uploadInfo.tagArtists.push(artist);
-                        }else if(field == 'tag'){
+                        } else if (field == 'tag') {
                             uploadInfo.tagArtists.push(JSON.parse(value));
                         } else {
                             console.log('file 아님 ', field);
@@ -286,10 +287,21 @@ module.exports.addShowPost = function (req, res, next) {
                         error.code = 400;
                         next(error);
                     } else {
-                        console.log('Done' ,doc);
+                        console.log('Done', doc);
                         callback();
                     }
                 });//Post.savePost
+
+                if (tagArtists.size > 0) {
+                    async.each(tagArtists, function (artist, callback) {
+                        var postId = req.body.
+                        Noti.makeNotiForTaggedArtists(artist._user, function (err, doc) {
+
+                        });
+                        callback();
+                    });//async
+                }//if
+                //saveNotis
             }
         ],
         function (err) {

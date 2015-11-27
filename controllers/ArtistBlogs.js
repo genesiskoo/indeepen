@@ -86,10 +86,21 @@ module.exports.getArtistBlogProfile = function(req, res, next){
            return next(error);
         }
         console.log('profile ', doc);
+        var info = {
+            _id : doc._id,
+            _user : doc._user._id,
+            email : doc._user.email,
+            name : doc._user.name,
+            nick : doc._user.nick,
+            phone : doc.phone,
+            intro : doc.intro,
+            type : doc.type,
+            isPublic : doc._user.isPublic
+        };
         var msg = {
             code : 200,
             msg : 'Success',
-            result : doc
+            result : info
         };
         res.status(msg.code).json(msg);
     });
@@ -173,15 +184,6 @@ module.exports.modifyArtistBlogProfilePhoto = function(req, res, next){
                 if(file == null){
                     console.log('not file');
                     callback(null, defaultArtistProfileUrl);
-                    //fs.unlink(file.path, function(err){
-                    //    if(err){
-                    //        var error = new Error('파일 삭제를 실패했습니다.');
-                    //        error.code = 400;
-                    //        return next(error);
-                    //    }else{
-                    //        callback(null, defaultArtistProfileUrl);
-                    //    }
-                    //});
                 }else {
                     var randomStr = randomstring.generate(10);
                     var newFileName = 'profile_' + randomStr;

@@ -52,7 +52,7 @@ exports.addSpaceBlog = function (req, res, next) {
         intro: req.body.intro
     };
     //res.json(spaceInfo);
-    Blog.saveBlog2(spaceInfo, function (err, docs) {
+    Blog.saveBlog(spaceInfo, function (err, docs) {
         if (err) {
             console.error('err ', err);
             var err = new Error('공간 블로그 등록실패');
@@ -131,15 +131,6 @@ exports.modifyProfilePhoto = function (req, res, next) {
                 if (file == null) {
                     console.log('not file');
                     callback(null, defaultArtistProfileUrl);
-                    //fs.unlink(file.path, function(err){
-                    //    if(err){
-                    //        var error = new Error('파일 삭제를 실패했습니다.');
-                    //        error.code = 400;
-                    //        return next(error);
-                    //    }else{
-                    //        callback(null, defaultArtistProfileUrl);
-                    //    }
-                    //});
                 } else {
                     var randomStr = randomstring.generate(10);
                     var newFileName = 'profile_' + randomStr;

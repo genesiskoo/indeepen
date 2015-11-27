@@ -1,5 +1,5 @@
 /**
- * Created by heuneul on 2015-11-05.
+ * Created by Moon Jung Hyun on 2015-11-05.
  */
 var s3 = {
     region : 'ap-northeast-1',
@@ -8,4 +8,4 @@ var s3 = {
     bucketName : 'in-deepen'
 }
 
-module.exports = s3
+module.exports = s3;

@@ -108,8 +108,8 @@ blogSchema.statics = {
     },
     findProfileOfArtistBlog : function(blogId, callback){
         this.findOne({_id : new ObjectId(blogId)}).
-            select('-type -bgPhoto -nick -profilePhoto -iMissYous -fans -location -createAt -updateAt -isActivated').
-            populate('_user', '-password -profilePhoto -intro -createAt -updateAt').
+            select('-bgPhoto -nick -profilePhoto -iMissYous -fans -location -createAt -updateAt -isActivated').
+            populate('_user', '-hashed_password -salt -phone -myArtists -profilePhoto -intro -createAt -updateAt').
             exec(callback);
     },
 
@@ -123,6 +123,7 @@ blogSchema.statics = {
             exec(callback);
     },
     updateProfilePhotoOfBlog : function(blogId, newUrl, callback){
+        console.log('blogId ', blogId);
         this.findOneAndUpdate({_id : new ObjectId(blogId)}, {$set : {profilePhoto : newUrl}}, callback);
     },
     updateBgPhotoOfBlog : function(blogId, newUrl, callback){
@@ -134,6 +135,7 @@ blogSchema.statics = {
                 callback(err, null);
             }else{
                 doc.fans.unshift(new ObjectId(userBlogId));
+                console.log('pushFanToBlog ', doc);
                 doc.save(callback);
             }
         });
@@ -183,7 +185,7 @@ blogSchema.statics = {
     // search
     findBlogIds : function(key, type, callback){
         this.find({nick : {$regex : key}, type : type})
-            .select('-_user -type -bgPhoto -intro -iMissYous -fans -location -createAt -updateAt -isActivated -phone -email')
+            .select('-_user -bgPhoto -intro -iMissYous -fans -location -createAt -updateAt -isActivated -phone -email')
             .exec(callback);
     }
 };

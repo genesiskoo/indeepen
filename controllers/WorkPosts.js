@@ -2,6 +2,9 @@
  * Created by Moon Jung Hyun on 2015-11-07.
  */
 
+var userKey = '564a926a29c7cf6416be1117'; // session에 있을 정보
+//var blogKey = '564a926b29c7cf6416be1118'; // session에 있을 정보
+
 var formidable = require('formidable'),
     pathUtil = require('path');
 var fs = require('fs');
@@ -24,6 +27,7 @@ module.exports.showAddWorkPostPage = function(req, res){
     fs.createReadStream(__dirname + '/../views/workPost.html').pipe(res);
 };
 
+var User = require('./../models/Users');
 var Comment = require('./../models/Comments');
 var Post = require('./../models/Posts');
 var Helper = require('./Helper');
@@ -42,9 +46,9 @@ module.exports.addWorkPost = function(req, res, next){
                     files: []
                 };
                 var form = new formidable.IncomingForm();
-                // aws 에 저장되는 경로....
                 form.uploadDir = uploadUrl;
-
+                form.encoding ='utf-8';
+                form.keepExtensions = true;
                 form
                     .on('field', function (field, value) {
                         console.log('file 아님 ', field);
@@ -66,15 +70,41 @@ module.exports.addWorkPost = function(req, res, next){
             },
             function (uploadInfo, callback) {
                 console.log('uploadInfo', uploadInfo);
-                var files = uploadInfo.files;
+                //var files = uploadInfo.files;
                 var imageUrls = [];
+                var fileUrls = [];
                 var order = 0;
                 var randomStr = randomstring.generate(10); // 10자리 랜덤
                 async.each(uploadInfo.files, function(file, callback){
                     var newFileName = 'content_'+ randomStr+'_' + (order++) ;
-                    var extname = pathUtil.extname(file.name);
+                    var extName = pathUtil.extname(file.name);
                     var contentType = file.type;
+                    var isImageExist = contentType.indexOf('image');
 
+                    if(isImageExist != -1){
+                        Helper.uploadImageAndThumbnail(file, newFileName, extName, 'contents/images', function(err, fileUrl){
+                            if(err){
+                                console.error('uploadImgaeAndThumbname error ', err);
+                                return;
+                            }else{
+                                console.log('uploadImageAndThumbnail fileUrl '+order, fileUrl);
+                                fileUrls.push(fileUrl);
+                                callback();
+                            }
+                        });
+                    }else{
+                        Helper.uploadFile(file, newFileName, extName, 'contents/songs', function(err, fileUrl){
+                            if(err){
+                                console.error('uploadAudio error', err);
+                                return;
+                            }else{
+                                console.log('uploadAudio '+order, fileUrl);
+                                fileUrls.push(fileUrl);
+                                callback();
+                            }
+                        });
+                    }
+/*
                     var readStream = fs.createReadStream(file.path);
                     // s3에 저장될 파일 이름 지정
                     var itemKey = 'contents/images/' + newFileName + extname;
@@ -106,7 +136,7 @@ module.exports.addWorkPost = function(req, res, next){
                                 }
                             });
                         }
-                    });
+                    });*/
 
                 }, function(err){
                     if(err){
@@ -114,17 +144,17 @@ module.exports.addWorkPost = function(req, res, next){
                         error.code = 400;
                         return next(error);
                     }
-                    console.log('before ', imageUrls);
-                    imageUrls.sort(function(a, b){
-                        if(a.url < b.url)
+                    console.log('before ', fileUrls);
+                    fileUrls.sort(function(a, b){
+                        if(a.originalPath < b.originalPath)
                             return -1;
-                        else if(a.url > b.url)
+                        else if(a.originalPath > b.originalPath)
                             return 1;
                         else
                             return 0;
                     });
-                    console.log('after ', imageUrls);
-                    callback(null, uploadInfo.workType, uploadInfo.emotion, uploadInfo.blogId, uploadInfo.content, imageUrls);
+                    console.log('after ', fileUrls);
+                    callback(null, uploadInfo.workType, uploadInfo.emotion, uploadInfo.blogId, uploadInfo.content, fileUrls);
                 });
             },
             function (workType, emotion, blogId, content, urls, callback) {
@@ -137,7 +167,7 @@ module.exports.addWorkPost = function(req, res, next){
                         hashTag.push(tmp);
                 }
 
-                // db 저장
+                /*// db 저장
                 var postInfo = {
                     postType : 0,
                     _writer : blogId,
@@ -175,7 +205,47 @@ module.exports.addWorkPost = function(req, res, next){
                             }
                         });
                     }
+                });*/
+                // db 저장
+                var postInfo = {
+                    postType : 0,
+                    _writer : blogId,
+                    content : content,
+                    hashTags : hashTag,
+                    likes : [],
+                    work : {
+                        type : workType,
+                        emotion : emotion
+                    },
+                    resources : urls
+                };
+                Post.savePost(postInfo, function(err, doc){
+                    if(err){
+                        console.error('Error', err);
+                        var error = new Error('포스팅 실패');
+                        error.code = 400;
+                        next(error);
+                    }else{
+                        console.log('Done Save POst ', doc);
+                        callback();
+                    }
                 });
+                /*async.each(urls, function(url, callback){
+                    //console.log('url', url);
+                    // s3 경로 저장
+                    postInfo.resources.push({type : url.contentType, originalPath : url.url});
+                    callback();
+                }, function(err){
+                    if(err){
+                        console.error('save workPosts async error ', err);
+                        var error = new Error('file url 관리에서 실패.....');
+                        error.code = 400;
+                        return next(error);
+                    }else{
+                        console.log("postInfo", postInfo);
+
+                    }
+                });*/
             }
         ],
         function (err) {
@@ -325,10 +395,8 @@ module.exports.getPostsByHashTag = function(req, res, next){
         if(docs.length != 0){
             if(type == 0){
                 Helper.findWorkPostsVerOnePictureList(req, res, 'hashTag', docs);
-                //findPostsByHashTagVerOnePictureList(req, res, docs);
             }else{
                 Helper.findPostsVerPostList(req, res, type, 'hashTag', docs);
-                //findPostsByHashTagVerPostList(req, res, type,docs);
             }
         }else{
             var error =new Error('더 이상 없음');
@@ -339,3 +407,43 @@ module.exports.getPostsByHashTag = function(req, res, next){
     });
 };
 
+/**
+ * 추천 work posts 가져오기
+ * @param req
+ * @param res
+ * @param next
+ */
+module.exports.getRecommendWorkPosts = function(req, res, next){
+    // 1. myArtists 를 가져온다.
+    //var key = req.user.userKey;
+    //console.log('userKey ', key);
+    var isStart = req.query.isStart;
+    var type = req.query.type;
+    var lastSeen = null;
+    var sessionId = 'recommend';
+    if(!isStart){
+        lastSeen = req.session[sessionId];
+    }
+    User.findMyArtistIds(userKey, function(err, doc){
+        if(err){
+            console.error('ERROR GETTING MY ARTISTS ', err);
+            var error = new Error('myArtists 를 가져올 수 없음');
+            error.code = 400;
+            return next(error);
+        }
+        console.log('doc ', doc);
+
+        Post.findRecommendWorkPosts(['564a926b29c7cf6416be1118'],doc.myArtists, type, lastSeen, function(err, docs){
+            if(docs.length != 0){
+                if(type == 0)
+                    Helper.findWorkPostsVerOnePictureList(req, res, sessionId, docs);
+                else
+                    Helper.findPostsVerPostList(req, res, type, sessionId, docs);
+            }else{
+                var error = new Error('더 이상 없음');
+                error.code = 404;
+                return next(error);
+            }
+        });
+    });
+};

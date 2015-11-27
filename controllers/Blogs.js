@@ -21,11 +21,12 @@ var uploadUrl = __dirname + '/../upload';
 var Blog = require('./../models/Blogs');
 var Post = require('./../models/Posts');
 var User = require('./../models/Users');
+var Comment = require('./../models/Comments');
 var Helper = require('./Helper');
 
-var defaultBgPhotoUrl = 'https://s3-ap-northeast-1.amazonaws.com/in-deepen/images/bg/default_bg.png';
-var userKey = '563ef1ca401ae00c19a15828'; // session에 있을 정보
-var blogKey = '563ef1cb401ae00c19a15838'; // session에 있을 정보
+var defaultBgPhotoUrl = 'http://s3-ap-northeast-1.amazonaws.com/in-deepen/images/bg/default_bg.png';
+var userKey = '564a926a29c7cf6416be1117'; // session에 있을 정보
+var blogKey = '564a926b29c7cf6416be1118'; // session에 있을 정보
 
 var perPage = 30;
 
@@ -77,7 +78,7 @@ module.exports.modifyBgOfBlog = function (req, res, next) {
         [
             function (callback) {
                 var form = new formidable.IncomingForm();
-                form.encoding = 'utf-8'
+                form.encoding = 'utf-8';
                 form.uploadDir = uploadUrl;
                 form.keepExtensions = true;
                 form.parse(req, function (err, fields, files) {
@@ -275,8 +276,8 @@ module.exports.getArtistsOfBlog = function (req, res, next) {
 module.exports.changeFanOfBlog = function (req, res, next) {
     var blogId = req.params.blogId;
     var fanStatus = req.params.fanStatus;
-    var blogKey = req.body.blogKey;
-    var userKey = req.body.userKey;
+    //var blogKey = req.user.activityBlogKey;
+    //var userKey = req.user.userKey;
     if (!blogId || !fanStatus) {
         var error = new Error('URL 확인 부탁해요.');
         error.code = 400;
@@ -426,30 +427,30 @@ module.exports.getWorkPostsOfBlogger = function (req, res, next) {
     var blogId = req.params.blogId;
     var isStart = req.query.isStart;
     var type = req.query.type;
-    if(!blogId){
+    if (!blogId) {
         var error = new Error('URL 확인 부탁해요.');
         error.code = 400;
         return next(error);
     }
     var lastSeenOfMyWork = null;
-    var tmpKey = 'mw'+blogId;
-    if(!isStart){
+    var tmpKey = 'mw' + blogId;
+    if (!isStart) {
         lastSeenOfMyWork = req.session[tmpKey];
     }
 
-    Post.findWorkPostsAtBlog(blogId, type,lastSeenOfMyWork, function(err, docs){
-        if(err){
+    Post.findWorkPostsAtBlog(blogId, type, lastSeenOfMyWork, function (err, docs) {
+        if (err) {
             console.error('ERROR GETTING WORK PORST AT BLOG ', err);
             var error = new Error('work post를 가져올 수 없습니다.');
             error.code = 400;
             return next(error);
         }
-        if(docs.length != 0){
-            if(type == 0)
+        if (docs.length != 0) {
+            if (type == 0)
                 Helper.findWorkPostsVerOnePictureList(req, res, tmpKey, docs);
             else
                 Helper.findPostsVerPostList(req, res, type, tmpKey, docs);
-        }else{
+        } else {
             var error = new Error('더 이상 없음.');
             error.code = 404;
             return next(error);
@@ -467,30 +468,30 @@ module.exports.getLikePostsOfBlogger = function (req, res, next) {
     var blogId = req.params.blogId;
     var isStart = req.query.isStart;
     var type = req.query.type;
-    if(!blogId){
-        var error =new Error('URL 확인 부탁해요.');
+    if (!blogId) {
+        var error = new Error('URL 확인 부탁해요.');
         error.code = 400;
         return next(error);
     }
     var lastSeenOfLikes = null;
-    var tmpKey = 'ml'+blogId;
-    if(!isStart){
+    var tmpKey = 'ml' + blogId;
+    if (!isStart) {
         lastSeenOfLikes = req.session[tmpKey];
     }
-    Post.findLikePostsAtBlog(blogId, type, lastSeenOfLikes, function(err, docs){
-        if(err){
+    Post.findLikePostsAtBlog(blogId, type, lastSeenOfLikes, function (err, docs) {
+        if (err) {
             console.error('ERROR GETTING LIKE POSTS AT BLOG ', err);
             var error = new Error('like posts를 가져올 수 없습니다.');
             error.code = 400;
             return next(error);
         }
-        if(docs.length != 0){
-            if(type == 0)
+        if (docs.length != 0) {
+            if (type == 0)
                 Helper.findWorkPostsVerOnePictureList(req, res, tmpKey, docs);
             else
                 Helper.findPostsVerPostList(req, res, type, tmpKey, docs);
-        }else{
-            var error =new Error('더 이상 없음');
+        } else {
+            var error = new Error('더 이상 없음');
             error.code = 404;
             return next(error);
         }
@@ -506,14 +507,15 @@ module.exports.getMyShows = function (req, res, next) {
         error.code = 400;
         return next(error);
     }
-    var tmpKey = 'ms' + blogId;
-    var lastSeen = null;
-    if (!isStart) {
-        lastSeen = req.session[tmpKey];
-    }
-    console.log('type : ' ,type);
+    var showList = [];
+    // type Switch
     switch (type) {
         case '0':
+            var tmpKey = 'ms' + blogId;
+            var lastSeen = null;
+            if (!isStart) {
+                lastSeen = req.session[tmpKey];
+            }
             Post.myShow(blogId, lastSeen, function (err, docs) {
                 if (err) {
                     console.error('ERROR GETTING MY SHOWS ', err);
@@ -522,61 +524,113 @@ module.exports.getMyShows = function (req, res, next) {
                     return next();
                 }
                 ;
-
-                if (docs.length != 0) {
-                    req.session[tmpKey] = docs.slice(-1)[0]._id;
-                    async.each(docs, function (doc, callback) {
-                        doc.resources = doc.resources[0];
+                //seq 및 CommentCnt
+                var order = 0;
+                async.each(docs, function (doc, callback) {
+                    doc.resources = doc.resources[0];
+                    var result = {
+                        seq: (order++),
+                        postInfo: doc
+                    };
+                    Comment.countCommentsOfPost(doc._id, function (err, count) {
+                        if (err) {
+                            console.error('CANT COUNT COMMENTS', err);
+                            var error = new Error('countComments Error');
+                            error.code = 400;
+                            return next(error);
+                        }
+                        result['commentCnt'] = count;
+                        //console.log('result : ', result);
+                        showList.push(result);
                         callback();
-                    }, function (err) {
+                    });//CommentCnt
+                }, function (err) {
+                    if (err) {
+                        var error = new Error('error 발생!');
+                        error.code = 400;
+                        return next(error);
+                    }
+                    showList.sort(function (a, b) {
+                        return a.seq > b.seq;
+                    });
+                    if (showList.length != 0) {
+                        req.session[tmpKey] = showList.slice(-1)[0].postInfo._id;
+                        //console.log('sliced : ',showList.slice(-1)[0].postInfo._id);
                         var msg = {
                             code: 200,
                             msg: 'Success',
-                            result: docs
+                            result: showList
                         };
                         console.log('게시물 수 : ', docs.length);
-                        console.log(msg);
                         res.status(msg.code).json(msg);
-                    });
-                } else {
-                    var error = new Error('더 이상 없음');
-                    error.code = 404;
-                    return next(error);
-                }
-
+                    } else {
+                        var error = new Error('더 이상 없음');
+                        error.code = 404;
+                        return next(error);
+                    }
+                });//async
             });//myShow
             break;
         case '1':
+            var tmpKey = 'ls' + blogId;
+            var lastSeen = null;
+            if (!isStart) {
+                lastSeen = req.session[tmpKey];
+            }
             Post.likedShow(blogId, lastSeen, function (err, docs) {
-                if (err) {
-                    console.error('ERROR GETTING MY SHOWS ', err);
-                    var error = new Error('내가참여한 문화를 가져올 수 없어요!');
-                    error.code = 400;
-                    return next();
-                }
-                ;
-
-                if (docs.length != 0) {
-                    req.session[tmpKey] = docs.slice(-1)[0]._id;
+                    if (err) {
+                        console.error('ERROR GETTING MY LIKED ', err);
+                        var error = new Error('나의 좋아요 문화를 가져올 수 없어요!');
+                        error.code = 400;
+                        return next();
+                    }
+                    ;
+                    //seq 및 CommentCnt
+                    var order = 0;
                     async.each(docs, function (doc, callback) {
                         doc.resources = doc.resources[0];
-                        callback();
-                    }, function (err) {
-                        var msg = {
-                            code: 200,
-                            msg: 'Success',
-                            result: docs
+                        var result = {
+                            seq: (order++),
+                            postInfo: doc
                         };
-                        console.log('게시물 수 : ', docs.length);
-                        res.status(msg.code).json(msg);
-                    });
-                } else {
-                    var error = new Error('더 이상 없음');
-                    error.code = 404;
-                    return next(error);
+                        Comment.countCommentsOfPost(doc._id, function (err, count) {
+                            if (err) {
+                                console.error('CANT COUNT COMMENTS', err);
+                                var error = new Error('countComments Error');
+                                error.code = 400;
+                                return next(error);
+                            }
+                            result['commentCnt'] = count;
+                            console.log('result : ', result);
+                            showList.push(result);
+                            callback();
+                        });//CommentCnt
+                    }, function (err) {
+                        if (err) {
+                            var error = new Error('error 발생!');
+                            error.code = 400;
+                            return next(error);
+                        }
+                        showList.sort(function (a, b) {
+                            return a.seq > b.seq;
+                        });
+                        if (showList.length != 0) {
+                            req.session[tmpKey] = showList.slice(-1)[0].postInfo._id;
+                            var msg = {
+                                code: 200,
+                                msg: 'Success',
+                                result: showList
+                            };
+                            console.log('게시물 수 : ', docs.length);
+                            res.status(msg.code).json(msg);
+                        } else {
+                            var error = new Error('더 이상 없음');
+                            error.code = 404;
+                            return next(error);
+                        }
+                    });//async
                 }
-
-            });//myShow
+            );//myLiked
             break;
         default:
             var error = new Error('type 확인 부탁해요.');

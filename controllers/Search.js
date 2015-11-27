@@ -108,7 +108,7 @@ module.exports.searchAtHashTag = function(req, res, next){
             var msg = {
                 code : 200,
                 msg : 'Success',
-                result : docs
+                hashTags : docs
             };
             res.status(msg.code).json(msg);
         }else{

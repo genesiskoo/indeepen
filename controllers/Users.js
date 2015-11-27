@@ -5,8 +5,8 @@
 var User = require('./../models/Users');
 var Blog = require('./../models/Blogs');
 
-var userKey = '563ef1ca401ae00c19a15828'; // session에 있을 정보
-var blogKey = '563ef1cb401ae00c19a15838'; // session에 있을 정보
+var userKey = '564a926a29c7cf6416be1117'; // session에 있을 정보
+//var blogKey = '564a926b29c7cf6416be1118'; // session에 있을 정보
 
 module.exports.join = function(req, res, next){
     var email = req.body.email;
@@ -33,11 +33,23 @@ module.exports.join = function(req, res, next){
             return next(error);
         }
         console.log('user join doc ', doc);
-        var msg = {
-            code : 200,
-            msg : 'Success'
+        var blogInfo = {
+            _user : doc._id,
+            nick : doc.nick,
+            profilePhoto : doc.profilePhoto
         };
-        res.status(msg.code).json(msg);
+        Blog.saveBlog(blogInfo, function(err, doc){
+            if(err){
+                console.error('Save Blog Error in User post event ', err);
+                return;
+            }
+            console.log('artistBlog ', doc);
+            var msg = {
+                code : 200,
+                msg : 'Success'
+            };
+            res.status(msg.code).json(msg);
+        });
     });
 };
 
@@ -163,6 +175,7 @@ module.exports.changeActivityMode = function(req, res, next){
             return next(error);
         }
         console.log('doc ', doc);
+        // req.user.activityBlogKey = blogId;
         var msg = {
             code : 200,
             msg : 'Success'

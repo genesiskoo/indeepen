@@ -6,6 +6,8 @@ var Post = require('./Posts');
 var Blog = require('./Blogs');
 var User = require('./Users');
 
+var userKey = "5657fd407b005d2403f932b2"; //김네임 blog
+
 var notiSchema = new Schema({
 
     _who: {
@@ -39,8 +41,17 @@ notiSchema.statics = {
             .sort({createAt: -1})
             .exec(callback);
     },
-    saveNoti: function (notiInfo, callback) {
-        console.log(notiInfo);
+    saveNoti: function (userId,where,what,how, callback) {
+        //var who = req.session.userId;
+        var notiInfo ={
+            _who : userKey, //작성자 session에서 가져옴
+            _receiver : userId,
+            where : where,
+            what : what,
+            how : how
+        };
+
+        //console.log(notiInfo);
         return this.create(notiInfo, callback);
     }
 };

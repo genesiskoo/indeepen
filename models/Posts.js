@@ -8,6 +8,7 @@ var ObjectId = mongoose.Types.ObjectId;
 
 var Blog = require('./Blogs');
 var HashTag = require('./HashTags');
+var Noti = require('./Notis');
 
 var postSchema = new Schema({
     postType : Number, // 0(일반 - work), 1(문화예술 - show),
@@ -77,16 +78,42 @@ postSchema.post('save', function(doc){
     console.log('hashTag', hashTag);
     if(hashTag.length != 0){
         hashTag.forEach(function(tag){
-            console.log('tag ', tag);
+            //console.log('tag ', tag);
             HashTag.updateIncCntById(tag, function(err, doc){
                 if(err){
                     console.error('ERROR HASH TAG INC ', err);
                     return;
                 }
-                console.log('hash tag doc', doc);
+                //console.log('hash tag doc', doc);
             });
         });
-    }
+    }//if
+    var tags = doc.show.tags;
+    if(tags.length != 0){
+        tags.forEach(function(tag){
+           //console.log('tags artists UserId! : ' ,tag._user);
+            //BlogId로 UserId찾기
+            Blog.findUserIdOfBlog(tag._user,function(err,result){
+               if(err) {
+                   console.error('Getting UserId by BlogId Failed', err);
+                   var error = new Error('userId를 가져올 수 없습니다');
+                   error.code = 404;
+                   return next(err);
+               }
+                //console.log('UserId via BlogId : ',doc);
+                //postId넘기기
+                Noti.saveNoti(result._user,doc._id, 1, 4,function(err,doc){
+                    if(err){
+                        console.error('error',err);
+                        var error = new Error('Noti를 생성 실패');
+                        error.code = 404;
+                        return next(err);
+                    }
+                });//notiSave
+            });
+        });//forEach
+    }//if
+
 });
 
 /**
@@ -418,7 +445,7 @@ postSchema.statics = {
             options.$and.push({_id: {$lt: lastSeen}});
         }
         console.log('option : ', options);
-        var select = '-content -hashTags -work -show.location.point';
+        var select = '-content -hashTags -work -show.location.point -show.resources.originalPath';
             this.find(options).
             select(select).
             sort({createAt: -1}).

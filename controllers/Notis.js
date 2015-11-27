@@ -3,39 +3,46 @@
  */
 
 var Noti = require('./../models/Notis');
-
-var sender = '564aa1d94287c23c068b95dc'; //결석왕Blog
+var userKey = '5657fd407b005d2403f932b1';
 
 module.exports.getNotis = function (req, res, next) {
-    Noti.findAll(function (err, docs) {
-        res.json(docs);
+    Noti.findAllByUserId(userKey, function (err, docs) {
+        if (err) {
+            console.error('NotiList 가져오기 실패!');
+            var error = new Error('Getting Notis Failed!');
+            error.code = 404;
+            return next(error);
+        }
+        var msg = {
+            msg: "success",
+            code: 200,
+            result: docs
+        };
+        res.status(msg.code).json(msg);
     });
 };
 
-module.exports.makeNotiForTaggedArtists = function (type, id, receiver, sender, how) {
-    //보내는 사람
-    var notiInfo = {
-        who: sender,
-        _receiver: receiver,
-        where : id,
-        how : how, // 0 : 좋아요, 1: 댓글, 2: 내 팬, 3: imissyou, 4: tag
-        what: what // 0 : 위치없음 1 : 문화, 2 : 예술, 3 : 개인 블로그 , 4 : 공간 블로그,  5: 협력제안,
-    };
-
-    Noti.saveNoti(notiInfo, function (err) {
+module.exports.checkNoti = function (req, res, next) {
+    var notiId = req.params.notiId;
+    if (notiId == null) {
+        console.error('NotiId를 다시 확인해줘요', err);
+        var error = new Error('Noti 확인');
+        error.code = 404;
+        return next(error);
+    }
+    //console.log('notiId', notiId);
+    Noti.checkNoti(notiId, function (err) {
         if (err) {
-            console.error('err :',err);
-            return;
+            console.error(err);
+            var error = new Error('Noti 확인 실패');
+            error.code = 404;
+            return next(err);
         }
         var msg = {
-            code: 200,
-            msg: '알림 입력 성공'
+            msg: 'check 성공',
+            code: 200
         };
         res.status(msg.code).json(msg);
-    });//saveNoti
-};
-
-module.exports.checkNoti = function (req, res, next) {
-    res.end('checkNotis');
+    });
 };
 

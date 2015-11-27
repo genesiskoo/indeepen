@@ -291,17 +291,6 @@ module.exports.addShowPost = function (req, res, next) {
                         callback();
                     }
                 });//Post.savePost
-
-                if (tagArtists.size > 0) {
-                    async.each(tagArtists, function (artist, callback) {
-                        var postId = req.body.
-                        Noti.makeNotiForTaggedArtists(artist._user, function (err, doc) {
-
-                        });
-                        callback();
-                    });//async
-                }//if
-                //saveNotis
             }
         ],
         function (err) {

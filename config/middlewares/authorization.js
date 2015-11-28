@@ -101,9 +101,14 @@ module.exports.post = {
 };
 var Blog = require('./../../models/Blogs');
 module.exports.blog = {
+    /**
+     * 블로그 주인 체크. 주인만 가능하게 함 (수정, 삭제)
+     * @param req
+     * @param res
+     * @param next
+     */
     hasAuthorization: function (req, res, next) {
         var blogId = req.params.blogId;
-        console.log('req.blogId', blogId);
         Blog.findOne({_id: blogId}).
             select('_user').
             exec(function (err, doc) {
@@ -118,7 +123,6 @@ module.exports.blog = {
                     error.code = 404;
                     return next(error);
                 }
-                console.log('doc ', doc);
                 if (doc._user == req.user.userKey) {
                     console.log('ok');
                     next();
@@ -129,6 +133,12 @@ module.exports.blog = {
                 }
             });
     },
+    /**
+     * 기존에 했을 경우 불허
+     * @param req
+     * @param res
+     * @param next
+     */
     hasAlreadyDone: function (req, res, next) {
         var url = req.url.split('/');
         var at = url[2];
@@ -153,6 +163,37 @@ module.exports.blog = {
                 }
             });
         }
+    },
+    /**
+     * 블로그 주인 체크. 주인일 경우 불허 (fan, iMissYou)
+     * @param req
+     * @param res
+     * @param next
+     */
+    whoIsOwner : function(req, res, next){
+        var blogId = req.params.blogId;
+        Blog.findOne({_id: blogId}).
+            select('_user').
+            exec(function (err, doc) {
+                if (err) {
+                    console.error('ERROR @ BLOG AUTH ', err);
+                    var error = new Error('blog user 정보 가져오기 실패');
+                    error.code = 400;
+                    return next(error);
+                }
+                if (!doc) {
+                    var error = new Error('blog id 다시 확인하셈요');
+                    error.code = 404;
+                    return next(error);
+                }
+                if (doc._user == req.user.userKey) {
+                    var error = new Error('권한 없음요.');
+                    error.code = 401;
+                    return next(error);
+                } else {
+                    next();
+                }
+            });
     }
 };
 
@@ -185,6 +226,33 @@ module.exports.user = {
     }
 };
 
+var Comment = require('./../../models/Comments');
+module.exports.comment = {
+    hasAuthorization : function(req, res, next){
+        var commentId = req.params.commentId;
+        Comment.findCommentWriter(commentId, function(err, doc){
+            if(err){
+                console.error('ERROR @ COMMENT AUTH ', err);
+                var error = new Error('comment 정보 가져오기 실패');
+                error.code = 400;
+                return next(error);
+            }
+            if(!doc){
+                var error = new Error('comment 정보 가져오기 실패');
+                error.code = 400;
+                return next(error);
+            }
+            if(doc._writer._user == req.user.userKey){
+                console.log('ok');
+                next();
+            }else{
+                var error = new Error('권한 없음');
+                error.code = 401;
+                return next(error);
+            }
+        });
+    }
+};
 
 
 

@@ -44,15 +44,15 @@ var auth = require('./config/middlewares/authorization');
 var commonAuth = [auth.requiresLogin];
 require('./routers/TheRest.js')(app, passport);
 
-app.use('/posts', require('./routers/Posts.js'));
+app.use('/posts',  commonAuth, require('./routers/Posts.js'));
 app.use('/workPosts',  commonAuth, require('./routers/WorkPosts'));
 app.use('/showPosts', require('./routers/ShowPosts'));
-app.use('/postComments', require('./routers/PostComments'));
+app.use('/postComments', commonAuth, require('./routers/PostComments'));
 app.use('/artistBlogs', commonAuth, require('./routers/ArtistBlogs'));
 app.use('/spaceBlogs', require('./routers/SpaceBlogs'));
 app.use('/blogs', commonAuth, require('./routers/Blogs'));
 app.use('/users', require('./routers/Users'));
-app.use('/search', require('./routers/Search'));
+app.use('/search', commonAuth, require('./routers/Search'));
 app.use('/notis', require('./routers/Notis'));
 
 

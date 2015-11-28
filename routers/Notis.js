@@ -9,6 +9,9 @@ var Noti = require('./../controllers/Notis');
 //Listing
 router.get('/',Noti.getNotis);
 
+//add
+//router.post('/',Noti.makeNoti);
+
 //check
 router.put('/:notiId',Noti.checkNoti);
 

@@ -5,6 +5,8 @@
 var express = require('express');
 var router = express.Router();
 var SpaceBlog = require('./../controllers/SpaceBlogs');
+
+var auth = require('./../config/middlewares/authorization');
 var blogAuth = [auth.blog.hasAuthorization];
 
 router.post('/', SpaceBlog.addSpaceBlog);

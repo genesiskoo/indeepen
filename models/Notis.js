@@ -50,7 +50,6 @@ notiSchema.statics = {
             what: what,
             how: how
         };
-
         //console.log(notiInfo);
         return this.create(notiInfo, callback);
     },

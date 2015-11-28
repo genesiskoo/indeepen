@@ -102,10 +102,10 @@ module.exports.addWorkPost = function(req, res, next){
                             return 0;
                     });
                     console.log('after ', fileUrls);
-                    callback(null, uploadInfo.workType, uploadInfo.emotion, uploadInfo.blogId, uploadInfo.content, fileUrls);
+                    callback(null, uploadInfo.workType, uploadInfo.emotion, uploadInfo.blogId, uploadInfo.content, uploadInfo.youTube, fileUrls);
                 });
             },
-            function (workType, emotion, blogId, content, urls, callback) {
+            function (workType, emotion, blogId, content, youTube, urls, callback) {
                 // hash_tag 추출
                 var tmpStr = content.split('#');
                 var hashTag = [];
@@ -125,7 +125,8 @@ module.exports.addWorkPost = function(req, res, next){
                         type : workType,
                         emotion : emotion
                     },
-                    resources : urls
+                    resources : urls,
+                    youTube : youTube
                 };
                 Post.savePost(postInfo, function(err, doc){
                     if(err){

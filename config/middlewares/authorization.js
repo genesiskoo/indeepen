@@ -185,6 +185,33 @@ module.exports.user = {
     }
 };
 
+var Comment = require('./../../models/Comments');
+module.exports.comment = {
+    hasAuthorization : function(req, res, next){
+        var commentId = req.params.commentId;
+        Comment.findCommentWriter(commentId, function(err, doc){
+            if(err){
+                console.error('ERROR @ COMMENT AUTH ', err);
+                var error = new Error('comment 정보 가져오기 실패');
+                error.code = 400;
+                return next(error);
+            }
+            if(!doc){
+                var error = new Error('comment 정보 가져오기 실패');
+                error.code = 400;
+                return next(error);
+            }
+            if(doc._writer._user == req.user.userKey){
+                console.log('ok');
+                next();
+            }else{
+                var error = new Error('권한 없음');
+                error.code = 401;
+                return next(error);
+            }
+        });
+    }
+};
 
 
 

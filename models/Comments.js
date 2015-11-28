@@ -83,12 +83,6 @@ commentSchema.statics = {
      * @param postId
      * @param callback
      */
-    /*findCommentsOfPost : function(postId, callback){
-        this.find({_post : new ObjectId(postId)}, {_id : 1, _writer : 1, content : 1, createAt : 1}).
-            sort({createAt : -1}).
-            populate('_writer', '-type -bgPhoto -intro -email -phone -iMissYous -fans -location -createAt -updateAt -isActivated').
-            exec(callback);
-    }*/
     findCommentsOfPost : function(postId, lastSeen, callback){
         console.log('findCommentsOfPost  안에서의 lastSeen', lastSeen);
         if(lastSeen == null){
@@ -104,6 +98,12 @@ commentSchema.statics = {
                 populate('_writer', '-type -bgPhoto -intro -email -phone -iMissYous -fans -location -createAt -updateAt -isActivated').
                 exec(callback);
         }
+    },
+    findCommentWriter : function(commentId, callback){
+        this.findOne({_id : ObjectId(commentId)}).
+            select('-_postId -content -createAt').
+            populate('_writer', '-type -bgPhoto -nick -profilePhoto -intro -phone -email -iMissYous -fans -location -createAt -updateAt -isActivated').
+            exec(callback);
     }
 };
 

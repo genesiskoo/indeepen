@@ -42,7 +42,7 @@ module.exports.getShowAddForm = function (req, res, next) {
 
 //List
 module.exports.getShowList = function (req, res, next) {
-    var showPageSession = null;
+    var showPageSession = "showPageSession";
     var isStart = req.query.isStart;
     var region = req.query.region;
     var field = req.query.field;
@@ -59,6 +59,7 @@ module.exports.getShowList = function (req, res, next) {
     if (!isStart) {
         lastSeen = req.session[showPageSession];
     }
+    console.log('session : ',req.session);
 
     var showList = [];
 

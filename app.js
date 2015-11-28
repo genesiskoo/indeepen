@@ -46,10 +46,10 @@ require('./routers/TheRest.js')(app, passport);
 
 app.use('/posts',  commonAuth, require('./routers/Posts.js'));
 app.use('/workPosts',  commonAuth, require('./routers/WorkPosts'));
-app.use('/showPosts', require('./routers/ShowPosts'));
+app.use('/showPosts',commonAuth, require('./routers/ShowPosts'));
 app.use('/postComments', commonAuth, require('./routers/PostComments'));
 app.use('/artistBlogs', commonAuth, require('./routers/ArtistBlogs'));
-app.use('/spaceBlogs', require('./routers/SpaceBlogs'));
+app.use('/spaceBlogs',commonAuth, require('./routers/SpaceBlogs'));
 app.use('/blogs', commonAuth, require('./routers/Blogs'));
 app.use('/users', require('./routers/Users'));
 app.use('/search', commonAuth, require('./routers/Search'));

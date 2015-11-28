@@ -7,6 +7,7 @@ var Schema = mongoose.Schema;
 var ObjectId = mongoose.Types.ObjectId;
 
 var Blog = require('./Blogs');
+var Noti = require('./Notis');
 
 var commentSchema = new Schema({
     _post : {
@@ -24,6 +25,19 @@ var commentSchema = new Schema({
         default : Date.now
     }
 }, {versionKey : false});
+
+
+commentSchema.post('save', function(doc){
+    console.log('doc ??',doc);
+    //doc의 writer(blogId)로 부터 userKey추출
+    Blog.findUserIdOfBlog(doc._writer, function(err,doc){
+        if(err){
+            console.error('err',err);
+        }
+    });
+    //post,문화 예술 구분 필요
+});
+
 
 commentSchema.statics = {
     /**

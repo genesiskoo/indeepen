@@ -9,7 +9,7 @@ var Post = require('../controllers/Posts.js');
 var auth = require('./../config/middlewares/authorization').post;
 
 //var postAuth = [auth.post.hasAuthorization];
-var likeAuth  = [ auth.whoIsWriter, auth.hasAlreadyLiked];
+var likeAuth  = [ /*auth.whoIsWriter,*/ auth.hasAlreadyLiked];
 router.get('/', Post.getPosts);
 
 

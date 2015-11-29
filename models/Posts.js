@@ -394,13 +394,13 @@ postSchema.statics = {
         var options = {likes : {$in : myArtists}, postType : 0, _writer : {$nin : blogId}};
         if(myArtists.length == 0)
             options = {postType : 0, _writer : {$nin : blogId}};
-        var perPage = 3;
+        var perPage = 15;
         var select = '-postType -content -_writer -createAt -updateAt -hashTags -likes -work.emotion -show -resources.originalPath';
         if(type != 0){
             if(type ==1)
                 perPage = null;
             else
-                perPage = 2;
+                perPage = 10;
             select = '-updateAt -hashTags -show -resources.originalPath';
         }
         if(lastSeen){

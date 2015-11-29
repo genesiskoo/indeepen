@@ -50,7 +50,8 @@ exports.addSpaceBlog = function (req, res, next) {
         },
         phone: req.body.phone,
         email: req.body.email,
-        intro: req.body.intro
+        intro: req.body.intro,
+        isActivated : fasle
     };
     //res.json(spaceInfo);
     Blog.saveBlog(spaceInfo, function (err, docs) {

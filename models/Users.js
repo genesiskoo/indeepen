@@ -27,7 +27,7 @@ var userSchema = new mongoose.Schema({
     facebook : {},
     profilePhoto: {
         type : String,
-        default : 'http://s3-ap-northeast-1.amazonaws.com/in-deepen/images/profiles/icon-person.jpg'
+        default : 'https://s3-ap-northeast-1.amazonaws.com/indeepen-s3/images/profiles/icon-person.jpg'
     },
     intro: {type : String, trim : true},
     phone: {type : String, trim : true},

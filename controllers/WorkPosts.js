@@ -104,6 +104,49 @@ module.exports.addWorkPost = function(req, res, next){
                     console.log('after ', fileUrls);
                     callback(null, uploadInfo.workType, uploadInfo.emotion, uploadInfo.blogId, uploadInfo.content, uploadInfo.youTube, fileUrls);
                 });
+                /*async.eachSeries(uploadInfo.files, function(file, callback){
+                    var newFileName = 'content_'+ randomStr+'_' + (order++) ;
+                    var extName = pathUtil.extname(file.name);
+                    var contentType = file.type;
+                    var isImageExist = contentType.indexOf('image');
+
+                    if(isImageExist != -1){
+                        Helper.uploadImageAndThumbnail(file, newFileName, extName, 'contents/images/', function(err, fileUrl){
+                            if(err){
+                                console.error('uploadImageAndThumbnail error ', err);
+                                callback(err);
+                            }else{
+                                console.log('uploadImageAndThumbnail fileUrl '+order, fileUrl);
+                                fileUrls.push(fileUrl);
+                                callback();
+                            }
+                        });
+                    }else{
+                        Helper.uploadFile(file, newFileName, extName, 'contents/music/', function(err, fileUrl){
+                            if(err){
+                                console.error('uploadAudio error', err);
+                                callback(err);
+                            }else{
+                                console.log('uploadAudio '+order, fileUrl);
+                                fileUrls.push(fileUrl);
+                                callback();
+                            }
+                        });
+                    }
+                }, function done(){
+
+                    console.log('before ', fileUrls);
+                    fileUrls.sort(function(a, b){
+                        if(a.originalPath < b.originalPath)
+                            return -1;
+                        else if(a.originalPath > b.originalPath)
+                            return 1;
+                        else
+                            return 0;
+                    });
+                    console.log('after ', fileUrls);
+                    callback(null, uploadInfo.workType, uploadInfo.emotion, uploadInfo.blogId, uploadInfo.content, uploadInfo.youTube, fileUrls);
+                });*/
             },
             function (workType, emotion, blogId, content, youTube, urls, callback) {
                 // hash_tag 추출

@@ -228,9 +228,9 @@ module.exports.addShowPost = function (req, res, next) {
                     } else {
                         //console.log('before',imageUrls);
                         fileUrls.sort(function (a, b) {
-                            if (a.url < b.url)
+                            if (a.originalPath < b.originalPath)
                                 return -1;
-                            else if (a.url > b.url)
+                            else if (a.originalPath > b.originalPath)
                                 return 1;
                             else
                                 return 0;
@@ -247,21 +247,11 @@ module.exports.addShowPost = function (req, res, next) {
             function (showType, title, startDate, endDate, startTime, endTime, fee,
                       blogId, content, latitude, longitude, address, tagArtists, urls, callback) {
 
-                // hash_tag 추출
-                var tmpStr = content.split('#');
-                var hashTag = [];
-                for (var i = 1; i < tmpStr.length; i++) {
-                    var tmp = tmpStr[i].split(' ')[0];
-                    if (tmp != '')
-                        hashTag.push(tmp);
-                }
-
                 // db 저장
                 var postInfo = {
                     postType: 1,
                     _writer: blogId,
                     content: content,
-                    hashTags: hashTag,
                     likes: [],
                     show: {
                         title: title,
